@@ -1,0 +1,29 @@
+syntax = "proto3";
+
+package k8s.v1;
+
+import "k8s/v1/types.proto";
+
+service Service {
+  rpc ListContexts(ListContextsRequest) returns (ListContextsResponse) {}
+  rpc SetContext(SetContextRequest) returns (SetContextResponse) {}
+  rpc ListNamespaces(ListNamespacesRequest) returns (ListNamespacesResponse) {}
+}
+
+message ListContextsRequest {}
+
+message ListContextsResponse {
+  repeated Context contexts = 1;
+}
+
+message SetContextRequest {
+  string context = 1;
+}
+
+message SetContextResponse {}
+
+message ListNamespacesRequest {}
+
+message ListNamespacesResponse {
+  repeated string namespaces = 1;
+}
