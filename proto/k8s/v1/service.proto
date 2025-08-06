@@ -8,6 +8,8 @@ service Service {
   rpc ListContexts(ListContextsRequest) returns (ListContextsResponse) {}
   rpc SetContext(SetContextRequest) returns (SetContextResponse) {}
   rpc ListNamespaces(ListNamespacesRequest) returns (ListNamespacesResponse) {}
+  rpc ListPods(ListPodsRequest) returns (ListPodsResponse) {}
+  rpc Debug(DebugRequest) returns (DebugResponse) {}
 }
 
 message ListContextsRequest {}
@@ -27,3 +29,15 @@ message ListNamespacesRequest {}
 message ListNamespacesResponse {
   repeated string namespaces = 1;
 }
+
+message ListPodsRequest {
+  string namespace = 1;
+}
+
+message ListPodsResponse {
+  repeated Pod pods = 1;
+}
+
+message DebugRequest {}
+
+message DebugResponse {}

@@ -30,4 +30,3 @@ plugins:
       - Client=true
       - Server=false
       - Visibility=Public
-      - Async

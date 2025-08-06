@@ -36,6 +36,393 @@ public struct K8s_V1_Context: Sendable {
   public init() {}
 }
 
+/// https://pkg.go.dev/k8s.io/apimachinery/pkg/apis/meta/v1@v0.33.3#ObjectMeta
+public struct K8s_V1_ObjectMeta: Sendable {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  public var name: String = String()
+
+  public var namespace: String = String()
+
+  public var generateName: String = String()
+
+  public var uid: String = String()
+
+  public var resourceVersion: String = String()
+
+  public var generation: Int64 = 0
+
+  public var creationTimestamp: SwiftProtobuf.Google_Protobuf_Timestamp {
+    get {return _creationTimestamp ?? SwiftProtobuf.Google_Protobuf_Timestamp()}
+    set {_creationTimestamp = newValue}
+  }
+  /// Returns true if `creationTimestamp` has been explicitly set.
+  public var hasCreationTimestamp: Bool {return self._creationTimestamp != nil}
+  /// Clears the value of `creationTimestamp`. Subsequent reads from it will return its default value.
+  public mutating func clearCreationTimestamp() {self._creationTimestamp = nil}
+
+  public var deletionTimestamp: SwiftProtobuf.Google_Protobuf_Timestamp {
+    get {return _deletionTimestamp ?? SwiftProtobuf.Google_Protobuf_Timestamp()}
+    set {_deletionTimestamp = newValue}
+  }
+  /// Returns true if `deletionTimestamp` has been explicitly set.
+  public var hasDeletionTimestamp: Bool {return self._deletionTimestamp != nil}
+  /// Clears the value of `deletionTimestamp`. Subsequent reads from it will return its default value.
+  public mutating func clearDeletionTimestamp() {self._deletionTimestamp = nil}
+
+  public var deletionGracePeriodSeconds: Int64 {
+    get {return _deletionGracePeriodSeconds ?? 0}
+    set {_deletionGracePeriodSeconds = newValue}
+  }
+  /// Returns true if `deletionGracePeriodSeconds` has been explicitly set.
+  public var hasDeletionGracePeriodSeconds: Bool {return self._deletionGracePeriodSeconds != nil}
+  /// Clears the value of `deletionGracePeriodSeconds`. Subsequent reads from it will return its default value.
+  public mutating func clearDeletionGracePeriodSeconds() {self._deletionGracePeriodSeconds = nil}
+
+  public var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  public init() {}
+
+  fileprivate var _creationTimestamp: SwiftProtobuf.Google_Protobuf_Timestamp? = nil
+  fileprivate var _deletionTimestamp: SwiftProtobuf.Google_Protobuf_Timestamp? = nil
+  fileprivate var _deletionGracePeriodSeconds: Int64? = nil
+}
+
+/// https://pkg.go.dev/k8s.io/api/core/v1@v0.33.3#Pod
+public struct K8s_V1_Pod: Sendable {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  public var meta: K8s_V1_ObjectMeta {
+    get {return _meta ?? K8s_V1_ObjectMeta()}
+    set {_meta = newValue}
+  }
+  /// Returns true if `meta` has been explicitly set.
+  public var hasMeta: Bool {return self._meta != nil}
+  /// Clears the value of `meta`. Subsequent reads from it will return its default value.
+  public mutating func clearMeta() {self._meta = nil}
+
+  public var spec: K8s_V1_PodSpec {
+    get {return _spec ?? K8s_V1_PodSpec()}
+    set {_spec = newValue}
+  }
+  /// Returns true if `spec` has been explicitly set.
+  public var hasSpec: Bool {return self._spec != nil}
+  /// Clears the value of `spec`. Subsequent reads from it will return its default value.
+  public mutating func clearSpec() {self._spec = nil}
+
+  public var status: K8s_V1_PodStatus {
+    get {return _status ?? K8s_V1_PodStatus()}
+    set {_status = newValue}
+  }
+  /// Returns true if `status` has been explicitly set.
+  public var hasStatus: Bool {return self._status != nil}
+  /// Clears the value of `status`. Subsequent reads from it will return its default value.
+  public mutating func clearStatus() {self._status = nil}
+
+  public var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  public init() {}
+
+  fileprivate var _meta: K8s_V1_ObjectMeta? = nil
+  fileprivate var _spec: K8s_V1_PodSpec? = nil
+  fileprivate var _status: K8s_V1_PodStatus? = nil
+}
+
+/// https://pkg.go.dev/k8s.io/api/core/v1@v0.33.3#PodSpec
+public struct K8s_V1_PodSpec: @unchecked Sendable {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  public var containers: [K8s_V1_Container] {
+    get {return _storage._containers}
+    set {_uniqueStorage()._containers = newValue}
+  }
+
+  public var ephemeralContainers: [K8s_V1_Container] {
+    get {return _storage._ephemeralContainers}
+    set {_uniqueStorage()._ephemeralContainers = newValue}
+  }
+
+  public var restartPolicy: String {
+    get {return _storage._restartPolicy}
+    set {_uniqueStorage()._restartPolicy = newValue}
+  }
+
+  public var nodeName: String {
+    get {return _storage._nodeName}
+    set {_uniqueStorage()._nodeName = newValue}
+  }
+
+  public var hostName: String {
+    get {return _storage._hostName}
+    set {_uniqueStorage()._hostName = newValue}
+  }
+
+  public var subdomain: String {
+    get {return _storage._subdomain}
+    set {_uniqueStorage()._subdomain = newValue}
+  }
+
+  public var scheduler: String {
+    get {return _storage._scheduler}
+    set {_uniqueStorage()._scheduler = newValue}
+  }
+
+  public var cpu: K8s_V1_Resource {
+    get {return _storage._cpu ?? K8s_V1_Resource()}
+    set {_uniqueStorage()._cpu = newValue}
+  }
+  /// Returns true if `cpu` has been explicitly set.
+  public var hasCpu: Bool {return _storage._cpu != nil}
+  /// Clears the value of `cpu`. Subsequent reads from it will return its default value.
+  public mutating func clearCpu() {_uniqueStorage()._cpu = nil}
+
+  public var memory: K8s_V1_Resource {
+    get {return _storage._memory ?? K8s_V1_Resource()}
+    set {_uniqueStorage()._memory = newValue}
+  }
+  /// Returns true if `memory` has been explicitly set.
+  public var hasMemory: Bool {return _storage._memory != nil}
+  /// Clears the value of `memory`. Subsequent reads from it will return its default value.
+  public mutating func clearMemory() {_uniqueStorage()._memory = nil}
+
+  public var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  public init() {}
+
+  fileprivate var _storage = _StorageClass.defaultInstance
+}
+
+/// https://pkg.go.dev/k8s.io/api/core/v1@v0.33.3#PodStatus
+public struct K8s_V1_PodStatus: Sendable {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  /// TODO
+  public var phase: String = String()
+
+  public var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  public init() {}
+}
+
+/// https://pkg.go.dev/k8s.io/api/core/v1@v0.33.3#Container
+public struct K8s_V1_Container: @unchecked Sendable {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  public var name: String {
+    get {return _storage._name}
+    set {_uniqueStorage()._name = newValue}
+  }
+
+  public var image: String {
+    get {return _storage._image}
+    set {_uniqueStorage()._image = newValue}
+  }
+
+  public var command: [String] {
+    get {return _storage._command}
+    set {_uniqueStorage()._command = newValue}
+  }
+
+  public var args: [String] {
+    get {return _storage._args}
+    set {_uniqueStorage()._args = newValue}
+  }
+
+  public var workingDir: String {
+    get {return _storage._workingDir}
+    set {_uniqueStorage()._workingDir = newValue}
+  }
+
+  public var ports: [K8s_V1_ContainerPort] {
+    get {return _storage._ports}
+    set {_uniqueStorage()._ports = newValue}
+  }
+
+  public var env: [K8s_V1_EnvVar] {
+    get {return _storage._env}
+    set {_uniqueStorage()._env = newValue}
+  }
+
+  public var cpu: K8s_V1_Resource {
+    get {return _storage._cpu ?? K8s_V1_Resource()}
+    set {_uniqueStorage()._cpu = newValue}
+  }
+  /// Returns true if `cpu` has been explicitly set.
+  public var hasCpu: Bool {return _storage._cpu != nil}
+  /// Clears the value of `cpu`. Subsequent reads from it will return its default value.
+  public mutating func clearCpu() {_uniqueStorage()._cpu = nil}
+
+  public var memory: K8s_V1_Resource {
+    get {return _storage._memory ?? K8s_V1_Resource()}
+    set {_uniqueStorage()._memory = newValue}
+  }
+  /// Returns true if `memory` has been explicitly set.
+  public var hasMemory: Bool {return _storage._memory != nil}
+  /// Clears the value of `memory`. Subsequent reads from it will return its default value.
+  public mutating func clearMemory() {_uniqueStorage()._memory = nil}
+
+  public var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  public init() {}
+
+  fileprivate var _storage = _StorageClass.defaultInstance
+}
+
+public struct K8s_V1_Resource: Sendable {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  public var requests: String = String()
+
+  public var limits: String = String()
+
+  public var usage: String = String()
+
+  public var usageRequestsPercentage: Int32 = 0
+
+  public var usageLimitsPercentage: Int32 = 0
+
+  public var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  public init() {}
+}
+
+/// https://pkg.go.dev/k8s.io/api/core/v1@v0.33.3#ContainerPort
+public struct K8s_V1_ContainerPort: Sendable {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  public var name: String = String()
+
+  public var hostPort: Int32 = 0
+
+  public var containerPort: Int32 = 0
+
+  public var `protocol`: String = String()
+
+  public var hostIp: String = String()
+
+  public var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  public init() {}
+}
+
+/// https://pkg.go.dev/k8s.io/api/core/v1@v0.33.3#EnvVar
+public struct K8s_V1_EnvVar: Sendable {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  public var name: String = String()
+
+  public var value: String = String()
+
+  public var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  public init() {}
+}
+
+/// Probe describes a health check to be performed against a container to determine
+/// whether it is alive or ready to receive traffic.
+///
+/// https://pkg.go.dev/k8s.io/api/core/v1@v0.33.3#Probe
+public struct K8s_V1_Probe: Sendable {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  /// Number of seconds after the container has started before liveness probes are initiated.
+  /// More info: https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle#container-probes
+  public var initDelaySeconds: Int32 {
+    get {return _initDelaySeconds ?? 0}
+    set {_initDelaySeconds = newValue}
+  }
+  /// Returns true if `initDelaySeconds` has been explicitly set.
+  public var hasInitDelaySeconds: Bool {return self._initDelaySeconds != nil}
+  /// Clears the value of `initDelaySeconds`. Subsequent reads from it will return its default value.
+  public mutating func clearInitDelaySeconds() {self._initDelaySeconds = nil}
+
+  /// Number of seconds after which the probe times out.
+  /// Defaults to 1 second. Minimum value is 1.
+  /// More info: https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle#container-probes
+  public var timeoutSeconds: Int32 {
+    get {return _timeoutSeconds ?? 0}
+    set {_timeoutSeconds = newValue}
+  }
+  /// Returns true if `timeoutSeconds` has been explicitly set.
+  public var hasTimeoutSeconds: Bool {return self._timeoutSeconds != nil}
+  /// Clears the value of `timeoutSeconds`. Subsequent reads from it will return its default value.
+  public mutating func clearTimeoutSeconds() {self._timeoutSeconds = nil}
+
+  /// How often (in seconds) to perform the probe.
+  /// Defaults to 10 seconds. Minimum value is 1.
+  public var periodSeconds: Int32 {
+    get {return _periodSeconds ?? 0}
+    set {_periodSeconds = newValue}
+  }
+  /// Returns true if `periodSeconds` has been explicitly set.
+  public var hasPeriodSeconds: Bool {return self._periodSeconds != nil}
+  /// Clears the value of `periodSeconds`. Subsequent reads from it will return its default value.
+  public mutating func clearPeriodSeconds() {self._periodSeconds = nil}
+
+  /// Minimum consecutive successes for the probe to be considered successful after having failed.
+  /// Defaults to 1. Must be 1 for liveness and startup. Minimum value is 1.
+  public var successThreshold: Int32 {
+    get {return _successThreshold ?? 0}
+    set {_successThreshold = newValue}
+  }
+  /// Returns true if `successThreshold` has been explicitly set.
+  public var hasSuccessThreshold: Bool {return self._successThreshold != nil}
+  /// Clears the value of `successThreshold`. Subsequent reads from it will return its default value.
+  public mutating func clearSuccessThreshold() {self._successThreshold = nil}
+
+  /// Minimum consecutive failures for the probe to be considered failed after having succeeded.
+  /// Defaults to 3. Minimum value is 1.
+  public var failureThreshold: Int32 {
+    get {return _failureThreshold ?? 0}
+    set {_failureThreshold = newValue}
+  }
+  /// Returns true if `failureThreshold` has been explicitly set.
+  public var hasFailureThreshold: Bool {return self._failureThreshold != nil}
+  /// Clears the value of `failureThreshold`. Subsequent reads from it will return its default value.
+  public mutating func clearFailureThreshold() {self._failureThreshold = nil}
+
+  /// Optional duration in seconds the pod needs to terminate gracefully upon probe failure.
+  /// If unset, the pod's terminationGracePeriodSeconds will be used.
+  /// Value must be non-negative; zero means immediate kill.
+  public var terminationGracePeriodSeconds: Int64 {
+    get {return _terminationGracePeriodSeconds ?? 0}
+    set {_terminationGracePeriodSeconds = newValue}
+  }
+  /// Returns true if `terminationGracePeriodSeconds` has been explicitly set.
+  public var hasTerminationGracePeriodSeconds: Bool {return self._terminationGracePeriodSeconds != nil}
+  /// Clears the value of `terminationGracePeriodSeconds`. Subsequent reads from it will return its default value.
+  public mutating func clearTerminationGracePeriodSeconds() {self._terminationGracePeriodSeconds = nil}
+
+  public var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  public init() {}
+
+  fileprivate var _initDelaySeconds: Int32? = nil
+  fileprivate var _timeoutSeconds: Int32? = nil
+  fileprivate var _periodSeconds: Int32? = nil
+  fileprivate var _successThreshold: Int32? = nil
+  fileprivate var _failureThreshold: Int32? = nil
+  fileprivate var _terminationGracePeriodSeconds: Int64? = nil
+}
+
 // MARK: - Code below here is support for the SwiftProtobuf runtime.
 
 fileprivate let _protobuf_package = "k8s.v1"
@@ -79,6 +466,658 @@ extension K8s_V1_Context: SwiftProtobuf.Message, SwiftProtobuf._MessageImplement
     if lhs.name != rhs.name {return false}
     if lhs.cluster != rhs.cluster {return false}
     if lhs.defaultNamespace != rhs.defaultNamespace {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension K8s_V1_ObjectMeta: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  public static let protoMessageName: String = _protobuf_package + ".ObjectMeta"
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "name"),
+    2: .same(proto: "namespace"),
+    3: .standard(proto: "generate_name"),
+    4: .same(proto: "uid"),
+    5: .standard(proto: "resource_version"),
+    6: .same(proto: "generation"),
+    7: .standard(proto: "creation_timestamp"),
+    8: .standard(proto: "deletion_timestamp"),
+    9: .standard(proto: "deletion_grace_period_seconds"),
+  ]
+
+  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch fieldNumber {
+      case 1: try { try decoder.decodeSingularStringField(value: &self.name) }()
+      case 2: try { try decoder.decodeSingularStringField(value: &self.namespace) }()
+      case 3: try { try decoder.decodeSingularStringField(value: &self.generateName) }()
+      case 4: try { try decoder.decodeSingularStringField(value: &self.uid) }()
+      case 5: try { try decoder.decodeSingularStringField(value: &self.resourceVersion) }()
+      case 6: try { try decoder.decodeSingularInt64Field(value: &self.generation) }()
+      case 7: try { try decoder.decodeSingularMessageField(value: &self._creationTimestamp) }()
+      case 8: try { try decoder.decodeSingularMessageField(value: &self._deletionTimestamp) }()
+      case 9: try { try decoder.decodeSingularInt64Field(value: &self._deletionGracePeriodSeconds) }()
+      default: break
+      }
+    }
+  }
+
+  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    // The use of inline closures is to circumvent an issue where the compiler
+    // allocates stack space for every if/case branch local when no optimizations
+    // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
+    // https://github.com/apple/swift-protobuf/issues/1182
+    if !self.name.isEmpty {
+      try visitor.visitSingularStringField(value: self.name, fieldNumber: 1)
+    }
+    if !self.namespace.isEmpty {
+      try visitor.visitSingularStringField(value: self.namespace, fieldNumber: 2)
+    }
+    if !self.generateName.isEmpty {
+      try visitor.visitSingularStringField(value: self.generateName, fieldNumber: 3)
+    }
+    if !self.uid.isEmpty {
+      try visitor.visitSingularStringField(value: self.uid, fieldNumber: 4)
+    }
+    if !self.resourceVersion.isEmpty {
+      try visitor.visitSingularStringField(value: self.resourceVersion, fieldNumber: 5)
+    }
+    if self.generation != 0 {
+      try visitor.visitSingularInt64Field(value: self.generation, fieldNumber: 6)
+    }
+    try { if let v = self._creationTimestamp {
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 7)
+    } }()
+    try { if let v = self._deletionTimestamp {
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 8)
+    } }()
+    try { if let v = self._deletionGracePeriodSeconds {
+      try visitor.visitSingularInt64Field(value: v, fieldNumber: 9)
+    } }()
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  public static func ==(lhs: K8s_V1_ObjectMeta, rhs: K8s_V1_ObjectMeta) -> Bool {
+    if lhs.name != rhs.name {return false}
+    if lhs.namespace != rhs.namespace {return false}
+    if lhs.generateName != rhs.generateName {return false}
+    if lhs.uid != rhs.uid {return false}
+    if lhs.resourceVersion != rhs.resourceVersion {return false}
+    if lhs.generation != rhs.generation {return false}
+    if lhs._creationTimestamp != rhs._creationTimestamp {return false}
+    if lhs._deletionTimestamp != rhs._deletionTimestamp {return false}
+    if lhs._deletionGracePeriodSeconds != rhs._deletionGracePeriodSeconds {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension K8s_V1_Pod: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  public static let protoMessageName: String = _protobuf_package + ".Pod"
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "meta"),
+    2: .same(proto: "spec"),
+    3: .same(proto: "status"),
+  ]
+
+  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch fieldNumber {
+      case 1: try { try decoder.decodeSingularMessageField(value: &self._meta) }()
+      case 2: try { try decoder.decodeSingularMessageField(value: &self._spec) }()
+      case 3: try { try decoder.decodeSingularMessageField(value: &self._status) }()
+      default: break
+      }
+    }
+  }
+
+  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    // The use of inline closures is to circumvent an issue where the compiler
+    // allocates stack space for every if/case branch local when no optimizations
+    // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
+    // https://github.com/apple/swift-protobuf/issues/1182
+    try { if let v = self._meta {
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 1)
+    } }()
+    try { if let v = self._spec {
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 2)
+    } }()
+    try { if let v = self._status {
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 3)
+    } }()
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  public static func ==(lhs: K8s_V1_Pod, rhs: K8s_V1_Pod) -> Bool {
+    if lhs._meta != rhs._meta {return false}
+    if lhs._spec != rhs._spec {return false}
+    if lhs._status != rhs._status {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension K8s_V1_PodSpec: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  public static let protoMessageName: String = _protobuf_package + ".PodSpec"
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "containers"),
+    2: .standard(proto: "ephemeral_containers"),
+    3: .standard(proto: "restart_policy"),
+    4: .standard(proto: "node_name"),
+    5: .standard(proto: "host_name"),
+    6: .same(proto: "subdomain"),
+    7: .same(proto: "scheduler"),
+    8: .same(proto: "cpu"),
+    9: .same(proto: "memory"),
+  ]
+
+  fileprivate class _StorageClass {
+    var _containers: [K8s_V1_Container] = []
+    var _ephemeralContainers: [K8s_V1_Container] = []
+    var _restartPolicy: String = String()
+    var _nodeName: String = String()
+    var _hostName: String = String()
+    var _subdomain: String = String()
+    var _scheduler: String = String()
+    var _cpu: K8s_V1_Resource? = nil
+    var _memory: K8s_V1_Resource? = nil
+
+      // This property is used as the initial default value for new instances of the type.
+      // The type itself is protecting the reference to its storage via CoW semantics.
+      // This will force a copy to be made of this reference when the first mutation occurs;
+      // hence, it is safe to mark this as `nonisolated(unsafe)`.
+      static nonisolated(unsafe) let defaultInstance = _StorageClass()
+
+    private init() {}
+
+    init(copying source: _StorageClass) {
+      _containers = source._containers
+      _ephemeralContainers = source._ephemeralContainers
+      _restartPolicy = source._restartPolicy
+      _nodeName = source._nodeName
+      _hostName = source._hostName
+      _subdomain = source._subdomain
+      _scheduler = source._scheduler
+      _cpu = source._cpu
+      _memory = source._memory
+    }
+  }
+
+  fileprivate mutating func _uniqueStorage() -> _StorageClass {
+    if !isKnownUniquelyReferenced(&_storage) {
+      _storage = _StorageClass(copying: _storage)
+    }
+    return _storage
+  }
+
+  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    _ = _uniqueStorage()
+    try withExtendedLifetime(_storage) { (_storage: _StorageClass) in
+      while let fieldNumber = try decoder.nextFieldNumber() {
+        // The use of inline closures is to circumvent an issue where the compiler
+        // allocates stack space for every case branch when no optimizations are
+        // enabled. https://github.com/apple/swift-protobuf/issues/1034
+        switch fieldNumber {
+        case 1: try { try decoder.decodeRepeatedMessageField(value: &_storage._containers) }()
+        case 2: try { try decoder.decodeRepeatedMessageField(value: &_storage._ephemeralContainers) }()
+        case 3: try { try decoder.decodeSingularStringField(value: &_storage._restartPolicy) }()
+        case 4: try { try decoder.decodeSingularStringField(value: &_storage._nodeName) }()
+        case 5: try { try decoder.decodeSingularStringField(value: &_storage._hostName) }()
+        case 6: try { try decoder.decodeSingularStringField(value: &_storage._subdomain) }()
+        case 7: try { try decoder.decodeSingularStringField(value: &_storage._scheduler) }()
+        case 8: try { try decoder.decodeSingularMessageField(value: &_storage._cpu) }()
+        case 9: try { try decoder.decodeSingularMessageField(value: &_storage._memory) }()
+        default: break
+        }
+      }
+    }
+  }
+
+  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    try withExtendedLifetime(_storage) { (_storage: _StorageClass) in
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every if/case branch local when no optimizations
+      // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
+      // https://github.com/apple/swift-protobuf/issues/1182
+      if !_storage._containers.isEmpty {
+        try visitor.visitRepeatedMessageField(value: _storage._containers, fieldNumber: 1)
+      }
+      if !_storage._ephemeralContainers.isEmpty {
+        try visitor.visitRepeatedMessageField(value: _storage._ephemeralContainers, fieldNumber: 2)
+      }
+      if !_storage._restartPolicy.isEmpty {
+        try visitor.visitSingularStringField(value: _storage._restartPolicy, fieldNumber: 3)
+      }
+      if !_storage._nodeName.isEmpty {
+        try visitor.visitSingularStringField(value: _storage._nodeName, fieldNumber: 4)
+      }
+      if !_storage._hostName.isEmpty {
+        try visitor.visitSingularStringField(value: _storage._hostName, fieldNumber: 5)
+      }
+      if !_storage._subdomain.isEmpty {
+        try visitor.visitSingularStringField(value: _storage._subdomain, fieldNumber: 6)
+      }
+      if !_storage._scheduler.isEmpty {
+        try visitor.visitSingularStringField(value: _storage._scheduler, fieldNumber: 7)
+      }
+      try { if let v = _storage._cpu {
+        try visitor.visitSingularMessageField(value: v, fieldNumber: 8)
+      } }()
+      try { if let v = _storage._memory {
+        try visitor.visitSingularMessageField(value: v, fieldNumber: 9)
+      } }()
+    }
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  public static func ==(lhs: K8s_V1_PodSpec, rhs: K8s_V1_PodSpec) -> Bool {
+    if lhs._storage !== rhs._storage {
+      let storagesAreEqual: Bool = withExtendedLifetime((lhs._storage, rhs._storage)) { (_args: (_StorageClass, _StorageClass)) in
+        let _storage = _args.0
+        let rhs_storage = _args.1
+        if _storage._containers != rhs_storage._containers {return false}
+        if _storage._ephemeralContainers != rhs_storage._ephemeralContainers {return false}
+        if _storage._restartPolicy != rhs_storage._restartPolicy {return false}
+        if _storage._nodeName != rhs_storage._nodeName {return false}
+        if _storage._hostName != rhs_storage._hostName {return false}
+        if _storage._subdomain != rhs_storage._subdomain {return false}
+        if _storage._scheduler != rhs_storage._scheduler {return false}
+        if _storage._cpu != rhs_storage._cpu {return false}
+        if _storage._memory != rhs_storage._memory {return false}
+        return true
+      }
+      if !storagesAreEqual {return false}
+    }
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension K8s_V1_PodStatus: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  public static let protoMessageName: String = _protobuf_package + ".PodStatus"
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "phase"),
+  ]
+
+  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch fieldNumber {
+      case 1: try { try decoder.decodeSingularStringField(value: &self.phase) }()
+      default: break
+      }
+    }
+  }
+
+  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    if !self.phase.isEmpty {
+      try visitor.visitSingularStringField(value: self.phase, fieldNumber: 1)
+    }
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  public static func ==(lhs: K8s_V1_PodStatus, rhs: K8s_V1_PodStatus) -> Bool {
+    if lhs.phase != rhs.phase {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension K8s_V1_Container: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  public static let protoMessageName: String = _protobuf_package + ".Container"
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "name"),
+    2: .same(proto: "image"),
+    3: .same(proto: "command"),
+    4: .same(proto: "args"),
+    5: .standard(proto: "working_dir"),
+    6: .same(proto: "ports"),
+    7: .same(proto: "env"),
+    8: .same(proto: "cpu"),
+    9: .same(proto: "memory"),
+  ]
+
+  fileprivate class _StorageClass {
+    var _name: String = String()
+    var _image: String = String()
+    var _command: [String] = []
+    var _args: [String] = []
+    var _workingDir: String = String()
+    var _ports: [K8s_V1_ContainerPort] = []
+    var _env: [K8s_V1_EnvVar] = []
+    var _cpu: K8s_V1_Resource? = nil
+    var _memory: K8s_V1_Resource? = nil
+
+      // This property is used as the initial default value for new instances of the type.
+      // The type itself is protecting the reference to its storage via CoW semantics.
+      // This will force a copy to be made of this reference when the first mutation occurs;
+      // hence, it is safe to mark this as `nonisolated(unsafe)`.
+      static nonisolated(unsafe) let defaultInstance = _StorageClass()
+
+    private init() {}
+
+    init(copying source: _StorageClass) {
+      _name = source._name
+      _image = source._image
+      _command = source._command
+      _args = source._args
+      _workingDir = source._workingDir
+      _ports = source._ports
+      _env = source._env
+      _cpu = source._cpu
+      _memory = source._memory
+    }
+  }
+
+  fileprivate mutating func _uniqueStorage() -> _StorageClass {
+    if !isKnownUniquelyReferenced(&_storage) {
+      _storage = _StorageClass(copying: _storage)
+    }
+    return _storage
+  }
+
+  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    _ = _uniqueStorage()
+    try withExtendedLifetime(_storage) { (_storage: _StorageClass) in
+      while let fieldNumber = try decoder.nextFieldNumber() {
+        // The use of inline closures is to circumvent an issue where the compiler
+        // allocates stack space for every case branch when no optimizations are
+        // enabled. https://github.com/apple/swift-protobuf/issues/1034
+        switch fieldNumber {
+        case 1: try { try decoder.decodeSingularStringField(value: &_storage._name) }()
+        case 2: try { try decoder.decodeSingularStringField(value: &_storage._image) }()
+        case 3: try { try decoder.decodeRepeatedStringField(value: &_storage._command) }()
+        case 4: try { try decoder.decodeRepeatedStringField(value: &_storage._args) }()
+        case 5: try { try decoder.decodeSingularStringField(value: &_storage._workingDir) }()
+        case 6: try { try decoder.decodeRepeatedMessageField(value: &_storage._ports) }()
+        case 7: try { try decoder.decodeRepeatedMessageField(value: &_storage._env) }()
+        case 8: try { try decoder.decodeSingularMessageField(value: &_storage._cpu) }()
+        case 9: try { try decoder.decodeSingularMessageField(value: &_storage._memory) }()
+        default: break
+        }
+      }
+    }
+  }
+
+  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    try withExtendedLifetime(_storage) { (_storage: _StorageClass) in
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every if/case branch local when no optimizations
+      // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
+      // https://github.com/apple/swift-protobuf/issues/1182
+      if !_storage._name.isEmpty {
+        try visitor.visitSingularStringField(value: _storage._name, fieldNumber: 1)
+      }
+      if !_storage._image.isEmpty {
+        try visitor.visitSingularStringField(value: _storage._image, fieldNumber: 2)
+      }
+      if !_storage._command.isEmpty {
+        try visitor.visitRepeatedStringField(value: _storage._command, fieldNumber: 3)
+      }
+      if !_storage._args.isEmpty {
+        try visitor.visitRepeatedStringField(value: _storage._args, fieldNumber: 4)
+      }
+      if !_storage._workingDir.isEmpty {
+        try visitor.visitSingularStringField(value: _storage._workingDir, fieldNumber: 5)
+      }
+      if !_storage._ports.isEmpty {
+        try visitor.visitRepeatedMessageField(value: _storage._ports, fieldNumber: 6)
+      }
+      if !_storage._env.isEmpty {
+        try visitor.visitRepeatedMessageField(value: _storage._env, fieldNumber: 7)
+      }
+      try { if let v = _storage._cpu {
+        try visitor.visitSingularMessageField(value: v, fieldNumber: 8)
+      } }()
+      try { if let v = _storage._memory {
+        try visitor.visitSingularMessageField(value: v, fieldNumber: 9)
+      } }()
+    }
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  public static func ==(lhs: K8s_V1_Container, rhs: K8s_V1_Container) -> Bool {
+    if lhs._storage !== rhs._storage {
+      let storagesAreEqual: Bool = withExtendedLifetime((lhs._storage, rhs._storage)) { (_args: (_StorageClass, _StorageClass)) in
+        let _storage = _args.0
+        let rhs_storage = _args.1
+        if _storage._name != rhs_storage._name {return false}
+        if _storage._image != rhs_storage._image {return false}
+        if _storage._command != rhs_storage._command {return false}
+        if _storage._args != rhs_storage._args {return false}
+        if _storage._workingDir != rhs_storage._workingDir {return false}
+        if _storage._ports != rhs_storage._ports {return false}
+        if _storage._env != rhs_storage._env {return false}
+        if _storage._cpu != rhs_storage._cpu {return false}
+        if _storage._memory != rhs_storage._memory {return false}
+        return true
+      }
+      if !storagesAreEqual {return false}
+    }
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension K8s_V1_Resource: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  public static let protoMessageName: String = _protobuf_package + ".Resource"
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "requests"),
+    2: .same(proto: "limits"),
+    3: .same(proto: "usage"),
+    4: .standard(proto: "usage_requests_percentage"),
+    5: .standard(proto: "usage_limits_percentage"),
+  ]
+
+  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch fieldNumber {
+      case 1: try { try decoder.decodeSingularStringField(value: &self.requests) }()
+      case 2: try { try decoder.decodeSingularStringField(value: &self.limits) }()
+      case 3: try { try decoder.decodeSingularStringField(value: &self.usage) }()
+      case 4: try { try decoder.decodeSingularInt32Field(value: &self.usageRequestsPercentage) }()
+      case 5: try { try decoder.decodeSingularInt32Field(value: &self.usageLimitsPercentage) }()
+      default: break
+      }
+    }
+  }
+
+  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    if !self.requests.isEmpty {
+      try visitor.visitSingularStringField(value: self.requests, fieldNumber: 1)
+    }
+    if !self.limits.isEmpty {
+      try visitor.visitSingularStringField(value: self.limits, fieldNumber: 2)
+    }
+    if !self.usage.isEmpty {
+      try visitor.visitSingularStringField(value: self.usage, fieldNumber: 3)
+    }
+    if self.usageRequestsPercentage != 0 {
+      try visitor.visitSingularInt32Field(value: self.usageRequestsPercentage, fieldNumber: 4)
+    }
+    if self.usageLimitsPercentage != 0 {
+      try visitor.visitSingularInt32Field(value: self.usageLimitsPercentage, fieldNumber: 5)
+    }
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  public static func ==(lhs: K8s_V1_Resource, rhs: K8s_V1_Resource) -> Bool {
+    if lhs.requests != rhs.requests {return false}
+    if lhs.limits != rhs.limits {return false}
+    if lhs.usage != rhs.usage {return false}
+    if lhs.usageRequestsPercentage != rhs.usageRequestsPercentage {return false}
+    if lhs.usageLimitsPercentage != rhs.usageLimitsPercentage {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension K8s_V1_ContainerPort: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  public static let protoMessageName: String = _protobuf_package + ".ContainerPort"
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "name"),
+    2: .standard(proto: "host_port"),
+    3: .standard(proto: "container_port"),
+    4: .same(proto: "protocol"),
+    5: .standard(proto: "host_ip"),
+  ]
+
+  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch fieldNumber {
+      case 1: try { try decoder.decodeSingularStringField(value: &self.name) }()
+      case 2: try { try decoder.decodeSingularInt32Field(value: &self.hostPort) }()
+      case 3: try { try decoder.decodeSingularInt32Field(value: &self.containerPort) }()
+      case 4: try { try decoder.decodeSingularStringField(value: &self.`protocol`) }()
+      case 5: try { try decoder.decodeSingularStringField(value: &self.hostIp) }()
+      default: break
+      }
+    }
+  }
+
+  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    if !self.name.isEmpty {
+      try visitor.visitSingularStringField(value: self.name, fieldNumber: 1)
+    }
+    if self.hostPort != 0 {
+      try visitor.visitSingularInt32Field(value: self.hostPort, fieldNumber: 2)
+    }
+    if self.containerPort != 0 {
+      try visitor.visitSingularInt32Field(value: self.containerPort, fieldNumber: 3)
+    }
+    if !self.`protocol`.isEmpty {
+      try visitor.visitSingularStringField(value: self.`protocol`, fieldNumber: 4)
+    }
+    if !self.hostIp.isEmpty {
+      try visitor.visitSingularStringField(value: self.hostIp, fieldNumber: 5)
+    }
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  public static func ==(lhs: K8s_V1_ContainerPort, rhs: K8s_V1_ContainerPort) -> Bool {
+    if lhs.name != rhs.name {return false}
+    if lhs.hostPort != rhs.hostPort {return false}
+    if lhs.containerPort != rhs.containerPort {return false}
+    if lhs.`protocol` != rhs.`protocol` {return false}
+    if lhs.hostIp != rhs.hostIp {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension K8s_V1_EnvVar: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  public static let protoMessageName: String = _protobuf_package + ".EnvVar"
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "name"),
+    2: .same(proto: "value"),
+  ]
+
+  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch fieldNumber {
+      case 1: try { try decoder.decodeSingularStringField(value: &self.name) }()
+      case 2: try { try decoder.decodeSingularStringField(value: &self.value) }()
+      default: break
+      }
+    }
+  }
+
+  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    if !self.name.isEmpty {
+      try visitor.visitSingularStringField(value: self.name, fieldNumber: 1)
+    }
+    if !self.value.isEmpty {
+      try visitor.visitSingularStringField(value: self.value, fieldNumber: 2)
+    }
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  public static func ==(lhs: K8s_V1_EnvVar, rhs: K8s_V1_EnvVar) -> Bool {
+    if lhs.name != rhs.name {return false}
+    if lhs.value != rhs.value {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension K8s_V1_Probe: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  public static let protoMessageName: String = _protobuf_package + ".Probe"
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    2: .standard(proto: "init_delay_seconds"),
+    3: .standard(proto: "timeout_seconds"),
+    4: .standard(proto: "period_seconds"),
+    5: .standard(proto: "success_threshold"),
+    6: .standard(proto: "failure_threshold"),
+    7: .standard(proto: "termination_grace_period_seconds"),
+  ]
+
+  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch fieldNumber {
+      case 2: try { try decoder.decodeSingularInt32Field(value: &self._initDelaySeconds) }()
+      case 3: try { try decoder.decodeSingularInt32Field(value: &self._timeoutSeconds) }()
+      case 4: try { try decoder.decodeSingularInt32Field(value: &self._periodSeconds) }()
+      case 5: try { try decoder.decodeSingularInt32Field(value: &self._successThreshold) }()
+      case 6: try { try decoder.decodeSingularInt32Field(value: &self._failureThreshold) }()
+      case 7: try { try decoder.decodeSingularInt64Field(value: &self._terminationGracePeriodSeconds) }()
+      default: break
+      }
+    }
+  }
+
+  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    // The use of inline closures is to circumvent an issue where the compiler
+    // allocates stack space for every if/case branch local when no optimizations
+    // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
+    // https://github.com/apple/swift-protobuf/issues/1182
+    try { if let v = self._initDelaySeconds {
+      try visitor.visitSingularInt32Field(value: v, fieldNumber: 2)
+    } }()
+    try { if let v = self._timeoutSeconds {
+      try visitor.visitSingularInt32Field(value: v, fieldNumber: 3)
+    } }()
+    try { if let v = self._periodSeconds {
+      try visitor.visitSingularInt32Field(value: v, fieldNumber: 4)
+    } }()
+    try { if let v = self._successThreshold {
+      try visitor.visitSingularInt32Field(value: v, fieldNumber: 5)
+    } }()
+    try { if let v = self._failureThreshold {
+      try visitor.visitSingularInt32Field(value: v, fieldNumber: 6)
+    } }()
+    try { if let v = self._terminationGracePeriodSeconds {
+      try visitor.visitSingularInt64Field(value: v, fieldNumber: 7)
+    } }()
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  public static func ==(lhs: K8s_V1_Probe, rhs: K8s_V1_Probe) -> Bool {
+    if lhs._initDelaySeconds != rhs._initDelaySeconds {return false}
+    if lhs._timeoutSeconds != rhs._timeoutSeconds {return false}
+    if lhs._periodSeconds != rhs._periodSeconds {return false}
+    if lhs._successThreshold != rhs._successThreshold {return false}
+    if lhs._failureThreshold != rhs._failureThreshold {return false}
+    if lhs._terminationGracePeriodSeconds != rhs._terminationGracePeriodSeconds {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }

@@ -2,8 +2,117 @@ syntax = "proto3";
 
 package k8s.v1;
 
+import "google/protobuf/timestamp.proto";
+
 message Context {
   string name = 1;
   string cluster = 2;
   string default_namespace = 3;
+}
+
+// https://pkg.go.dev/k8s.io/apimachinery/pkg/apis/meta/v1@v0.33.3#ObjectMeta
+message ObjectMeta {
+  string name = 1;
+  string namespace = 2;
+  string generate_name = 3;
+  string uid = 4;
+  string resource_version = 5;
+  int64 generation = 6;
+  google.protobuf.Timestamp creation_timestamp = 7;
+  optional google.protobuf.Timestamp deletion_timestamp = 8;
+  optional int64 deletion_grace_period_seconds = 9;
+}
+
+// https://pkg.go.dev/k8s.io/api/core/v1@v0.33.3#Pod
+message Pod {
+  ObjectMeta meta = 1;
+  PodSpec spec = 2;
+  PodStatus status = 3;
+}
+
+// https://pkg.go.dev/k8s.io/api/core/v1@v0.33.3#PodSpec
+message PodSpec {
+  repeated Container containers = 1;
+  repeated Container ephemeral_containers = 2;
+  string restart_policy = 3;
+  string node_name = 4;
+  string host_name = 5;
+  string subdomain = 6;
+  string scheduler = 7;
+  Resource cpu = 8;
+  Resource memory = 9;
+}
+
+// https://pkg.go.dev/k8s.io/api/core/v1@v0.33.3#PodStatus
+message PodStatus {
+  string phase = 1;
+  // TODO
+}
+
+// https://pkg.go.dev/k8s.io/api/core/v1@v0.33.3#Container
+message Container {
+  string name = 1;
+  string image = 2;
+  repeated string command = 3;
+  repeated string args = 4;
+  string working_dir = 5;
+  repeated ContainerPort ports = 6;
+  repeated EnvVar env = 7;
+  Resource cpu = 8;
+  Resource memory = 9;
+}
+
+message Resource {
+  string requests = 1;
+  string limits = 2;
+  string usage = 3;
+  int32 usage_requests_percentage = 4;
+  int32 usage_limits_percentage = 5;
+}
+
+// https://pkg.go.dev/k8s.io/api/core/v1@v0.33.3#ContainerPort
+message ContainerPort {
+  string name = 1;
+  int32 host_port = 2;
+  int32 container_port = 3;
+  string protocol = 4;
+  string host_ip = 5;
+}
+
+// https://pkg.go.dev/k8s.io/api/core/v1@v0.33.3#EnvVar
+message EnvVar {
+  string name = 1;
+  string value = 2;
+}
+
+// Probe describes a health check to be performed against a container to determine
+// whether it is alive or ready to receive traffic.
+//
+// https://pkg.go.dev/k8s.io/api/core/v1@v0.33.3#Probe
+message Probe {
+  // Number of seconds after the container has started before liveness probes are initiated.
+  // More info: https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle#container-probes
+  optional int32 init_delay_seconds = 2;
+
+  // Number of seconds after which the probe times out.
+  // Defaults to 1 second. Minimum value is 1.
+  // More info: https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle#container-probes
+  optional int32 timeout_seconds = 3;
+
+  // How often (in seconds) to perform the probe.
+  // Defaults to 10 seconds. Minimum value is 1.
+  optional int32 period_seconds = 4;
+
+  // Minimum consecutive successes for the probe to be considered successful after having failed.
+  // Defaults to 1. Must be 1 for liveness and startup. Minimum value is 1.
+  optional int32 success_threshold = 5;
+
+  // Minimum consecutive failures for the probe to be considered failed after having succeeded.
+  // Defaults to 3. Minimum value is 1.
+  optional int32 failure_threshold = 6;
+
+  // Optional duration in seconds the pod needs to terminate gracefully upon probe failure.
+  // If unset, the pod's terminationGracePeriodSeconds will be used.
+  // Value must be non-negative; zero means immediate kill.
+  optional int64 termination_grace_period_seconds = 7;
 }

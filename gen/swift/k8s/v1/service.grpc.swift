@@ -56,11 +56,37 @@ public enum K8s_V1_Service {
                 method: "ListNamespaces"
             )
         }
+        /// Namespace for "ListPods" metadata.
+        public enum ListPods {
+            /// Request type for "ListPods".
+            public typealias Input = K8s_V1_ListPodsRequest
+            /// Response type for "ListPods".
+            public typealias Output = K8s_V1_ListPodsResponse
+            /// Descriptor for "ListPods".
+            public static let descriptor = GRPCCore.MethodDescriptor(
+                service: GRPCCore.ServiceDescriptor(fullyQualifiedService: "k8s.v1.Service"),
+                method: "ListPods"
+            )
+        }
+        /// Namespace for "Debug" metadata.
+        public enum Debug {
+            /// Request type for "Debug".
+            public typealias Input = K8s_V1_DebugRequest
+            /// Response type for "Debug".
+            public typealias Output = K8s_V1_DebugResponse
+            /// Descriptor for "Debug".
+            public static let descriptor = GRPCCore.MethodDescriptor(
+                service: GRPCCore.ServiceDescriptor(fullyQualifiedService: "k8s.v1.Service"),
+                method: "Debug"
+            )
+        }
         /// Descriptors for all methods in the "k8s.v1.Service" service.
         public static let descriptors: [GRPCCore.MethodDescriptor] = [
             ListContexts.descriptor,
             SetContext.descriptor,
-            ListNamespaces.descriptor
+            ListNamespaces.descriptor,
+            ListPods.descriptor,
+            Debug.descriptor
         ]
     }
 }
@@ -69,285 +95,6 @@ public enum K8s_V1_Service {
 extension GRPCCore.ServiceDescriptor {
     /// Service descriptor for the "k8s.v1.Service" service.
     public static let k8S_v1_Service = GRPCCore.ServiceDescriptor(fullyQualifiedService: "k8s.v1.Service")
-}
-
-// MARK: k8s.v1.Service (server)
-
-@available(macOS 15.0, iOS 18.0, watchOS 11.0, tvOS 18.0, visionOS 2.0, *)
-extension K8s_V1_Service {
-    /// Streaming variant of the service protocol for the "k8s.v1.Service" service.
-    ///
-    /// This protocol is the lowest-level of the service protocols generated for this service
-    /// giving you the most flexibility over the implementation of your service. This comes at
-    /// the cost of more verbose and less strict APIs. Each RPC requires you to implement it in
-    /// terms of a request stream and response stream. Where only a single request or response
-    /// message is expected, you are responsible for enforcing this invariant is maintained.
-    ///
-    /// Where possible, prefer using the stricter, less-verbose ``ServiceProtocol``
-    /// or ``SimpleServiceProtocol`` instead.
-    public protocol StreamingServiceProtocol: GRPCCore.RegistrableRPCService {
-        /// Handle the "ListContexts" method.
-        ///
-        /// - Parameters:
-        ///   - request: A streaming request of `K8s_V1_ListContextsRequest` messages.
-        ///   - context: Context providing information about the RPC.
-        /// - Throws: Any error which occurred during the processing of the request. Thrown errors
-        ///     of type `RPCError` are mapped to appropriate statuses. All other errors are converted
-        ///     to an internal error.
-        /// - Returns: A streaming response of `K8s_V1_ListContextsResponse` messages.
-        func listContexts(
-            request: GRPCCore.StreamingServerRequest<K8s_V1_ListContextsRequest>,
-            context: GRPCCore.ServerContext
-        ) async throws -> GRPCCore.StreamingServerResponse<K8s_V1_ListContextsResponse>
-
-        /// Handle the "SetContext" method.
-        ///
-        /// - Parameters:
-        ///   - request: A streaming request of `K8s_V1_SetContextRequest` messages.
-        ///   - context: Context providing information about the RPC.
-        /// - Throws: Any error which occurred during the processing of the request. Thrown errors
-        ///     of type `RPCError` are mapped to appropriate statuses. All other errors are converted
-        ///     to an internal error.
-        /// - Returns: A streaming response of `K8s_V1_SetContextResponse` messages.
-        func setContext(
-            request: GRPCCore.StreamingServerRequest<K8s_V1_SetContextRequest>,
-            context: GRPCCore.ServerContext
-        ) async throws -> GRPCCore.StreamingServerResponse<K8s_V1_SetContextResponse>
-
-        /// Handle the "ListNamespaces" method.
-        ///
-        /// - Parameters:
-        ///   - request: A streaming request of `K8s_V1_ListNamespacesRequest` messages.
-        ///   - context: Context providing information about the RPC.
-        /// - Throws: Any error which occurred during the processing of the request. Thrown errors
-        ///     of type `RPCError` are mapped to appropriate statuses. All other errors are converted
-        ///     to an internal error.
-        /// - Returns: A streaming response of `K8s_V1_ListNamespacesResponse` messages.
-        func listNamespaces(
-            request: GRPCCore.StreamingServerRequest<K8s_V1_ListNamespacesRequest>,
-            context: GRPCCore.ServerContext
-        ) async throws -> GRPCCore.StreamingServerResponse<K8s_V1_ListNamespacesResponse>
-    }
-
-    /// Service protocol for the "k8s.v1.Service" service.
-    ///
-    /// This protocol is higher level than ``StreamingServiceProtocol`` but lower level than
-    /// the ``SimpleServiceProtocol``, it provides access to request and response metadata and
-    /// trailing response metadata. If you don't need these then consider using
-    /// the ``SimpleServiceProtocol``. If you need fine grained control over your RPCs then
-    /// use ``StreamingServiceProtocol``.
-    public protocol ServiceProtocol: K8s_V1_Service.StreamingServiceProtocol {
-        /// Handle the "ListContexts" method.
-        ///
-        /// - Parameters:
-        ///   - request: A request containing a single `K8s_V1_ListContextsRequest` message.
-        ///   - context: Context providing information about the RPC.
-        /// - Throws: Any error which occurred during the processing of the request. Thrown errors
-        ///     of type `RPCError` are mapped to appropriate statuses. All other errors are converted
-        ///     to an internal error.
-        /// - Returns: A response containing a single `K8s_V1_ListContextsResponse` message.
-        func listContexts(
-            request: GRPCCore.ServerRequest<K8s_V1_ListContextsRequest>,
-            context: GRPCCore.ServerContext
-        ) async throws -> GRPCCore.ServerResponse<K8s_V1_ListContextsResponse>
-
-        /// Handle the "SetContext" method.
-        ///
-        /// - Parameters:
-        ///   - request: A request containing a single `K8s_V1_SetContextRequest` message.
-        ///   - context: Context providing information about the RPC.
-        /// - Throws: Any error which occurred during the processing of the request. Thrown errors
-        ///     of type `RPCError` are mapped to appropriate statuses. All other errors are converted
-        ///     to an internal error.
-        /// - Returns: A response containing a single `K8s_V1_SetContextResponse` message.
-        func setContext(
-            request: GRPCCore.ServerRequest<K8s_V1_SetContextRequest>,
-            context: GRPCCore.ServerContext
-        ) async throws -> GRPCCore.ServerResponse<K8s_V1_SetContextResponse>
-
-        /// Handle the "ListNamespaces" method.
-        ///
-        /// - Parameters:
-        ///   - request: A request containing a single `K8s_V1_ListNamespacesRequest` message.
-        ///   - context: Context providing information about the RPC.
-        /// - Throws: Any error which occurred during the processing of the request. Thrown errors
-        ///     of type `RPCError` are mapped to appropriate statuses. All other errors are converted
-        ///     to an internal error.
-        /// - Returns: A response containing a single `K8s_V1_ListNamespacesResponse` message.
-        func listNamespaces(
-            request: GRPCCore.ServerRequest<K8s_V1_ListNamespacesRequest>,
-            context: GRPCCore.ServerContext
-        ) async throws -> GRPCCore.ServerResponse<K8s_V1_ListNamespacesResponse>
-    }
-
-    /// Simple service protocol for the "k8s.v1.Service" service.
-    ///
-    /// This is the highest level protocol for the service. The API is the easiest to use but
-    /// doesn't provide access to request or response metadata. If you need access to these
-    /// then use ``ServiceProtocol`` instead.
-    public protocol SimpleServiceProtocol: K8s_V1_Service.ServiceProtocol {
-        /// Handle the "ListContexts" method.
-        ///
-        /// - Parameters:
-        ///   - request: A `K8s_V1_ListContextsRequest` message.
-        ///   - context: Context providing information about the RPC.
-        /// - Throws: Any error which occurred during the processing of the request. Thrown errors
-        ///     of type `RPCError` are mapped to appropriate statuses. All other errors are converted
-        ///     to an internal error.
-        /// - Returns: A `K8s_V1_ListContextsResponse` to respond with.
-        func listContexts(
-            request: K8s_V1_ListContextsRequest,
-            context: GRPCCore.ServerContext
-        ) async throws -> K8s_V1_ListContextsResponse
-
-        /// Handle the "SetContext" method.
-        ///
-        /// - Parameters:
-        ///   - request: A `K8s_V1_SetContextRequest` message.
-        ///   - context: Context providing information about the RPC.
-        /// - Throws: Any error which occurred during the processing of the request. Thrown errors
-        ///     of type `RPCError` are mapped to appropriate statuses. All other errors are converted
-        ///     to an internal error.
-        /// - Returns: A `K8s_V1_SetContextResponse` to respond with.
-        func setContext(
-            request: K8s_V1_SetContextRequest,
-            context: GRPCCore.ServerContext
-        ) async throws -> K8s_V1_SetContextResponse
-
-        /// Handle the "ListNamespaces" method.
-        ///
-        /// - Parameters:
-        ///   - request: A `K8s_V1_ListNamespacesRequest` message.
-        ///   - context: Context providing information about the RPC.
-        /// - Throws: Any error which occurred during the processing of the request. Thrown errors
-        ///     of type `RPCError` are mapped to appropriate statuses. All other errors are converted
-        ///     to an internal error.
-        /// - Returns: A `K8s_V1_ListNamespacesResponse` to respond with.
-        func listNamespaces(
-            request: K8s_V1_ListNamespacesRequest,
-            context: GRPCCore.ServerContext
-        ) async throws -> K8s_V1_ListNamespacesResponse
-    }
-}
-
-// Default implementation of 'registerMethods(with:)'.
-@available(macOS 15.0, iOS 18.0, watchOS 11.0, tvOS 18.0, visionOS 2.0, *)
-extension K8s_V1_Service.StreamingServiceProtocol {
-    public func registerMethods<Transport>(with router: inout GRPCCore.RPCRouter<Transport>) where Transport: GRPCCore.ServerTransport {
-        router.registerHandler(
-            forMethod: K8s_V1_Service.Method.ListContexts.descriptor,
-            deserializer: GRPCProtobuf.ProtobufDeserializer<K8s_V1_ListContextsRequest>(),
-            serializer: GRPCProtobuf.ProtobufSerializer<K8s_V1_ListContextsResponse>(),
-            handler: { request, context in
-                try await self.listContexts(
-                    request: request,
-                    context: context
-                )
-            }
-        )
-        router.registerHandler(
-            forMethod: K8s_V1_Service.Method.SetContext.descriptor,
-            deserializer: GRPCProtobuf.ProtobufDeserializer<K8s_V1_SetContextRequest>(),
-            serializer: GRPCProtobuf.ProtobufSerializer<K8s_V1_SetContextResponse>(),
-            handler: { request, context in
-                try await self.setContext(
-                    request: request,
-                    context: context
-                )
-            }
-        )
-        router.registerHandler(
-            forMethod: K8s_V1_Service.Method.ListNamespaces.descriptor,
-            deserializer: GRPCProtobuf.ProtobufDeserializer<K8s_V1_ListNamespacesRequest>(),
-            serializer: GRPCProtobuf.ProtobufSerializer<K8s_V1_ListNamespacesResponse>(),
-            handler: { request, context in
-                try await self.listNamespaces(
-                    request: request,
-                    context: context
-                )
-            }
-        )
-    }
-}
-
-// Default implementation of streaming methods from 'StreamingServiceProtocol'.
-@available(macOS 15.0, iOS 18.0, watchOS 11.0, tvOS 18.0, visionOS 2.0, *)
-extension K8s_V1_Service.ServiceProtocol {
-    public func listContexts(
-        request: GRPCCore.StreamingServerRequest<K8s_V1_ListContextsRequest>,
-        context: GRPCCore.ServerContext
-    ) async throws -> GRPCCore.StreamingServerResponse<K8s_V1_ListContextsResponse> {
-        let response = try await self.listContexts(
-            request: GRPCCore.ServerRequest(stream: request),
-            context: context
-        )
-        return GRPCCore.StreamingServerResponse(single: response)
-    }
-
-    public func setContext(
-        request: GRPCCore.StreamingServerRequest<K8s_V1_SetContextRequest>,
-        context: GRPCCore.ServerContext
-    ) async throws -> GRPCCore.StreamingServerResponse<K8s_V1_SetContextResponse> {
-        let response = try await self.setContext(
-            request: GRPCCore.ServerRequest(stream: request),
-            context: context
-        )
-        return GRPCCore.StreamingServerResponse(single: response)
-    }
-
-    public func listNamespaces(
-        request: GRPCCore.StreamingServerRequest<K8s_V1_ListNamespacesRequest>,
-        context: GRPCCore.ServerContext
-    ) async throws -> GRPCCore.StreamingServerResponse<K8s_V1_ListNamespacesResponse> {
-        let response = try await self.listNamespaces(
-            request: GRPCCore.ServerRequest(stream: request),
-            context: context
-        )
-        return GRPCCore.StreamingServerResponse(single: response)
-    }
-}
-
-// Default implementation of methods from 'ServiceProtocol'.
-@available(macOS 15.0, iOS 18.0, watchOS 11.0, tvOS 18.0, visionOS 2.0, *)
-extension K8s_V1_Service.SimpleServiceProtocol {
-    public func listContexts(
-        request: GRPCCore.ServerRequest<K8s_V1_ListContextsRequest>,
-        context: GRPCCore.ServerContext
-    ) async throws -> GRPCCore.ServerResponse<K8s_V1_ListContextsResponse> {
-        return GRPCCore.ServerResponse<K8s_V1_ListContextsResponse>(
-            message: try await self.listContexts(
-                request: request.message,
-                context: context
-            ),
-            metadata: [:]
-        )
-    }
-
-    public func setContext(
-        request: GRPCCore.ServerRequest<K8s_V1_SetContextRequest>,
-        context: GRPCCore.ServerContext
-    ) async throws -> GRPCCore.ServerResponse<K8s_V1_SetContextResponse> {
-        return GRPCCore.ServerResponse<K8s_V1_SetContextResponse>(
-            message: try await self.setContext(
-                request: request.message,
-                context: context
-            ),
-            metadata: [:]
-        )
-    }
-
-    public func listNamespaces(
-        request: GRPCCore.ServerRequest<K8s_V1_ListNamespacesRequest>,
-        context: GRPCCore.ServerContext
-    ) async throws -> GRPCCore.ServerResponse<K8s_V1_ListNamespacesResponse> {
-        return GRPCCore.ServerResponse<K8s_V1_ListNamespacesResponse>(
-            message: try await self.listNamespaces(
-                request: request.message,
-                context: context
-            ),
-            metadata: [:]
-        )
-    }
 }
 
 // MARK: k8s.v1.Service (client)
@@ -414,6 +161,44 @@ extension K8s_V1_Service {
             deserializer: some GRPCCore.MessageDeserializer<K8s_V1_ListNamespacesResponse>,
             options: GRPCCore.CallOptions,
             onResponse handleResponse: @Sendable @escaping (GRPCCore.ClientResponse<K8s_V1_ListNamespacesResponse>) async throws -> Result
+        ) async throws -> Result where Result: Sendable
+
+        /// Call the "ListPods" method.
+        ///
+        /// - Parameters:
+        ///   - request: A request containing a single `K8s_V1_ListPodsRequest` message.
+        ///   - serializer: A serializer for `K8s_V1_ListPodsRequest` messages.
+        ///   - deserializer: A deserializer for `K8s_V1_ListPodsResponse` messages.
+        ///   - options: Options to apply to this RPC.
+        ///   - handleResponse: A closure which handles the response, the result of which is
+        ///       returned to the caller. Returning from the closure will cancel the RPC if it
+        ///       hasn't already finished.
+        /// - Returns: The result of `handleResponse`.
+        func listPods<Result>(
+            request: GRPCCore.ClientRequest<K8s_V1_ListPodsRequest>,
+            serializer: some GRPCCore.MessageSerializer<K8s_V1_ListPodsRequest>,
+            deserializer: some GRPCCore.MessageDeserializer<K8s_V1_ListPodsResponse>,
+            options: GRPCCore.CallOptions,
+            onResponse handleResponse: @Sendable @escaping (GRPCCore.ClientResponse<K8s_V1_ListPodsResponse>) async throws -> Result
+        ) async throws -> Result where Result: Sendable
+
+        /// Call the "Debug" method.
+        ///
+        /// - Parameters:
+        ///   - request: A request containing a single `K8s_V1_DebugRequest` message.
+        ///   - serializer: A serializer for `K8s_V1_DebugRequest` messages.
+        ///   - deserializer: A deserializer for `K8s_V1_DebugResponse` messages.
+        ///   - options: Options to apply to this RPC.
+        ///   - handleResponse: A closure which handles the response, the result of which is
+        ///       returned to the caller. Returning from the closure will cancel the RPC if it
+        ///       hasn't already finished.
+        /// - Returns: The result of `handleResponse`.
+        func debug<Result>(
+            request: GRPCCore.ClientRequest<K8s_V1_DebugRequest>,
+            serializer: some GRPCCore.MessageSerializer<K8s_V1_DebugRequest>,
+            deserializer: some GRPCCore.MessageDeserializer<K8s_V1_DebugResponse>,
+            options: GRPCCore.CallOptions,
+            onResponse handleResponse: @Sendable @escaping (GRPCCore.ClientResponse<K8s_V1_DebugResponse>) async throws -> Result
         ) async throws -> Result where Result: Sendable
     }
 
@@ -522,6 +307,66 @@ extension K8s_V1_Service {
                 onResponse: handleResponse
             )
         }
+
+        /// Call the "ListPods" method.
+        ///
+        /// - Parameters:
+        ///   - request: A request containing a single `K8s_V1_ListPodsRequest` message.
+        ///   - serializer: A serializer for `K8s_V1_ListPodsRequest` messages.
+        ///   - deserializer: A deserializer for `K8s_V1_ListPodsResponse` messages.
+        ///   - options: Options to apply to this RPC.
+        ///   - handleResponse: A closure which handles the response, the result of which is
+        ///       returned to the caller. Returning from the closure will cancel the RPC if it
+        ///       hasn't already finished.
+        /// - Returns: The result of `handleResponse`.
+        public func listPods<Result>(
+            request: GRPCCore.ClientRequest<K8s_V1_ListPodsRequest>,
+            serializer: some GRPCCore.MessageSerializer<K8s_V1_ListPodsRequest>,
+            deserializer: some GRPCCore.MessageDeserializer<K8s_V1_ListPodsResponse>,
+            options: GRPCCore.CallOptions = .defaults,
+            onResponse handleResponse: @Sendable @escaping (GRPCCore.ClientResponse<K8s_V1_ListPodsResponse>) async throws -> Result = { response in
+                try response.message
+            }
+        ) async throws -> Result where Result: Sendable {
+            try await self.client.unary(
+                request: request,
+                descriptor: K8s_V1_Service.Method.ListPods.descriptor,
+                serializer: serializer,
+                deserializer: deserializer,
+                options: options,
+                onResponse: handleResponse
+            )
+        }
+
+        /// Call the "Debug" method.
+        ///
+        /// - Parameters:
+        ///   - request: A request containing a single `K8s_V1_DebugRequest` message.
+        ///   - serializer: A serializer for `K8s_V1_DebugRequest` messages.
+        ///   - deserializer: A deserializer for `K8s_V1_DebugResponse` messages.
+        ///   - options: Options to apply to this RPC.
+        ///   - handleResponse: A closure which handles the response, the result of which is
+        ///       returned to the caller. Returning from the closure will cancel the RPC if it
+        ///       hasn't already finished.
+        /// - Returns: The result of `handleResponse`.
+        public func debug<Result>(
+            request: GRPCCore.ClientRequest<K8s_V1_DebugRequest>,
+            serializer: some GRPCCore.MessageSerializer<K8s_V1_DebugRequest>,
+            deserializer: some GRPCCore.MessageDeserializer<K8s_V1_DebugResponse>,
+            options: GRPCCore.CallOptions = .defaults,
+            onResponse handleResponse: @Sendable @escaping (GRPCCore.ClientResponse<K8s_V1_DebugResponse>) async throws -> Result = { response in
+                try response.message
+            }
+        ) async throws -> Result where Result: Sendable {
+            try await self.client.unary(
+                request: request,
+                descriptor: K8s_V1_Service.Method.Debug.descriptor,
+                serializer: serializer,
+                deserializer: deserializer,
+                options: options,
+                onResponse: handleResponse
+            )
+        }
     }
 }
 
@@ -598,6 +443,56 @@ extension K8s_V1_Service.ClientProtocol {
             request: request,
             serializer: GRPCProtobuf.ProtobufSerializer<K8s_V1_ListNamespacesRequest>(),
             deserializer: GRPCProtobuf.ProtobufDeserializer<K8s_V1_ListNamespacesResponse>(),
+            options: options,
+            onResponse: handleResponse
+        )
+    }
+
+    /// Call the "ListPods" method.
+    ///
+    /// - Parameters:
+    ///   - request: A request containing a single `K8s_V1_ListPodsRequest` message.
+    ///   - options: Options to apply to this RPC.
+    ///   - handleResponse: A closure which handles the response, the result of which is
+    ///       returned to the caller. Returning from the closure will cancel the RPC if it
+    ///       hasn't already finished.
+    /// - Returns: The result of `handleResponse`.
+    public func listPods<Result>(
+        request: GRPCCore.ClientRequest<K8s_V1_ListPodsRequest>,
+        options: GRPCCore.CallOptions = .defaults,
+        onResponse handleResponse: @Sendable @escaping (GRPCCore.ClientResponse<K8s_V1_ListPodsResponse>) async throws -> Result = { response in
+            try response.message
+        }
+    ) async throws -> Result where Result: Sendable {
+        try await self.listPods(
+            request: request,
+            serializer: GRPCProtobuf.ProtobufSerializer<K8s_V1_ListPodsRequest>(),
+            deserializer: GRPCProtobuf.ProtobufDeserializer<K8s_V1_ListPodsResponse>(),
+            options: options,
+            onResponse: handleResponse
+        )
+    }
+
+    /// Call the "Debug" method.
+    ///
+    /// - Parameters:
+    ///   - request: A request containing a single `K8s_V1_DebugRequest` message.
+    ///   - options: Options to apply to this RPC.
+    ///   - handleResponse: A closure which handles the response, the result of which is
+    ///       returned to the caller. Returning from the closure will cancel the RPC if it
+    ///       hasn't already finished.
+    /// - Returns: The result of `handleResponse`.
+    public func debug<Result>(
+        request: GRPCCore.ClientRequest<K8s_V1_DebugRequest>,
+        options: GRPCCore.CallOptions = .defaults,
+        onResponse handleResponse: @Sendable @escaping (GRPCCore.ClientResponse<K8s_V1_DebugResponse>) async throws -> Result = { response in
+            try response.message
+        }
+    ) async throws -> Result where Result: Sendable {
+        try await self.debug(
+            request: request,
+            serializer: GRPCProtobuf.ProtobufSerializer<K8s_V1_DebugRequest>(),
+            deserializer: GRPCProtobuf.ProtobufDeserializer<K8s_V1_DebugResponse>(),
             options: options,
             onResponse: handleResponse
         )
@@ -688,6 +583,64 @@ extension K8s_V1_Service.ClientProtocol {
             metadata: metadata
         )
         return try await self.listNamespaces(
+            request: request,
+            options: options,
+            onResponse: handleResponse
+        )
+    }
+
+    /// Call the "ListPods" method.
+    ///
+    /// - Parameters:
+    ///   - message: request message to send.
+    ///   - metadata: Additional metadata to send, defaults to empty.
+    ///   - options: Options to apply to this RPC, defaults to `.defaults`.
+    ///   - handleResponse: A closure which handles the response, the result of which is
+    ///       returned to the caller. Returning from the closure will cancel the RPC if it
+    ///       hasn't already finished.
+    /// - Returns: The result of `handleResponse`.
+    public func listPods<Result>(
+        _ message: K8s_V1_ListPodsRequest,
+        metadata: GRPCCore.Metadata = [:],
+        options: GRPCCore.CallOptions = .defaults,
+        onResponse handleResponse: @Sendable @escaping (GRPCCore.ClientResponse<K8s_V1_ListPodsResponse>) async throws -> Result = { response in
+            try response.message
+        }
+    ) async throws -> Result where Result: Sendable {
+        let request = GRPCCore.ClientRequest<K8s_V1_ListPodsRequest>(
+            message: message,
+            metadata: metadata
+        )
+        return try await self.listPods(
+            request: request,
+            options: options,
+            onResponse: handleResponse
+        )
+    }
+
+    /// Call the "Debug" method.
+    ///
+    /// - Parameters:
+    ///   - message: request message to send.
+    ///   - metadata: Additional metadata to send, defaults to empty.
+    ///   - options: Options to apply to this RPC, defaults to `.defaults`.
+    ///   - handleResponse: A closure which handles the response, the result of which is
+    ///       returned to the caller. Returning from the closure will cancel the RPC if it
+    ///       hasn't already finished.
+    /// - Returns: The result of `handleResponse`.
+    public func debug<Result>(
+        _ message: K8s_V1_DebugRequest,
+        metadata: GRPCCore.Metadata = [:],
+        options: GRPCCore.CallOptions = .defaults,
+        onResponse handleResponse: @Sendable @escaping (GRPCCore.ClientResponse<K8s_V1_DebugResponse>) async throws -> Result = { response in
+            try response.message
+        }
+    ) async throws -> Result where Result: Sendable {
+        let request = GRPCCore.ClientRequest<K8s_V1_DebugRequest>(
+            message: message,
+            metadata: metadata
+        )
+        return try await self.debug(
             request: request,
             options: options,
             onResponse: handleResponse

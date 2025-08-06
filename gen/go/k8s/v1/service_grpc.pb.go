@@ -22,6 +22,8 @@ const (
 	Service_ListContexts_FullMethodName   = "/k8s.v1.Service/ListContexts"
 	Service_SetContext_FullMethodName     = "/k8s.v1.Service/SetContext"
 	Service_ListNamespaces_FullMethodName = "/k8s.v1.Service/ListNamespaces"
+	Service_ListPods_FullMethodName       = "/k8s.v1.Service/ListPods"
+	Service_Debug_FullMethodName          = "/k8s.v1.Service/Debug"
 )
 
 // ServiceClient is the client API for Service service.
@@ -31,6 +33,8 @@ type ServiceClient interface {
 	ListContexts(ctx context.Context, in *ListContextsRequest, opts ...grpc.CallOption) (*ListContextsResponse, error)
 	SetContext(ctx context.Context, in *SetContextRequest, opts ...grpc.CallOption) (*SetContextResponse, error)
 	ListNamespaces(ctx context.Context, in *ListNamespacesRequest, opts ...grpc.CallOption) (*ListNamespacesResponse, error)
+	ListPods(ctx context.Context, in *ListPodsRequest, opts ...grpc.CallOption) (*ListPodsResponse, error)
+	Debug(ctx context.Context, in *DebugRequest, opts ...grpc.CallOption) (*DebugResponse, error)
 }
 
 type serviceClient struct {
@@ -71,6 +75,26 @@ func (c *serviceClient) ListNamespaces(ctx context.Context, in *ListNamespacesRe
 	return out, nil
 }
 
+func (c *serviceClient) ListPods(ctx context.Context, in *ListPodsRequest, opts ...grpc.CallOption) (*ListPodsResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(ListPodsResponse)
+	err := c.cc.Invoke(ctx, Service_ListPods_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *serviceClient) Debug(ctx context.Context, in *DebugRequest, opts ...grpc.CallOption) (*DebugResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(DebugResponse)
+	err := c.cc.Invoke(ctx, Service_Debug_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // ServiceServer is the server API for Service service.
 // All implementations should embed UnimplementedServiceServer
 // for forward compatibility.
@@ -78,6 +102,8 @@ type ServiceServer interface {
 	ListContexts(context.Context, *ListContextsRequest) (*ListContextsResponse, error)
 	SetContext(context.Context, *SetContextRequest) (*SetContextResponse, error)
 	ListNamespaces(context.Context, *ListNamespacesRequest) (*ListNamespacesResponse, error)
+	ListPods(context.Context, *ListPodsRequest) (*ListPodsResponse, error)
+	Debug(context.Context, *DebugRequest) (*DebugResponse, error)
 }
 
 // UnimplementedServiceServer should be embedded to have
@@ -95,6 +121,12 @@ func (UnimplementedServiceServer) SetContext(context.Context, *SetContextRequest
 }
 func (UnimplementedServiceServer) ListNamespaces(context.Context, *ListNamespacesRequest) (*ListNamespacesResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ListNamespaces not implemented")
+}
+func (UnimplementedServiceServer) ListPods(context.Context, *ListPodsRequest) (*ListPodsResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ListPods not implemented")
+}
+func (UnimplementedServiceServer) Debug(context.Context, *DebugRequest) (*DebugResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method Debug not implemented")
 }
 func (UnimplementedServiceServer) testEmbeddedByValue() {}
 
@@ -170,6 +202,42 @@ func _Service_ListNamespaces_Handler(srv interface{}, ctx context.Context, dec f
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Service_ListPods_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ListPodsRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ServiceServer).ListPods(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Service_ListPods_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ServiceServer).ListPods(ctx, req.(*ListPodsRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Service_Debug_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(DebugRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ServiceServer).Debug(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Service_Debug_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ServiceServer).Debug(ctx, req.(*DebugRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // Service_ServiceDesc is the grpc.ServiceDesc for Service service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -188,6 +256,14 @@ var Service_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "ListNamespaces",
 			Handler:    _Service_ListNamespaces_Handler,
+		},
+		{
+			MethodName: "ListPods",
+			Handler:    _Service_ListPods_Handler,
+		},
+		{
+			MethodName: "Debug",
+			Handler:    _Service_Debug_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
