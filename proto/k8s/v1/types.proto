@@ -25,10 +25,9 @@ message ObjectMeta {
 
 // https://pkg.go.dev/k8s.io/api/core/v1@v0.33.3#Pod
 message Pod {
-  string id = 1;
-  ObjectMeta meta = 2;
-  PodSpec spec = 3;
-  PodStatus status = 4;
+  ObjectMeta meta = 1;
+  PodSpec spec = 2;
+  PodStatus status = 3;
 }
 
 // https://pkg.go.dev/k8s.io/api/core/v1@v0.33.3#PodSpec

@@ -194,10 +194,9 @@ func (x *ObjectMeta) GetDeletionGracePeriodSeconds() int64 {
 // https://pkg.go.dev/k8s.io/api/core/v1@v0.33.3#Pod
 type Pod struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	Id            string                 `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
-	Meta          *ObjectMeta            `protobuf:"bytes,2,opt,name=meta,proto3" json:"meta,omitempty"`
-	Spec          *PodSpec               `protobuf:"bytes,3,opt,name=spec,proto3" json:"spec,omitempty"`
-	Status        *PodStatus             `protobuf:"bytes,4,opt,name=status,proto3" json:"status,omitempty"`
+	Meta          *ObjectMeta            `protobuf:"bytes,1,opt,name=meta,proto3" json:"meta,omitempty"`
+	Spec          *PodSpec               `protobuf:"bytes,2,opt,name=spec,proto3" json:"spec,omitempty"`
+	Status        *PodStatus             `protobuf:"bytes,3,opt,name=status,proto3" json:"status,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -230,13 +229,6 @@ func (x *Pod) ProtoReflect() protoreflect.Message {
 // Deprecated: Use Pod.ProtoReflect.Descriptor instead.
 func (*Pod) Descriptor() ([]byte, []int) {
 	return file_k8s_v1_types_proto_rawDescGZIP(), []int{2}
-}
-
-func (x *Pod) GetId() string {
-	if x != nil {
-		return x.Id
-	}
-	return ""
 }
 
 func (x *Pod) GetMeta() *ObjectMeta {
@@ -854,12 +846,11 @@ const file_k8s_v1_types_proto_rawDesc = "" +
 	"\x12deletion_timestamp\x18\b \x01(\v2\x1a.google.protobuf.TimestampH\x00R\x11deletionTimestamp\x88\x01\x01\x12F\n" +
 	"\x1ddeletion_grace_period_seconds\x18\t \x01(\x03H\x01R\x1adeletionGracePeriodSeconds\x88\x01\x01B\x15\n" +
 	"\x13_deletion_timestampB \n" +
-	"\x1e_deletion_grace_period_seconds\"\x8d\x01\n" +
-	"\x03Pod\x12\x0e\n" +
-	"\x02id\x18\x01 \x01(\tR\x02id\x12&\n" +
-	"\x04meta\x18\x02 \x01(\v2\x12.k8s.v1.ObjectMetaR\x04meta\x12#\n" +
-	"\x04spec\x18\x03 \x01(\v2\x0f.k8s.v1.PodSpecR\x04spec\x12)\n" +
-	"\x06status\x18\x04 \x01(\v2\x11.k8s.v1.PodStatusR\x06status\"\xed\x02\n" +
+	"\x1e_deletion_grace_period_seconds\"}\n" +
+	"\x03Pod\x12&\n" +
+	"\x04meta\x18\x01 \x01(\v2\x12.k8s.v1.ObjectMetaR\x04meta\x12#\n" +
+	"\x04spec\x18\x02 \x01(\v2\x0f.k8s.v1.PodSpecR\x04spec\x12)\n" +
+	"\x06status\x18\x03 \x01(\v2\x11.k8s.v1.PodStatusR\x06status\"\xed\x02\n" +
 	"\aPodSpec\x121\n" +
 	"\n" +
 	"containers\x18\x01 \x03(\v2\x11.k8s.v1.ContainerR\n" +

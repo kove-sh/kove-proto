@@ -96,8 +96,6 @@ public struct K8s_V1_Pod: Sendable {
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
-  public var id: String = String()
-
   public var meta: K8s_V1_ObjectMeta {
     get {return _meta ?? K8s_V1_ObjectMeta()}
     set {_meta = newValue}
@@ -560,10 +558,9 @@ extension K8s_V1_ObjectMeta: SwiftProtobuf.Message, SwiftProtobuf._MessageImplem
 extension K8s_V1_Pod: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".Pod"
   public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
-    1: .same(proto: "id"),
-    2: .same(proto: "meta"),
-    3: .same(proto: "spec"),
-    4: .same(proto: "status"),
+    1: .same(proto: "meta"),
+    2: .same(proto: "spec"),
+    3: .same(proto: "status"),
   ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
@@ -572,10 +569,9 @@ extension K8s_V1_Pod: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementatio
       // allocates stack space for every case branch when no optimizations are
       // enabled. https://github.com/apple/swift-protobuf/issues/1034
       switch fieldNumber {
-      case 1: try { try decoder.decodeSingularStringField(value: &self.id) }()
-      case 2: try { try decoder.decodeSingularMessageField(value: &self._meta) }()
-      case 3: try { try decoder.decodeSingularMessageField(value: &self._spec) }()
-      case 4: try { try decoder.decodeSingularMessageField(value: &self._status) }()
+      case 1: try { try decoder.decodeSingularMessageField(value: &self._meta) }()
+      case 2: try { try decoder.decodeSingularMessageField(value: &self._spec) }()
+      case 3: try { try decoder.decodeSingularMessageField(value: &self._status) }()
       default: break
       }
     }
@@ -586,23 +582,19 @@ extension K8s_V1_Pod: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementatio
     // allocates stack space for every if/case branch local when no optimizations
     // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
     // https://github.com/apple/swift-protobuf/issues/1182
-    if !self.id.isEmpty {
-      try visitor.visitSingularStringField(value: self.id, fieldNumber: 1)
-    }
     try { if let v = self._meta {
-      try visitor.visitSingularMessageField(value: v, fieldNumber: 2)
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 1)
     } }()
     try { if let v = self._spec {
-      try visitor.visitSingularMessageField(value: v, fieldNumber: 3)
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 2)
     } }()
     try { if let v = self._status {
-      try visitor.visitSingularMessageField(value: v, fieldNumber: 4)
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 3)
     } }()
     try unknownFields.traverse(visitor: &visitor)
   }
 
   public static func ==(lhs: K8s_V1_Pod, rhs: K8s_V1_Pod) -> Bool {
-    if lhs.id != rhs.id {return false}
     if lhs._meta != rhs._meta {return false}
     if lhs._spec != rhs._spec {return false}
     if lhs._status != rhs._status {return false}
