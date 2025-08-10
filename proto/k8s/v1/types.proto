@@ -46,7 +46,7 @@ message PodSpec {
 // https://pkg.go.dev/k8s.io/api/core/v1@v0.33.3#PodStatus
 message PodStatus {
   string phase = 1;
-  // TODO
+  string pod_ip = 2;
 }
 
 // https://pkg.go.dev/k8s.io/api/core/v1@v0.33.3#Container

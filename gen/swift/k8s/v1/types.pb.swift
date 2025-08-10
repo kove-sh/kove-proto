@@ -204,8 +204,12 @@ public struct K8s_V1_PodStatus: Sendable {
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
-  /// TODO
   public var phase: String = String()
+
+  /// TODO: containerStatuses
+  /// TODO: podIP
+  /// TODO
+  public var podIp: String = String()
 
   public var unknownFields = SwiftProtobuf.UnknownStorage()
 
@@ -743,6 +747,7 @@ extension K8s_V1_PodStatus: SwiftProtobuf.Message, SwiftProtobuf._MessageImpleme
   public static let protoMessageName: String = _protobuf_package + ".PodStatus"
   public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
     1: .same(proto: "phase"),
+    2: .standard(proto: "pod_ip"),
   ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
@@ -752,6 +757,7 @@ extension K8s_V1_PodStatus: SwiftProtobuf.Message, SwiftProtobuf._MessageImpleme
       // enabled. https://github.com/apple/swift-protobuf/issues/1034
       switch fieldNumber {
       case 1: try { try decoder.decodeSingularStringField(value: &self.phase) }()
+      case 2: try { try decoder.decodeSingularStringField(value: &self.podIp) }()
       default: break
       }
     }
@@ -761,11 +767,15 @@ extension K8s_V1_PodStatus: SwiftProtobuf.Message, SwiftProtobuf._MessageImpleme
     if !self.phase.isEmpty {
       try visitor.visitSingularStringField(value: self.phase, fieldNumber: 1)
     }
+    if !self.podIp.isEmpty {
+      try visitor.visitSingularStringField(value: self.podIp, fieldNumber: 2)
+    }
     try unknownFields.traverse(visitor: &visitor)
   }
 
   public static func ==(lhs: K8s_V1_PodStatus, rhs: K8s_V1_PodStatus) -> Bool {
     if lhs.phase != rhs.phase {return false}
+    if lhs.podIp != rhs.podIp {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }
