@@ -10,7 +10,7 @@ service Service {
   rpc ListNamespaces(ListNamespacesRequest) returns (ListNamespacesResponse) {}
   rpc ListPods(ListPodsRequest) returns (ListPodsResponse) {}
   rpc GetPod(GetPodRequest) returns (GetPodResponse) {}
-  rpc WatchPodLogs(WatchPodLogsRequest) returns (stream WatchPodLogsResponse) {}
+  rpc StreamPodLogs(StreamPodLogsRequest) returns (stream StreamPodLogsResponse) {}
   rpc Debug(DebugRequest) returns (DebugResponse) {}
 }
 
@@ -49,14 +49,17 @@ message GetPodResponse {
   Pod pod = 1;
 }
 
-message WatchPodLogsRequest {
+message StreamPodLogsRequest {
   string namespace = 1;
   string name = 2;
+  string container = 3;
+  int64 since_seconds = 4;
 }
 
-message WatchPodLogsResponse {
+message StreamPodLogsResponse {
   repeated string log_batch = 1;
 }
+
 message DebugRequest {}
 
 message DebugResponse {}

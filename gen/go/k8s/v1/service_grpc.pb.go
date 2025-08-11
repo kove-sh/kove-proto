@@ -24,7 +24,7 @@ const (
 	Service_ListNamespaces_FullMethodName = "/k8s.v1.Service/ListNamespaces"
 	Service_ListPods_FullMethodName       = "/k8s.v1.Service/ListPods"
 	Service_GetPod_FullMethodName         = "/k8s.v1.Service/GetPod"
-	Service_WatchPodLogs_FullMethodName   = "/k8s.v1.Service/WatchPodLogs"
+	Service_StreamPodLogs_FullMethodName  = "/k8s.v1.Service/StreamPodLogs"
 	Service_Debug_FullMethodName          = "/k8s.v1.Service/Debug"
 )
 
@@ -37,7 +37,7 @@ type ServiceClient interface {
 	ListNamespaces(ctx context.Context, in *ListNamespacesRequest, opts ...grpc.CallOption) (*ListNamespacesResponse, error)
 	ListPods(ctx context.Context, in *ListPodsRequest, opts ...grpc.CallOption) (*ListPodsResponse, error)
 	GetPod(ctx context.Context, in *GetPodRequest, opts ...grpc.CallOption) (*GetPodResponse, error)
-	WatchPodLogs(ctx context.Context, in *WatchPodLogsRequest, opts ...grpc.CallOption) (grpc.ServerStreamingClient[WatchPodLogsResponse], error)
+	StreamPodLogs(ctx context.Context, in *StreamPodLogsRequest, opts ...grpc.CallOption) (grpc.ServerStreamingClient[StreamPodLogsResponse], error)
 	Debug(ctx context.Context, in *DebugRequest, opts ...grpc.CallOption) (*DebugResponse, error)
 }
 
@@ -99,13 +99,13 @@ func (c *serviceClient) GetPod(ctx context.Context, in *GetPodRequest, opts ...g
 	return out, nil
 }
 
-func (c *serviceClient) WatchPodLogs(ctx context.Context, in *WatchPodLogsRequest, opts ...grpc.CallOption) (grpc.ServerStreamingClient[WatchPodLogsResponse], error) {
+func (c *serviceClient) StreamPodLogs(ctx context.Context, in *StreamPodLogsRequest, opts ...grpc.CallOption) (grpc.ServerStreamingClient[StreamPodLogsResponse], error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	stream, err := c.cc.NewStream(ctx, &Service_ServiceDesc.Streams[0], Service_WatchPodLogs_FullMethodName, cOpts...)
+	stream, err := c.cc.NewStream(ctx, &Service_ServiceDesc.Streams[0], Service_StreamPodLogs_FullMethodName, cOpts...)
 	if err != nil {
 		return nil, err
 	}
-	x := &grpc.GenericClientStream[WatchPodLogsRequest, WatchPodLogsResponse]{ClientStream: stream}
+	x := &grpc.GenericClientStream[StreamPodLogsRequest, StreamPodLogsResponse]{ClientStream: stream}
 	if err := x.ClientStream.SendMsg(in); err != nil {
 		return nil, err
 	}
@@ -116,7 +116,7 @@ func (c *serviceClient) WatchPodLogs(ctx context.Context, in *WatchPodLogsReques
 }
 
 // This type alias is provided for backwards compatibility with existing code that references the prior non-generic stream type by name.
-type Service_WatchPodLogsClient = grpc.ServerStreamingClient[WatchPodLogsResponse]
+type Service_StreamPodLogsClient = grpc.ServerStreamingClient[StreamPodLogsResponse]
 
 func (c *serviceClient) Debug(ctx context.Context, in *DebugRequest, opts ...grpc.CallOption) (*DebugResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
@@ -137,7 +137,7 @@ type ServiceServer interface {
 	ListNamespaces(context.Context, *ListNamespacesRequest) (*ListNamespacesResponse, error)
 	ListPods(context.Context, *ListPodsRequest) (*ListPodsResponse, error)
 	GetPod(context.Context, *GetPodRequest) (*GetPodResponse, error)
-	WatchPodLogs(*WatchPodLogsRequest, grpc.ServerStreamingServer[WatchPodLogsResponse]) error
+	StreamPodLogs(*StreamPodLogsRequest, grpc.ServerStreamingServer[StreamPodLogsResponse]) error
 	Debug(context.Context, *DebugRequest) (*DebugResponse, error)
 }
 
@@ -163,8 +163,8 @@ func (UnimplementedServiceServer) ListPods(context.Context, *ListPodsRequest) (*
 func (UnimplementedServiceServer) GetPod(context.Context, *GetPodRequest) (*GetPodResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetPod not implemented")
 }
-func (UnimplementedServiceServer) WatchPodLogs(*WatchPodLogsRequest, grpc.ServerStreamingServer[WatchPodLogsResponse]) error {
-	return status.Errorf(codes.Unimplemented, "method WatchPodLogs not implemented")
+func (UnimplementedServiceServer) StreamPodLogs(*StreamPodLogsRequest, grpc.ServerStreamingServer[StreamPodLogsResponse]) error {
+	return status.Errorf(codes.Unimplemented, "method StreamPodLogs not implemented")
 }
 func (UnimplementedServiceServer) Debug(context.Context, *DebugRequest) (*DebugResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Debug not implemented")
@@ -279,16 +279,16 @@ func _Service_GetPod_Handler(srv interface{}, ctx context.Context, dec func(inte
 	return interceptor(ctx, in, info, handler)
 }
 
-func _Service_WatchPodLogs_Handler(srv interface{}, stream grpc.ServerStream) error {
-	m := new(WatchPodLogsRequest)
+func _Service_StreamPodLogs_Handler(srv interface{}, stream grpc.ServerStream) error {
+	m := new(StreamPodLogsRequest)
 	if err := stream.RecvMsg(m); err != nil {
 		return err
 	}
-	return srv.(ServiceServer).WatchPodLogs(m, &grpc.GenericServerStream[WatchPodLogsRequest, WatchPodLogsResponse]{ServerStream: stream})
+	return srv.(ServiceServer).StreamPodLogs(m, &grpc.GenericServerStream[StreamPodLogsRequest, StreamPodLogsResponse]{ServerStream: stream})
 }
 
 // This type alias is provided for backwards compatibility with existing code that references the prior non-generic stream type by name.
-type Service_WatchPodLogsServer = grpc.ServerStreamingServer[WatchPodLogsResponse]
+type Service_StreamPodLogsServer = grpc.ServerStreamingServer[StreamPodLogsResponse]
 
 func _Service_Debug_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(DebugRequest)
@@ -342,8 +342,8 @@ var Service_ServiceDesc = grpc.ServiceDesc{
 	},
 	Streams: []grpc.StreamDesc{
 		{
-			StreamName:    "WatchPodLogs",
-			Handler:       _Service_WatchPodLogs_Handler,
+			StreamName:    "StreamPodLogs",
+			Handler:       _Service_StreamPodLogs_Handler,
 			ServerStreams: true,
 		},
 	},

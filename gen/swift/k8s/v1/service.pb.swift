@@ -145,7 +145,7 @@ public struct K8s_V1_GetPodResponse: Sendable {
   fileprivate var _pod: K8s_V1_Pod? = nil
 }
 
-public struct K8s_V1_WatchPodLogsRequest: Sendable {
+public struct K8s_V1_StreamPodLogsRequest: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -154,12 +154,16 @@ public struct K8s_V1_WatchPodLogsRequest: Sendable {
 
   public var name: String = String()
 
+  public var container: String = String()
+
+  public var sinceSeconds: Int64 = 0
+
   public var unknownFields = SwiftProtobuf.UnknownStorage()
 
   public init() {}
 }
 
-public struct K8s_V1_WatchPodLogsResponse: Sendable {
+public struct K8s_V1_StreamPodLogsResponse: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -486,11 +490,13 @@ extension K8s_V1_GetPodResponse: SwiftProtobuf.Message, SwiftProtobuf._MessageIm
   }
 }
 
-extension K8s_V1_WatchPodLogsRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
-  public static let protoMessageName: String = _protobuf_package + ".WatchPodLogsRequest"
+extension K8s_V1_StreamPodLogsRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  public static let protoMessageName: String = _protobuf_package + ".StreamPodLogsRequest"
   public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
     1: .same(proto: "namespace"),
     2: .same(proto: "name"),
+    3: .same(proto: "container"),
+    4: .standard(proto: "since_seconds"),
   ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
@@ -501,6 +507,8 @@ extension K8s_V1_WatchPodLogsRequest: SwiftProtobuf.Message, SwiftProtobuf._Mess
       switch fieldNumber {
       case 1: try { try decoder.decodeSingularStringField(value: &self.namespace) }()
       case 2: try { try decoder.decodeSingularStringField(value: &self.name) }()
+      case 3: try { try decoder.decodeSingularStringField(value: &self.container) }()
+      case 4: try { try decoder.decodeSingularInt64Field(value: &self.sinceSeconds) }()
       default: break
       }
     }
@@ -513,19 +521,27 @@ extension K8s_V1_WatchPodLogsRequest: SwiftProtobuf.Message, SwiftProtobuf._Mess
     if !self.name.isEmpty {
       try visitor.visitSingularStringField(value: self.name, fieldNumber: 2)
     }
+    if !self.container.isEmpty {
+      try visitor.visitSingularStringField(value: self.container, fieldNumber: 3)
+    }
+    if self.sinceSeconds != 0 {
+      try visitor.visitSingularInt64Field(value: self.sinceSeconds, fieldNumber: 4)
+    }
     try unknownFields.traverse(visitor: &visitor)
   }
 
-  public static func ==(lhs: K8s_V1_WatchPodLogsRequest, rhs: K8s_V1_WatchPodLogsRequest) -> Bool {
+  public static func ==(lhs: K8s_V1_StreamPodLogsRequest, rhs: K8s_V1_StreamPodLogsRequest) -> Bool {
     if lhs.namespace != rhs.namespace {return false}
     if lhs.name != rhs.name {return false}
+    if lhs.container != rhs.container {return false}
+    if lhs.sinceSeconds != rhs.sinceSeconds {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }
 }
 
-extension K8s_V1_WatchPodLogsResponse: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
-  public static let protoMessageName: String = _protobuf_package + ".WatchPodLogsResponse"
+extension K8s_V1_StreamPodLogsResponse: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  public static let protoMessageName: String = _protobuf_package + ".StreamPodLogsResponse"
   public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
     1: .standard(proto: "log_batch"),
   ]
@@ -549,7 +565,7 @@ extension K8s_V1_WatchPodLogsResponse: SwiftProtobuf.Message, SwiftProtobuf._Mes
     try unknownFields.traverse(visitor: &visitor)
   }
 
-  public static func ==(lhs: K8s_V1_WatchPodLogsResponse, rhs: K8s_V1_WatchPodLogsResponse) -> Bool {
+  public static func ==(lhs: K8s_V1_StreamPodLogsResponse, rhs: K8s_V1_StreamPodLogsResponse) -> Bool {
     if lhs.logBatch != rhs.logBatch {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true

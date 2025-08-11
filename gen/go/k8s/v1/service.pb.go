@@ -445,28 +445,30 @@ func (x *GetPodResponse) GetPod() *Pod {
 	return nil
 }
 
-type WatchPodLogsRequest struct {
+type StreamPodLogsRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	Namespace     string                 `protobuf:"bytes,1,opt,name=namespace,proto3" json:"namespace,omitempty"`
 	Name          string                 `protobuf:"bytes,2,opt,name=name,proto3" json:"name,omitempty"`
+	Container     string                 `protobuf:"bytes,3,opt,name=container,proto3" json:"container,omitempty"`
+	SinceSeconds  int64                  `protobuf:"varint,4,opt,name=since_seconds,json=sinceSeconds,proto3" json:"since_seconds,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
 
-func (x *WatchPodLogsRequest) Reset() {
-	*x = WatchPodLogsRequest{}
+func (x *StreamPodLogsRequest) Reset() {
+	*x = StreamPodLogsRequest{}
 	mi := &file_k8s_v1_service_proto_msgTypes[10]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
 
-func (x *WatchPodLogsRequest) String() string {
+func (x *StreamPodLogsRequest) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*WatchPodLogsRequest) ProtoMessage() {}
+func (*StreamPodLogsRequest) ProtoMessage() {}
 
-func (x *WatchPodLogsRequest) ProtoReflect() protoreflect.Message {
+func (x *StreamPodLogsRequest) ProtoReflect() protoreflect.Message {
 	mi := &file_k8s_v1_service_proto_msgTypes[10]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -478,46 +480,60 @@ func (x *WatchPodLogsRequest) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use WatchPodLogsRequest.ProtoReflect.Descriptor instead.
-func (*WatchPodLogsRequest) Descriptor() ([]byte, []int) {
+// Deprecated: Use StreamPodLogsRequest.ProtoReflect.Descriptor instead.
+func (*StreamPodLogsRequest) Descriptor() ([]byte, []int) {
 	return file_k8s_v1_service_proto_rawDescGZIP(), []int{10}
 }
 
-func (x *WatchPodLogsRequest) GetNamespace() string {
+func (x *StreamPodLogsRequest) GetNamespace() string {
 	if x != nil {
 		return x.Namespace
 	}
 	return ""
 }
 
-func (x *WatchPodLogsRequest) GetName() string {
+func (x *StreamPodLogsRequest) GetName() string {
 	if x != nil {
 		return x.Name
 	}
 	return ""
 }
 
-type WatchPodLogsResponse struct {
+func (x *StreamPodLogsRequest) GetContainer() string {
+	if x != nil {
+		return x.Container
+	}
+	return ""
+}
+
+func (x *StreamPodLogsRequest) GetSinceSeconds() int64 {
+	if x != nil {
+		return x.SinceSeconds
+	}
+	return 0
+}
+
+type StreamPodLogsResponse struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	LogBatch      []string               `protobuf:"bytes,1,rep,name=log_batch,json=logBatch,proto3" json:"log_batch,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
 
-func (x *WatchPodLogsResponse) Reset() {
-	*x = WatchPodLogsResponse{}
+func (x *StreamPodLogsResponse) Reset() {
+	*x = StreamPodLogsResponse{}
 	mi := &file_k8s_v1_service_proto_msgTypes[11]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
 
-func (x *WatchPodLogsResponse) String() string {
+func (x *StreamPodLogsResponse) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*WatchPodLogsResponse) ProtoMessage() {}
+func (*StreamPodLogsResponse) ProtoMessage() {}
 
-func (x *WatchPodLogsResponse) ProtoReflect() protoreflect.Message {
+func (x *StreamPodLogsResponse) ProtoReflect() protoreflect.Message {
 	mi := &file_k8s_v1_service_proto_msgTypes[11]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -529,12 +545,12 @@ func (x *WatchPodLogsResponse) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use WatchPodLogsResponse.ProtoReflect.Descriptor instead.
-func (*WatchPodLogsResponse) Descriptor() ([]byte, []int) {
+// Deprecated: Use StreamPodLogsResponse.ProtoReflect.Descriptor instead.
+func (*StreamPodLogsResponse) Descriptor() ([]byte, []int) {
 	return file_k8s_v1_service_proto_rawDescGZIP(), []int{11}
 }
 
-func (x *WatchPodLogsResponse) GetLogBatch() []string {
+func (x *StreamPodLogsResponse) GetLogBatch() []string {
 	if x != nil {
 		return x.LogBatch
 	}
@@ -637,22 +653,24 @@ const file_k8s_v1_service_proto_rawDesc = "" +
 	"\tnamespace\x18\x01 \x01(\tR\tnamespace\x12\x12\n" +
 	"\x04name\x18\x02 \x01(\tR\x04name\"/\n" +
 	"\x0eGetPodResponse\x12\x1d\n" +
-	"\x03pod\x18\x01 \x01(\v2\v.k8s.v1.PodR\x03pod\"G\n" +
-	"\x13WatchPodLogsRequest\x12\x1c\n" +
+	"\x03pod\x18\x01 \x01(\v2\v.k8s.v1.PodR\x03pod\"\x8b\x01\n" +
+	"\x14StreamPodLogsRequest\x12\x1c\n" +
 	"\tnamespace\x18\x01 \x01(\tR\tnamespace\x12\x12\n" +
-	"\x04name\x18\x02 \x01(\tR\x04name\"3\n" +
-	"\x14WatchPodLogsResponse\x12\x1b\n" +
+	"\x04name\x18\x02 \x01(\tR\x04name\x12\x1c\n" +
+	"\tcontainer\x18\x03 \x01(\tR\tcontainer\x12#\n" +
+	"\rsince_seconds\x18\x04 \x01(\x03R\fsinceSeconds\"4\n" +
+	"\x15StreamPodLogsResponse\x12\x1b\n" +
 	"\tlog_batch\x18\x01 \x03(\tR\blogBatch\"\x0e\n" +
 	"\fDebugRequest\"\x0f\n" +
-	"\rDebugResponse2\xf3\x03\n" +
+	"\rDebugResponse2\xf6\x03\n" +
 	"\aService\x12K\n" +
 	"\fListContexts\x12\x1b.k8s.v1.ListContextsRequest\x1a\x1c.k8s.v1.ListContextsResponse\"\x00\x12E\n" +
 	"\n" +
 	"SetContext\x12\x19.k8s.v1.SetContextRequest\x1a\x1a.k8s.v1.SetContextResponse\"\x00\x12Q\n" +
 	"\x0eListNamespaces\x12\x1d.k8s.v1.ListNamespacesRequest\x1a\x1e.k8s.v1.ListNamespacesResponse\"\x00\x12?\n" +
 	"\bListPods\x12\x17.k8s.v1.ListPodsRequest\x1a\x18.k8s.v1.ListPodsResponse\"\x00\x129\n" +
-	"\x06GetPod\x12\x15.k8s.v1.GetPodRequest\x1a\x16.k8s.v1.GetPodResponse\"\x00\x12M\n" +
-	"\fWatchPodLogs\x12\x1b.k8s.v1.WatchPodLogsRequest\x1a\x1c.k8s.v1.WatchPodLogsResponse\"\x000\x01\x126\n" +
+	"\x06GetPod\x12\x15.k8s.v1.GetPodRequest\x1a\x16.k8s.v1.GetPodResponse\"\x00\x12P\n" +
+	"\rStreamPodLogs\x12\x1c.k8s.v1.StreamPodLogsRequest\x1a\x1d.k8s.v1.StreamPodLogsResponse\"\x000\x01\x126\n" +
 	"\x05Debug\x12\x14.k8s.v1.DebugRequest\x1a\x15.k8s.v1.DebugResponse\"\x00B\x86\x01\n" +
 	"\n" +
 	"com.k8s.v1B\fServiceProtoP\x01Z1github.com/kove-sh/kove-proto/gen/go/k8s/v1;k8sv1\xa2\x02\x03KXX\xaa\x02\x06K8s.V1\xca\x02\x06K8s\\V1\xe2\x02\x12K8s\\V1\\GPBMetadata\xea\x02\aK8s::V1b\x06proto3"
@@ -681,8 +699,8 @@ var file_k8s_v1_service_proto_goTypes = []any{
 	(*ListPodsResponse)(nil),       // 7: k8s.v1.ListPodsResponse
 	(*GetPodRequest)(nil),          // 8: k8s.v1.GetPodRequest
 	(*GetPodResponse)(nil),         // 9: k8s.v1.GetPodResponse
-	(*WatchPodLogsRequest)(nil),    // 10: k8s.v1.WatchPodLogsRequest
-	(*WatchPodLogsResponse)(nil),   // 11: k8s.v1.WatchPodLogsResponse
+	(*StreamPodLogsRequest)(nil),   // 10: k8s.v1.StreamPodLogsRequest
+	(*StreamPodLogsResponse)(nil),  // 11: k8s.v1.StreamPodLogsResponse
 	(*DebugRequest)(nil),           // 12: k8s.v1.DebugRequest
 	(*DebugResponse)(nil),          // 13: k8s.v1.DebugResponse
 	(*Context)(nil),                // 14: k8s.v1.Context
@@ -697,14 +715,14 @@ var file_k8s_v1_service_proto_depIdxs = []int32{
 	4,  // 5: k8s.v1.Service.ListNamespaces:input_type -> k8s.v1.ListNamespacesRequest
 	6,  // 6: k8s.v1.Service.ListPods:input_type -> k8s.v1.ListPodsRequest
 	8,  // 7: k8s.v1.Service.GetPod:input_type -> k8s.v1.GetPodRequest
-	10, // 8: k8s.v1.Service.WatchPodLogs:input_type -> k8s.v1.WatchPodLogsRequest
+	10, // 8: k8s.v1.Service.StreamPodLogs:input_type -> k8s.v1.StreamPodLogsRequest
 	12, // 9: k8s.v1.Service.Debug:input_type -> k8s.v1.DebugRequest
 	1,  // 10: k8s.v1.Service.ListContexts:output_type -> k8s.v1.ListContextsResponse
 	3,  // 11: k8s.v1.Service.SetContext:output_type -> k8s.v1.SetContextResponse
 	5,  // 12: k8s.v1.Service.ListNamespaces:output_type -> k8s.v1.ListNamespacesResponse
 	7,  // 13: k8s.v1.Service.ListPods:output_type -> k8s.v1.ListPodsResponse
 	9,  // 14: k8s.v1.Service.GetPod:output_type -> k8s.v1.GetPodResponse
-	11, // 15: k8s.v1.Service.WatchPodLogs:output_type -> k8s.v1.WatchPodLogsResponse
+	11, // 15: k8s.v1.Service.StreamPodLogs:output_type -> k8s.v1.StreamPodLogsResponse
 	13, // 16: k8s.v1.Service.Debug:output_type -> k8s.v1.DebugResponse
 	10, // [10:17] is the sub-list for method output_type
 	3,  // [3:10] is the sub-list for method input_type
