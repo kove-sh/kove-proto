@@ -68,6 +68,30 @@ public enum K8s_V1_Service {
                 method: "ListPods"
             )
         }
+        /// Namespace for "GetPod" metadata.
+        public enum GetPod {
+            /// Request type for "GetPod".
+            public typealias Input = K8s_V1_GetPodRequest
+            /// Response type for "GetPod".
+            public typealias Output = K8s_V1_GetPodResponse
+            /// Descriptor for "GetPod".
+            public static let descriptor = GRPCCore.MethodDescriptor(
+                service: GRPCCore.ServiceDescriptor(fullyQualifiedService: "k8s.v1.Service"),
+                method: "GetPod"
+            )
+        }
+        /// Namespace for "WatchPodLogs" metadata.
+        public enum WatchPodLogs {
+            /// Request type for "WatchPodLogs".
+            public typealias Input = K8s_V1_WatchPodLogsRequest
+            /// Response type for "WatchPodLogs".
+            public typealias Output = K8s_V1_WatchPodLogsResponse
+            /// Descriptor for "WatchPodLogs".
+            public static let descriptor = GRPCCore.MethodDescriptor(
+                service: GRPCCore.ServiceDescriptor(fullyQualifiedService: "k8s.v1.Service"),
+                method: "WatchPodLogs"
+            )
+        }
         /// Namespace for "Debug" metadata.
         public enum Debug {
             /// Request type for "Debug".
@@ -86,6 +110,8 @@ public enum K8s_V1_Service {
             SetContext.descriptor,
             ListNamespaces.descriptor,
             ListPods.descriptor,
+            GetPod.descriptor,
+            WatchPodLogs.descriptor,
             Debug.descriptor
         ]
     }
@@ -180,6 +206,44 @@ extension K8s_V1_Service {
             deserializer: some GRPCCore.MessageDeserializer<K8s_V1_ListPodsResponse>,
             options: GRPCCore.CallOptions,
             onResponse handleResponse: @Sendable @escaping (GRPCCore.ClientResponse<K8s_V1_ListPodsResponse>) async throws -> Result
+        ) async throws -> Result where Result: Sendable
+
+        /// Call the "GetPod" method.
+        ///
+        /// - Parameters:
+        ///   - request: A request containing a single `K8s_V1_GetPodRequest` message.
+        ///   - serializer: A serializer for `K8s_V1_GetPodRequest` messages.
+        ///   - deserializer: A deserializer for `K8s_V1_GetPodResponse` messages.
+        ///   - options: Options to apply to this RPC.
+        ///   - handleResponse: A closure which handles the response, the result of which is
+        ///       returned to the caller. Returning from the closure will cancel the RPC if it
+        ///       hasn't already finished.
+        /// - Returns: The result of `handleResponse`.
+        func getPod<Result>(
+            request: GRPCCore.ClientRequest<K8s_V1_GetPodRequest>,
+            serializer: some GRPCCore.MessageSerializer<K8s_V1_GetPodRequest>,
+            deserializer: some GRPCCore.MessageDeserializer<K8s_V1_GetPodResponse>,
+            options: GRPCCore.CallOptions,
+            onResponse handleResponse: @Sendable @escaping (GRPCCore.ClientResponse<K8s_V1_GetPodResponse>) async throws -> Result
+        ) async throws -> Result where Result: Sendable
+
+        /// Call the "WatchPodLogs" method.
+        ///
+        /// - Parameters:
+        ///   - request: A request containing a single `K8s_V1_WatchPodLogsRequest` message.
+        ///   - serializer: A serializer for `K8s_V1_WatchPodLogsRequest` messages.
+        ///   - deserializer: A deserializer for `K8s_V1_WatchPodLogsResponse` messages.
+        ///   - options: Options to apply to this RPC.
+        ///   - handleResponse: A closure which handles the response, the result of which is
+        ///       returned to the caller. Returning from the closure will cancel the RPC if it
+        ///       hasn't already finished.
+        /// - Returns: The result of `handleResponse`.
+        func watchPodLogs<Result>(
+            request: GRPCCore.ClientRequest<K8s_V1_WatchPodLogsRequest>,
+            serializer: some GRPCCore.MessageSerializer<K8s_V1_WatchPodLogsRequest>,
+            deserializer: some GRPCCore.MessageDeserializer<K8s_V1_WatchPodLogsResponse>,
+            options: GRPCCore.CallOptions,
+            onResponse handleResponse: @Sendable @escaping (GRPCCore.StreamingClientResponse<K8s_V1_WatchPodLogsResponse>) async throws -> Result
         ) async throws -> Result where Result: Sendable
 
         /// Call the "Debug" method.
@@ -338,6 +402,64 @@ extension K8s_V1_Service {
             )
         }
 
+        /// Call the "GetPod" method.
+        ///
+        /// - Parameters:
+        ///   - request: A request containing a single `K8s_V1_GetPodRequest` message.
+        ///   - serializer: A serializer for `K8s_V1_GetPodRequest` messages.
+        ///   - deserializer: A deserializer for `K8s_V1_GetPodResponse` messages.
+        ///   - options: Options to apply to this RPC.
+        ///   - handleResponse: A closure which handles the response, the result of which is
+        ///       returned to the caller. Returning from the closure will cancel the RPC if it
+        ///       hasn't already finished.
+        /// - Returns: The result of `handleResponse`.
+        public func getPod<Result>(
+            request: GRPCCore.ClientRequest<K8s_V1_GetPodRequest>,
+            serializer: some GRPCCore.MessageSerializer<K8s_V1_GetPodRequest>,
+            deserializer: some GRPCCore.MessageDeserializer<K8s_V1_GetPodResponse>,
+            options: GRPCCore.CallOptions = .defaults,
+            onResponse handleResponse: @Sendable @escaping (GRPCCore.ClientResponse<K8s_V1_GetPodResponse>) async throws -> Result = { response in
+                try response.message
+            }
+        ) async throws -> Result where Result: Sendable {
+            try await self.client.unary(
+                request: request,
+                descriptor: K8s_V1_Service.Method.GetPod.descriptor,
+                serializer: serializer,
+                deserializer: deserializer,
+                options: options,
+                onResponse: handleResponse
+            )
+        }
+
+        /// Call the "WatchPodLogs" method.
+        ///
+        /// - Parameters:
+        ///   - request: A request containing a single `K8s_V1_WatchPodLogsRequest` message.
+        ///   - serializer: A serializer for `K8s_V1_WatchPodLogsRequest` messages.
+        ///   - deserializer: A deserializer for `K8s_V1_WatchPodLogsResponse` messages.
+        ///   - options: Options to apply to this RPC.
+        ///   - handleResponse: A closure which handles the response, the result of which is
+        ///       returned to the caller. Returning from the closure will cancel the RPC if it
+        ///       hasn't already finished.
+        /// - Returns: The result of `handleResponse`.
+        public func watchPodLogs<Result>(
+            request: GRPCCore.ClientRequest<K8s_V1_WatchPodLogsRequest>,
+            serializer: some GRPCCore.MessageSerializer<K8s_V1_WatchPodLogsRequest>,
+            deserializer: some GRPCCore.MessageDeserializer<K8s_V1_WatchPodLogsResponse>,
+            options: GRPCCore.CallOptions = .defaults,
+            onResponse handleResponse: @Sendable @escaping (GRPCCore.StreamingClientResponse<K8s_V1_WatchPodLogsResponse>) async throws -> Result
+        ) async throws -> Result where Result: Sendable {
+            try await self.client.serverStreaming(
+                request: request,
+                descriptor: K8s_V1_Service.Method.WatchPodLogs.descriptor,
+                serializer: serializer,
+                deserializer: deserializer,
+                options: options,
+                onResponse: handleResponse
+            )
+        }
+
         /// Call the "Debug" method.
         ///
         /// - Parameters:
@@ -468,6 +590,54 @@ extension K8s_V1_Service.ClientProtocol {
             request: request,
             serializer: GRPCProtobuf.ProtobufSerializer<K8s_V1_ListPodsRequest>(),
             deserializer: GRPCProtobuf.ProtobufDeserializer<K8s_V1_ListPodsResponse>(),
+            options: options,
+            onResponse: handleResponse
+        )
+    }
+
+    /// Call the "GetPod" method.
+    ///
+    /// - Parameters:
+    ///   - request: A request containing a single `K8s_V1_GetPodRequest` message.
+    ///   - options: Options to apply to this RPC.
+    ///   - handleResponse: A closure which handles the response, the result of which is
+    ///       returned to the caller. Returning from the closure will cancel the RPC if it
+    ///       hasn't already finished.
+    /// - Returns: The result of `handleResponse`.
+    public func getPod<Result>(
+        request: GRPCCore.ClientRequest<K8s_V1_GetPodRequest>,
+        options: GRPCCore.CallOptions = .defaults,
+        onResponse handleResponse: @Sendable @escaping (GRPCCore.ClientResponse<K8s_V1_GetPodResponse>) async throws -> Result = { response in
+            try response.message
+        }
+    ) async throws -> Result where Result: Sendable {
+        try await self.getPod(
+            request: request,
+            serializer: GRPCProtobuf.ProtobufSerializer<K8s_V1_GetPodRequest>(),
+            deserializer: GRPCProtobuf.ProtobufDeserializer<K8s_V1_GetPodResponse>(),
+            options: options,
+            onResponse: handleResponse
+        )
+    }
+
+    /// Call the "WatchPodLogs" method.
+    ///
+    /// - Parameters:
+    ///   - request: A request containing a single `K8s_V1_WatchPodLogsRequest` message.
+    ///   - options: Options to apply to this RPC.
+    ///   - handleResponse: A closure which handles the response, the result of which is
+    ///       returned to the caller. Returning from the closure will cancel the RPC if it
+    ///       hasn't already finished.
+    /// - Returns: The result of `handleResponse`.
+    public func watchPodLogs<Result>(
+        request: GRPCCore.ClientRequest<K8s_V1_WatchPodLogsRequest>,
+        options: GRPCCore.CallOptions = .defaults,
+        onResponse handleResponse: @Sendable @escaping (GRPCCore.StreamingClientResponse<K8s_V1_WatchPodLogsResponse>) async throws -> Result
+    ) async throws -> Result where Result: Sendable {
+        try await self.watchPodLogs(
+            request: request,
+            serializer: GRPCProtobuf.ProtobufSerializer<K8s_V1_WatchPodLogsRequest>(),
+            deserializer: GRPCProtobuf.ProtobufDeserializer<K8s_V1_WatchPodLogsResponse>(),
             options: options,
             onResponse: handleResponse
         )
@@ -612,6 +782,62 @@ extension K8s_V1_Service.ClientProtocol {
             metadata: metadata
         )
         return try await self.listPods(
+            request: request,
+            options: options,
+            onResponse: handleResponse
+        )
+    }
+
+    /// Call the "GetPod" method.
+    ///
+    /// - Parameters:
+    ///   - message: request message to send.
+    ///   - metadata: Additional metadata to send, defaults to empty.
+    ///   - options: Options to apply to this RPC, defaults to `.defaults`.
+    ///   - handleResponse: A closure which handles the response, the result of which is
+    ///       returned to the caller. Returning from the closure will cancel the RPC if it
+    ///       hasn't already finished.
+    /// - Returns: The result of `handleResponse`.
+    public func getPod<Result>(
+        _ message: K8s_V1_GetPodRequest,
+        metadata: GRPCCore.Metadata = [:],
+        options: GRPCCore.CallOptions = .defaults,
+        onResponse handleResponse: @Sendable @escaping (GRPCCore.ClientResponse<K8s_V1_GetPodResponse>) async throws -> Result = { response in
+            try response.message
+        }
+    ) async throws -> Result where Result: Sendable {
+        let request = GRPCCore.ClientRequest<K8s_V1_GetPodRequest>(
+            message: message,
+            metadata: metadata
+        )
+        return try await self.getPod(
+            request: request,
+            options: options,
+            onResponse: handleResponse
+        )
+    }
+
+    /// Call the "WatchPodLogs" method.
+    ///
+    /// - Parameters:
+    ///   - message: request message to send.
+    ///   - metadata: Additional metadata to send, defaults to empty.
+    ///   - options: Options to apply to this RPC, defaults to `.defaults`.
+    ///   - handleResponse: A closure which handles the response, the result of which is
+    ///       returned to the caller. Returning from the closure will cancel the RPC if it
+    ///       hasn't already finished.
+    /// - Returns: The result of `handleResponse`.
+    public func watchPodLogs<Result>(
+        _ message: K8s_V1_WatchPodLogsRequest,
+        metadata: GRPCCore.Metadata = [:],
+        options: GRPCCore.CallOptions = .defaults,
+        onResponse handleResponse: @Sendable @escaping (GRPCCore.StreamingClientResponse<K8s_V1_WatchPodLogsResponse>) async throws -> Result
+    ) async throws -> Result where Result: Sendable {
+        let request = GRPCCore.ClientRequest<K8s_V1_WatchPodLogsRequest>(
+            message: message,
+            metadata: metadata
+        )
+        return try await self.watchPodLogs(
             request: request,
             options: options,
             onResponse: handleResponse

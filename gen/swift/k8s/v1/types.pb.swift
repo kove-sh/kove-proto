@@ -206,9 +206,6 @@ public struct K8s_V1_PodStatus: Sendable {
 
   public var phase: String = String()
 
-  /// TODO: containerStatuses
-  /// TODO: podIP
-  /// TODO
   public var podIp: String = String()
 
   public var unknownFields = SwiftProtobuf.UnknownStorage()
