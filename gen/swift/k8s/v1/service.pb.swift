@@ -154,7 +154,7 @@ public struct K8s_V1_StreamPodLogsRequest: Sendable {
 
   public var name: String = String()
 
-  public var container: String = String()
+  public var containers: [String] = []
 
   public var sinceSeconds: Int64 = 0
 
@@ -168,7 +168,7 @@ public struct K8s_V1_StreamPodLogsResponse: Sendable {
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
-  public var logBatch: [String] = []
+  public var logBatch: [K8s_V1_ContainerLog] = []
 
   public var unknownFields = SwiftProtobuf.UnknownStorage()
 
@@ -495,7 +495,7 @@ extension K8s_V1_StreamPodLogsRequest: SwiftProtobuf.Message, SwiftProtobuf._Mes
   public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
     1: .same(proto: "namespace"),
     2: .same(proto: "name"),
-    3: .same(proto: "container"),
+    3: .same(proto: "containers"),
     4: .standard(proto: "since_seconds"),
   ]
 
@@ -507,7 +507,7 @@ extension K8s_V1_StreamPodLogsRequest: SwiftProtobuf.Message, SwiftProtobuf._Mes
       switch fieldNumber {
       case 1: try { try decoder.decodeSingularStringField(value: &self.namespace) }()
       case 2: try { try decoder.decodeSingularStringField(value: &self.name) }()
-      case 3: try { try decoder.decodeSingularStringField(value: &self.container) }()
+      case 3: try { try decoder.decodeRepeatedStringField(value: &self.containers) }()
       case 4: try { try decoder.decodeSingularInt64Field(value: &self.sinceSeconds) }()
       default: break
       }
@@ -521,8 +521,8 @@ extension K8s_V1_StreamPodLogsRequest: SwiftProtobuf.Message, SwiftProtobuf._Mes
     if !self.name.isEmpty {
       try visitor.visitSingularStringField(value: self.name, fieldNumber: 2)
     }
-    if !self.container.isEmpty {
-      try visitor.visitSingularStringField(value: self.container, fieldNumber: 3)
+    if !self.containers.isEmpty {
+      try visitor.visitRepeatedStringField(value: self.containers, fieldNumber: 3)
     }
     if self.sinceSeconds != 0 {
       try visitor.visitSingularInt64Field(value: self.sinceSeconds, fieldNumber: 4)
@@ -533,7 +533,7 @@ extension K8s_V1_StreamPodLogsRequest: SwiftProtobuf.Message, SwiftProtobuf._Mes
   public static func ==(lhs: K8s_V1_StreamPodLogsRequest, rhs: K8s_V1_StreamPodLogsRequest) -> Bool {
     if lhs.namespace != rhs.namespace {return false}
     if lhs.name != rhs.name {return false}
-    if lhs.container != rhs.container {return false}
+    if lhs.containers != rhs.containers {return false}
     if lhs.sinceSeconds != rhs.sinceSeconds {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
@@ -552,7 +552,7 @@ extension K8s_V1_StreamPodLogsResponse: SwiftProtobuf.Message, SwiftProtobuf._Me
       // allocates stack space for every case branch when no optimizations are
       // enabled. https://github.com/apple/swift-protobuf/issues/1034
       switch fieldNumber {
-      case 1: try { try decoder.decodeRepeatedStringField(value: &self.logBatch) }()
+      case 1: try { try decoder.decodeRepeatedMessageField(value: &self.logBatch) }()
       default: break
       }
     }
@@ -560,7 +560,7 @@ extension K8s_V1_StreamPodLogsResponse: SwiftProtobuf.Message, SwiftProtobuf._Me
 
   public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
     if !self.logBatch.isEmpty {
-      try visitor.visitRepeatedStringField(value: self.logBatch, fieldNumber: 1)
+      try visitor.visitRepeatedMessageField(value: self.logBatch, fieldNumber: 1)
     }
     try unknownFields.traverse(visitor: &visitor)
   }

@@ -449,7 +449,7 @@ type StreamPodLogsRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	Namespace     string                 `protobuf:"bytes,1,opt,name=namespace,proto3" json:"namespace,omitempty"`
 	Name          string                 `protobuf:"bytes,2,opt,name=name,proto3" json:"name,omitempty"`
-	Container     string                 `protobuf:"bytes,3,opt,name=container,proto3" json:"container,omitempty"`
+	Containers    []string               `protobuf:"bytes,3,rep,name=containers,proto3" json:"containers,omitempty"`
 	SinceSeconds  int64                  `protobuf:"varint,4,opt,name=since_seconds,json=sinceSeconds,proto3" json:"since_seconds,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
@@ -499,11 +499,11 @@ func (x *StreamPodLogsRequest) GetName() string {
 	return ""
 }
 
-func (x *StreamPodLogsRequest) GetContainer() string {
+func (x *StreamPodLogsRequest) GetContainers() []string {
 	if x != nil {
-		return x.Container
+		return x.Containers
 	}
-	return ""
+	return nil
 }
 
 func (x *StreamPodLogsRequest) GetSinceSeconds() int64 {
@@ -515,7 +515,7 @@ func (x *StreamPodLogsRequest) GetSinceSeconds() int64 {
 
 type StreamPodLogsResponse struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	LogBatch      []string               `protobuf:"bytes,1,rep,name=log_batch,json=logBatch,proto3" json:"log_batch,omitempty"`
+	LogBatch      []*ContainerLog        `protobuf:"bytes,1,rep,name=log_batch,json=logBatch,proto3" json:"log_batch,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -550,7 +550,7 @@ func (*StreamPodLogsResponse) Descriptor() ([]byte, []int) {
 	return file_k8s_v1_service_proto_rawDescGZIP(), []int{11}
 }
 
-func (x *StreamPodLogsResponse) GetLogBatch() []string {
+func (x *StreamPodLogsResponse) GetLogBatch() []*ContainerLog {
 	if x != nil {
 		return x.LogBatch
 	}
@@ -653,14 +653,16 @@ const file_k8s_v1_service_proto_rawDesc = "" +
 	"\tnamespace\x18\x01 \x01(\tR\tnamespace\x12\x12\n" +
 	"\x04name\x18\x02 \x01(\tR\x04name\"/\n" +
 	"\x0eGetPodResponse\x12\x1d\n" +
-	"\x03pod\x18\x01 \x01(\v2\v.k8s.v1.PodR\x03pod\"\x8b\x01\n" +
+	"\x03pod\x18\x01 \x01(\v2\v.k8s.v1.PodR\x03pod\"\x8d\x01\n" +
 	"\x14StreamPodLogsRequest\x12\x1c\n" +
 	"\tnamespace\x18\x01 \x01(\tR\tnamespace\x12\x12\n" +
-	"\x04name\x18\x02 \x01(\tR\x04name\x12\x1c\n" +
-	"\tcontainer\x18\x03 \x01(\tR\tcontainer\x12#\n" +
-	"\rsince_seconds\x18\x04 \x01(\x03R\fsinceSeconds\"4\n" +
-	"\x15StreamPodLogsResponse\x12\x1b\n" +
-	"\tlog_batch\x18\x01 \x03(\tR\blogBatch\"\x0e\n" +
+	"\x04name\x18\x02 \x01(\tR\x04name\x12\x1e\n" +
+	"\n" +
+	"containers\x18\x03 \x03(\tR\n" +
+	"containers\x12#\n" +
+	"\rsince_seconds\x18\x04 \x01(\x03R\fsinceSeconds\"J\n" +
+	"\x15StreamPodLogsResponse\x121\n" +
+	"\tlog_batch\x18\x01 \x03(\v2\x14.k8s.v1.ContainerLogR\blogBatch\"\x0e\n" +
 	"\fDebugRequest\"\x0f\n" +
 	"\rDebugResponse2\xf6\x03\n" +
 	"\aService\x12K\n" +
@@ -705,30 +707,32 @@ var file_k8s_v1_service_proto_goTypes = []any{
 	(*DebugResponse)(nil),          // 13: k8s.v1.DebugResponse
 	(*Context)(nil),                // 14: k8s.v1.Context
 	(*Pod)(nil),                    // 15: k8s.v1.Pod
+	(*ContainerLog)(nil),           // 16: k8s.v1.ContainerLog
 }
 var file_k8s_v1_service_proto_depIdxs = []int32{
 	14, // 0: k8s.v1.ListContextsResponse.contexts:type_name -> k8s.v1.Context
 	15, // 1: k8s.v1.ListPodsResponse.pods:type_name -> k8s.v1.Pod
 	15, // 2: k8s.v1.GetPodResponse.pod:type_name -> k8s.v1.Pod
-	0,  // 3: k8s.v1.Service.ListContexts:input_type -> k8s.v1.ListContextsRequest
-	2,  // 4: k8s.v1.Service.SetContext:input_type -> k8s.v1.SetContextRequest
-	4,  // 5: k8s.v1.Service.ListNamespaces:input_type -> k8s.v1.ListNamespacesRequest
-	6,  // 6: k8s.v1.Service.ListPods:input_type -> k8s.v1.ListPodsRequest
-	8,  // 7: k8s.v1.Service.GetPod:input_type -> k8s.v1.GetPodRequest
-	10, // 8: k8s.v1.Service.StreamPodLogs:input_type -> k8s.v1.StreamPodLogsRequest
-	12, // 9: k8s.v1.Service.Debug:input_type -> k8s.v1.DebugRequest
-	1,  // 10: k8s.v1.Service.ListContexts:output_type -> k8s.v1.ListContextsResponse
-	3,  // 11: k8s.v1.Service.SetContext:output_type -> k8s.v1.SetContextResponse
-	5,  // 12: k8s.v1.Service.ListNamespaces:output_type -> k8s.v1.ListNamespacesResponse
-	7,  // 13: k8s.v1.Service.ListPods:output_type -> k8s.v1.ListPodsResponse
-	9,  // 14: k8s.v1.Service.GetPod:output_type -> k8s.v1.GetPodResponse
-	11, // 15: k8s.v1.Service.StreamPodLogs:output_type -> k8s.v1.StreamPodLogsResponse
-	13, // 16: k8s.v1.Service.Debug:output_type -> k8s.v1.DebugResponse
-	10, // [10:17] is the sub-list for method output_type
-	3,  // [3:10] is the sub-list for method input_type
-	3,  // [3:3] is the sub-list for extension type_name
-	3,  // [3:3] is the sub-list for extension extendee
-	0,  // [0:3] is the sub-list for field type_name
+	16, // 3: k8s.v1.StreamPodLogsResponse.log_batch:type_name -> k8s.v1.ContainerLog
+	0,  // 4: k8s.v1.Service.ListContexts:input_type -> k8s.v1.ListContextsRequest
+	2,  // 5: k8s.v1.Service.SetContext:input_type -> k8s.v1.SetContextRequest
+	4,  // 6: k8s.v1.Service.ListNamespaces:input_type -> k8s.v1.ListNamespacesRequest
+	6,  // 7: k8s.v1.Service.ListPods:input_type -> k8s.v1.ListPodsRequest
+	8,  // 8: k8s.v1.Service.GetPod:input_type -> k8s.v1.GetPodRequest
+	10, // 9: k8s.v1.Service.StreamPodLogs:input_type -> k8s.v1.StreamPodLogsRequest
+	12, // 10: k8s.v1.Service.Debug:input_type -> k8s.v1.DebugRequest
+	1,  // 11: k8s.v1.Service.ListContexts:output_type -> k8s.v1.ListContextsResponse
+	3,  // 12: k8s.v1.Service.SetContext:output_type -> k8s.v1.SetContextResponse
+	5,  // 13: k8s.v1.Service.ListNamespaces:output_type -> k8s.v1.ListNamespacesResponse
+	7,  // 14: k8s.v1.Service.ListPods:output_type -> k8s.v1.ListPodsResponse
+	9,  // 15: k8s.v1.Service.GetPod:output_type -> k8s.v1.GetPodResponse
+	11, // 16: k8s.v1.Service.StreamPodLogs:output_type -> k8s.v1.StreamPodLogsResponse
+	13, // 17: k8s.v1.Service.Debug:output_type -> k8s.v1.DebugResponse
+	11, // [11:18] is the sub-list for method output_type
+	4,  // [4:11] is the sub-list for method input_type
+	4,  // [4:4] is the sub-list for extension type_name
+	4,  // [4:4] is the sub-list for extension extendee
+	0,  // [0:4] is the sub-list for field type_name
 }
 
 func init() { file_k8s_v1_service_proto_init() }

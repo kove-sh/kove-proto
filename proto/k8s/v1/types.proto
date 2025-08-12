@@ -116,3 +116,9 @@ message Probe {
   // Value must be non-negative; zero means immediate kill.
   optional int64 termination_grace_period_seconds = 7;
 }
+
+message ContainerLog {
+  string container_name = 1;
+  google.protobuf.Timestamp timestamp = 2;
+  string line = 3;
+}

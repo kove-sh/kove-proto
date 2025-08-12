@@ -831,6 +831,66 @@ func (x *Probe) GetTerminationGracePeriodSeconds() int64 {
 	return 0
 }
 
+type ContainerLog struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	ContainerName string                 `protobuf:"bytes,1,opt,name=container_name,json=containerName,proto3" json:"container_name,omitempty"`
+	Timestamp     *timestamppb.Timestamp `protobuf:"bytes,2,opt,name=timestamp,proto3" json:"timestamp,omitempty"`
+	Line          string                 `protobuf:"bytes,3,opt,name=line,proto3" json:"line,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *ContainerLog) Reset() {
+	*x = ContainerLog{}
+	mi := &file_k8s_v1_types_proto_msgTypes[10]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *ContainerLog) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ContainerLog) ProtoMessage() {}
+
+func (x *ContainerLog) ProtoReflect() protoreflect.Message {
+	mi := &file_k8s_v1_types_proto_msgTypes[10]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ContainerLog.ProtoReflect.Descriptor instead.
+func (*ContainerLog) Descriptor() ([]byte, []int) {
+	return file_k8s_v1_types_proto_rawDescGZIP(), []int{10}
+}
+
+func (x *ContainerLog) GetContainerName() string {
+	if x != nil {
+		return x.ContainerName
+	}
+	return ""
+}
+
+func (x *ContainerLog) GetTimestamp() *timestamppb.Timestamp {
+	if x != nil {
+		return x.Timestamp
+	}
+	return nil
+}
+
+func (x *ContainerLog) GetLine() string {
+	if x != nil {
+		return x.Line
+	}
+	return ""
+}
+
 var File_k8s_v1_types_proto protoreflect.FileDescriptor
 
 const file_k8s_v1_types_proto_rawDesc = "" +
@@ -912,7 +972,11 @@ const file_k8s_v1_types_proto_rawDesc = "" +
 	"\x0f_period_secondsB\x14\n" +
 	"\x12_success_thresholdB\x14\n" +
 	"\x12_failure_thresholdB#\n" +
-	"!_termination_grace_period_secondsB\x84\x01\n" +
+	"!_termination_grace_period_seconds\"\x83\x01\n" +
+	"\fContainerLog\x12%\n" +
+	"\x0econtainer_name\x18\x01 \x01(\tR\rcontainerName\x128\n" +
+	"\ttimestamp\x18\x02 \x01(\v2\x1a.google.protobuf.TimestampR\ttimestamp\x12\x12\n" +
+	"\x04line\x18\x03 \x01(\tR\x04lineB\x84\x01\n" +
 	"\n" +
 	"com.k8s.v1B\n" +
 	"TypesProtoP\x01Z1github.com/kove-sh/kove-proto/gen/go/k8s/v1;k8sv1\xa2\x02\x03KXX\xaa\x02\x06K8s.V1\xca\x02\x06K8s\\V1\xe2\x02\x12K8s\\V1\\GPBMetadata\xea\x02\aK8s::V1b\x06proto3"
@@ -929,7 +993,7 @@ func file_k8s_v1_types_proto_rawDescGZIP() []byte {
 	return file_k8s_v1_types_proto_rawDescData
 }
 
-var file_k8s_v1_types_proto_msgTypes = make([]protoimpl.MessageInfo, 10)
+var file_k8s_v1_types_proto_msgTypes = make([]protoimpl.MessageInfo, 11)
 var file_k8s_v1_types_proto_goTypes = []any{
 	(*Context)(nil),               // 0: k8s.v1.Context
 	(*ObjectMeta)(nil),            // 1: k8s.v1.ObjectMeta
@@ -941,11 +1005,12 @@ var file_k8s_v1_types_proto_goTypes = []any{
 	(*ContainerPort)(nil),         // 7: k8s.v1.ContainerPort
 	(*EnvVar)(nil),                // 8: k8s.v1.EnvVar
 	(*Probe)(nil),                 // 9: k8s.v1.Probe
-	(*timestamppb.Timestamp)(nil), // 10: google.protobuf.Timestamp
+	(*ContainerLog)(nil),          // 10: k8s.v1.ContainerLog
+	(*timestamppb.Timestamp)(nil), // 11: google.protobuf.Timestamp
 }
 var file_k8s_v1_types_proto_depIdxs = []int32{
-	10, // 0: k8s.v1.ObjectMeta.creation_timestamp:type_name -> google.protobuf.Timestamp
-	10, // 1: k8s.v1.ObjectMeta.deletion_timestamp:type_name -> google.protobuf.Timestamp
+	11, // 0: k8s.v1.ObjectMeta.creation_timestamp:type_name -> google.protobuf.Timestamp
+	11, // 1: k8s.v1.ObjectMeta.deletion_timestamp:type_name -> google.protobuf.Timestamp
 	1,  // 2: k8s.v1.Pod.meta:type_name -> k8s.v1.ObjectMeta
 	3,  // 3: k8s.v1.Pod.spec:type_name -> k8s.v1.PodSpec
 	4,  // 4: k8s.v1.Pod.status:type_name -> k8s.v1.PodStatus
@@ -957,11 +1022,12 @@ var file_k8s_v1_types_proto_depIdxs = []int32{
 	8,  // 10: k8s.v1.Container.env:type_name -> k8s.v1.EnvVar
 	6,  // 11: k8s.v1.Container.cpu:type_name -> k8s.v1.Resource
 	6,  // 12: k8s.v1.Container.memory:type_name -> k8s.v1.Resource
-	13, // [13:13] is the sub-list for method output_type
-	13, // [13:13] is the sub-list for method input_type
-	13, // [13:13] is the sub-list for extension type_name
-	13, // [13:13] is the sub-list for extension extendee
-	0,  // [0:13] is the sub-list for field type_name
+	11, // 13: k8s.v1.ContainerLog.timestamp:type_name -> google.protobuf.Timestamp
+	14, // [14:14] is the sub-list for method output_type
+	14, // [14:14] is the sub-list for method input_type
+	14, // [14:14] is the sub-list for extension type_name
+	14, // [14:14] is the sub-list for extension extendee
+	0,  // [0:14] is the sub-list for field type_name
 }
 
 func init() { file_k8s_v1_types_proto_init() }
@@ -977,7 +1043,7 @@ func file_k8s_v1_types_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_k8s_v1_types_proto_rawDesc), len(file_k8s_v1_types_proto_rawDesc)),
 			NumEnums:      0,
-			NumMessages:   10,
+			NumMessages:   11,
 			NumExtensions: 0,
 			NumServices:   0,
 		},

@@ -52,12 +52,12 @@ message GetPodResponse {
 message StreamPodLogsRequest {
   string namespace = 1;
   string name = 2;
-  string container = 3;
+  repeated string containers = 3;
   int64 since_seconds = 4;
 }
 
 message StreamPodLogsResponse {
-  repeated string log_batch = 1;
+  repeated ContainerLog log_batch = 1;
 }
 
 message DebugRequest {}
