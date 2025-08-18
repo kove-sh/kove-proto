@@ -19,13 +19,15 @@ import (
 const _ = grpc.SupportPackageIsVersion9
 
 const (
-	Service_ListContexts_FullMethodName   = "/k8s.v1.Service/ListContexts"
-	Service_SetContext_FullMethodName     = "/k8s.v1.Service/SetContext"
-	Service_ListNamespaces_FullMethodName = "/k8s.v1.Service/ListNamespaces"
-	Service_ListPods_FullMethodName       = "/k8s.v1.Service/ListPods"
-	Service_GetPod_FullMethodName         = "/k8s.v1.Service/GetPod"
-	Service_StreamPodLogs_FullMethodName  = "/k8s.v1.Service/StreamPodLogs"
-	Service_Debug_FullMethodName          = "/k8s.v1.Service/Debug"
+	Service_ListContexts_FullMethodName             = "/k8s.v1.Service/ListContexts"
+	Service_SetContext_FullMethodName               = "/k8s.v1.Service/SetContext"
+	Service_ListNamespaces_FullMethodName           = "/k8s.v1.Service/ListNamespaces"
+	Service_ListPods_FullMethodName                 = "/k8s.v1.Service/ListPods"
+	Service_GetPod_FullMethodName                   = "/k8s.v1.Service/GetPod"
+	Service_StreamPodLogs_FullMethodName            = "/k8s.v1.Service/StreamPodLogs"
+	Service_PortForwardPod_FullMethodName           = "/k8s.v1.Service/PortForwardPod"
+	Service_CheckForwardedPortHealth_FullMethodName = "/k8s.v1.Service/CheckForwardedPortHealth"
+	Service_StopForwardedPort_FullMethodName        = "/k8s.v1.Service/StopForwardedPort"
 )
 
 // ServiceClient is the client API for Service service.
@@ -38,7 +40,9 @@ type ServiceClient interface {
 	ListPods(ctx context.Context, in *ListPodsRequest, opts ...grpc.CallOption) (*ListPodsResponse, error)
 	GetPod(ctx context.Context, in *GetPodRequest, opts ...grpc.CallOption) (*GetPodResponse, error)
 	StreamPodLogs(ctx context.Context, in *StreamPodLogsRequest, opts ...grpc.CallOption) (grpc.ServerStreamingClient[StreamPodLogsResponse], error)
-	Debug(ctx context.Context, in *DebugRequest, opts ...grpc.CallOption) (*DebugResponse, error)
+	PortForwardPod(ctx context.Context, in *PortForwardPodRequest, opts ...grpc.CallOption) (*PortForwardPodResponse, error)
+	CheckForwardedPortHealth(ctx context.Context, in *CheckForwardedPortHealthRequest, opts ...grpc.CallOption) (*CheckForwardedPortHealthResponse, error)
+	StopForwardedPort(ctx context.Context, in *StopForwardedPortRequest, opts ...grpc.CallOption) (*StopForwardedPortResponse, error)
 }
 
 type serviceClient struct {
@@ -118,10 +122,30 @@ func (c *serviceClient) StreamPodLogs(ctx context.Context, in *StreamPodLogsRequ
 // This type alias is provided for backwards compatibility with existing code that references the prior non-generic stream type by name.
 type Service_StreamPodLogsClient = grpc.ServerStreamingClient[StreamPodLogsResponse]
 
-func (c *serviceClient) Debug(ctx context.Context, in *DebugRequest, opts ...grpc.CallOption) (*DebugResponse, error) {
+func (c *serviceClient) PortForwardPod(ctx context.Context, in *PortForwardPodRequest, opts ...grpc.CallOption) (*PortForwardPodResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(DebugResponse)
-	err := c.cc.Invoke(ctx, Service_Debug_FullMethodName, in, out, cOpts...)
+	out := new(PortForwardPodResponse)
+	err := c.cc.Invoke(ctx, Service_PortForwardPod_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *serviceClient) CheckForwardedPortHealth(ctx context.Context, in *CheckForwardedPortHealthRequest, opts ...grpc.CallOption) (*CheckForwardedPortHealthResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(CheckForwardedPortHealthResponse)
+	err := c.cc.Invoke(ctx, Service_CheckForwardedPortHealth_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *serviceClient) StopForwardedPort(ctx context.Context, in *StopForwardedPortRequest, opts ...grpc.CallOption) (*StopForwardedPortResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(StopForwardedPortResponse)
+	err := c.cc.Invoke(ctx, Service_StopForwardedPort_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
@@ -138,7 +162,9 @@ type ServiceServer interface {
 	ListPods(context.Context, *ListPodsRequest) (*ListPodsResponse, error)
 	GetPod(context.Context, *GetPodRequest) (*GetPodResponse, error)
 	StreamPodLogs(*StreamPodLogsRequest, grpc.ServerStreamingServer[StreamPodLogsResponse]) error
-	Debug(context.Context, *DebugRequest) (*DebugResponse, error)
+	PortForwardPod(context.Context, *PortForwardPodRequest) (*PortForwardPodResponse, error)
+	CheckForwardedPortHealth(context.Context, *CheckForwardedPortHealthRequest) (*CheckForwardedPortHealthResponse, error)
+	StopForwardedPort(context.Context, *StopForwardedPortRequest) (*StopForwardedPortResponse, error)
 }
 
 // UnimplementedServiceServer should be embedded to have
@@ -166,8 +192,14 @@ func (UnimplementedServiceServer) GetPod(context.Context, *GetPodRequest) (*GetP
 func (UnimplementedServiceServer) StreamPodLogs(*StreamPodLogsRequest, grpc.ServerStreamingServer[StreamPodLogsResponse]) error {
 	return status.Errorf(codes.Unimplemented, "method StreamPodLogs not implemented")
 }
-func (UnimplementedServiceServer) Debug(context.Context, *DebugRequest) (*DebugResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method Debug not implemented")
+func (UnimplementedServiceServer) PortForwardPod(context.Context, *PortForwardPodRequest) (*PortForwardPodResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method PortForwardPod not implemented")
+}
+func (UnimplementedServiceServer) CheckForwardedPortHealth(context.Context, *CheckForwardedPortHealthRequest) (*CheckForwardedPortHealthResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method CheckForwardedPortHealth not implemented")
+}
+func (UnimplementedServiceServer) StopForwardedPort(context.Context, *StopForwardedPortRequest) (*StopForwardedPortResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method StopForwardedPort not implemented")
 }
 func (UnimplementedServiceServer) testEmbeddedByValue() {}
 
@@ -290,20 +322,56 @@ func _Service_StreamPodLogs_Handler(srv interface{}, stream grpc.ServerStream) e
 // This type alias is provided for backwards compatibility with existing code that references the prior non-generic stream type by name.
 type Service_StreamPodLogsServer = grpc.ServerStreamingServer[StreamPodLogsResponse]
 
-func _Service_Debug_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(DebugRequest)
+func _Service_PortForwardPod_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(PortForwardPodRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(ServiceServer).Debug(ctx, in)
+		return srv.(ServiceServer).PortForwardPod(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: Service_Debug_FullMethodName,
+		FullMethod: Service_PortForwardPod_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(ServiceServer).Debug(ctx, req.(*DebugRequest))
+		return srv.(ServiceServer).PortForwardPod(ctx, req.(*PortForwardPodRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Service_CheckForwardedPortHealth_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(CheckForwardedPortHealthRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ServiceServer).CheckForwardedPortHealth(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Service_CheckForwardedPortHealth_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ServiceServer).CheckForwardedPortHealth(ctx, req.(*CheckForwardedPortHealthRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Service_StopForwardedPort_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(StopForwardedPortRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ServiceServer).StopForwardedPort(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Service_StopForwardedPort_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ServiceServer).StopForwardedPort(ctx, req.(*StopForwardedPortRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -336,8 +404,16 @@ var Service_ServiceDesc = grpc.ServiceDesc{
 			Handler:    _Service_GetPod_Handler,
 		},
 		{
-			MethodName: "Debug",
-			Handler:    _Service_Debug_Handler,
+			MethodName: "PortForwardPod",
+			Handler:    _Service_PortForwardPod_Handler,
+		},
+		{
+			MethodName: "CheckForwardedPortHealth",
+			Handler:    _Service_CheckForwardedPortHealth_Handler,
+		},
+		{
+			MethodName: "StopForwardedPort",
+			Handler:    _Service_StopForwardedPort_Handler,
 		},
 	},
 	Streams: []grpc.StreamDesc{
