@@ -227,39 +227,53 @@ public struct K8s_V1_StopForwardedPortResponse: Sendable {
   public init() {}
 }
 
-public struct K8s_V1_CheckForwardedPortHealthRequest: Sendable {
+public struct K8s_V1_CheckForwardedPortsHealthRequest: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
-  public var portForwardID: String = String()
+  public var portForwardIds: [String] = []
 
   public var unknownFields = SwiftProtobuf.UnknownStorage()
 
   public init() {}
 }
 
-public struct K8s_V1_CheckForwardedPortHealthResponse: Sendable {
+public struct K8s_V1_CheckForwardedPortsHealthResponse: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
-  public var healthy: Bool = false
-
-  public var stopError: String {
-    get {return _stopError ?? String()}
-    set {_stopError = newValue}
-  }
-  /// Returns true if `stopError` has been explicitly set.
-  public var hasStopError: Bool {return self._stopError != nil}
-  /// Clears the value of `stopError`. Subsequent reads from it will return its default value.
-  public mutating func clearStopError() {self._stopError = nil}
+  public var ports: [K8s_V1_CheckForwardedPortsHealthResponse.PortHealth] = []
 
   public var unknownFields = SwiftProtobuf.UnknownStorage()
 
-  public init() {}
+  public struct PortHealth: Sendable {
+    // SwiftProtobuf.Message conformance is added in an extension below. See the
+    // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+    // methods supported on all messages.
 
-  fileprivate var _stopError: String? = nil
+    public var portForwardID: String = String()
+
+    public var healthy: Bool = false
+
+    public var error: String {
+      get {return _error ?? String()}
+      set {_error = newValue}
+    }
+    /// Returns true if `error` has been explicitly set.
+    public var hasError: Bool {return self._error != nil}
+    /// Clears the value of `error`. Subsequent reads from it will return its default value.
+    public mutating func clearError() {self._error = nil}
+
+    public var unknownFields = SwiftProtobuf.UnknownStorage()
+
+    public init() {}
+
+    fileprivate var _error: String? = nil
+  }
+
+  public init() {}
 }
 
 // MARK: - Code below here is support for the SwiftProtobuf runtime.
@@ -772,10 +786,76 @@ extension K8s_V1_StopForwardedPortResponse: SwiftProtobuf.Message, SwiftProtobuf
   }
 }
 
-extension K8s_V1_CheckForwardedPortHealthRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
-  public static let protoMessageName: String = _protobuf_package + ".CheckForwardedPortHealthRequest"
+extension K8s_V1_CheckForwardedPortsHealthRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  public static let protoMessageName: String = _protobuf_package + ".CheckForwardedPortsHealthRequest"
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .standard(proto: "port_forward_ids"),
+  ]
+
+  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch fieldNumber {
+      case 1: try { try decoder.decodeRepeatedStringField(value: &self.portForwardIds) }()
+      default: break
+      }
+    }
+  }
+
+  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    if !self.portForwardIds.isEmpty {
+      try visitor.visitRepeatedStringField(value: self.portForwardIds, fieldNumber: 1)
+    }
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  public static func ==(lhs: K8s_V1_CheckForwardedPortsHealthRequest, rhs: K8s_V1_CheckForwardedPortsHealthRequest) -> Bool {
+    if lhs.portForwardIds != rhs.portForwardIds {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension K8s_V1_CheckForwardedPortsHealthResponse: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  public static let protoMessageName: String = _protobuf_package + ".CheckForwardedPortsHealthResponse"
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "ports"),
+  ]
+
+  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch fieldNumber {
+      case 1: try { try decoder.decodeRepeatedMessageField(value: &self.ports) }()
+      default: break
+      }
+    }
+  }
+
+  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    if !self.ports.isEmpty {
+      try visitor.visitRepeatedMessageField(value: self.ports, fieldNumber: 1)
+    }
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  public static func ==(lhs: K8s_V1_CheckForwardedPortsHealthResponse, rhs: K8s_V1_CheckForwardedPortsHealthResponse) -> Bool {
+    if lhs.ports != rhs.ports {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension K8s_V1_CheckForwardedPortsHealthResponse.PortHealth: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  public static let protoMessageName: String = K8s_V1_CheckForwardedPortsHealthResponse.protoMessageName + ".PortHealth"
   public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
     1: .standard(proto: "port_forward_id"),
+    2: .same(proto: "healthy"),
+    3: .same(proto: "error"),
   ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
@@ -785,40 +865,8 @@ extension K8s_V1_CheckForwardedPortHealthRequest: SwiftProtobuf.Message, SwiftPr
       // enabled. https://github.com/apple/swift-protobuf/issues/1034
       switch fieldNumber {
       case 1: try { try decoder.decodeSingularStringField(value: &self.portForwardID) }()
-      default: break
-      }
-    }
-  }
-
-  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
-    if !self.portForwardID.isEmpty {
-      try visitor.visitSingularStringField(value: self.portForwardID, fieldNumber: 1)
-    }
-    try unknownFields.traverse(visitor: &visitor)
-  }
-
-  public static func ==(lhs: K8s_V1_CheckForwardedPortHealthRequest, rhs: K8s_V1_CheckForwardedPortHealthRequest) -> Bool {
-    if lhs.portForwardID != rhs.portForwardID {return false}
-    if lhs.unknownFields != rhs.unknownFields {return false}
-    return true
-  }
-}
-
-extension K8s_V1_CheckForwardedPortHealthResponse: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
-  public static let protoMessageName: String = _protobuf_package + ".CheckForwardedPortHealthResponse"
-  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
-    1: .same(proto: "healthy"),
-    2: .standard(proto: "stop_error"),
-  ]
-
-  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
-    while let fieldNumber = try decoder.nextFieldNumber() {
-      // The use of inline closures is to circumvent an issue where the compiler
-      // allocates stack space for every case branch when no optimizations are
-      // enabled. https://github.com/apple/swift-protobuf/issues/1034
-      switch fieldNumber {
-      case 1: try { try decoder.decodeSingularBoolField(value: &self.healthy) }()
-      case 2: try { try decoder.decodeSingularStringField(value: &self._stopError) }()
+      case 2: try { try decoder.decodeSingularBoolField(value: &self.healthy) }()
+      case 3: try { try decoder.decodeSingularStringField(value: &self._error) }()
       default: break
       }
     }
@@ -829,18 +877,22 @@ extension K8s_V1_CheckForwardedPortHealthResponse: SwiftProtobuf.Message, SwiftP
     // allocates stack space for every if/case branch local when no optimizations
     // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
     // https://github.com/apple/swift-protobuf/issues/1182
-    if self.healthy != false {
-      try visitor.visitSingularBoolField(value: self.healthy, fieldNumber: 1)
+    if !self.portForwardID.isEmpty {
+      try visitor.visitSingularStringField(value: self.portForwardID, fieldNumber: 1)
     }
-    try { if let v = self._stopError {
-      try visitor.visitSingularStringField(value: v, fieldNumber: 2)
+    if self.healthy != false {
+      try visitor.visitSingularBoolField(value: self.healthy, fieldNumber: 2)
+    }
+    try { if let v = self._error {
+      try visitor.visitSingularStringField(value: v, fieldNumber: 3)
     } }()
     try unknownFields.traverse(visitor: &visitor)
   }
 
-  public static func ==(lhs: K8s_V1_CheckForwardedPortHealthResponse, rhs: K8s_V1_CheckForwardedPortHealthResponse) -> Bool {
+  public static func ==(lhs: K8s_V1_CheckForwardedPortsHealthResponse.PortHealth, rhs: K8s_V1_CheckForwardedPortsHealthResponse.PortHealth) -> Bool {
+    if lhs.portForwardID != rhs.portForwardID {return false}
     if lhs.healthy != rhs.healthy {return false}
-    if lhs._stopError != rhs._stopError {return false}
+    if lhs._error != rhs._error {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }

@@ -19,15 +19,15 @@ import (
 const _ = grpc.SupportPackageIsVersion9
 
 const (
-	Service_ListContexts_FullMethodName             = "/k8s.v1.Service/ListContexts"
-	Service_SetContext_FullMethodName               = "/k8s.v1.Service/SetContext"
-	Service_ListNamespaces_FullMethodName           = "/k8s.v1.Service/ListNamespaces"
-	Service_ListPods_FullMethodName                 = "/k8s.v1.Service/ListPods"
-	Service_GetPod_FullMethodName                   = "/k8s.v1.Service/GetPod"
-	Service_StreamPodLogs_FullMethodName            = "/k8s.v1.Service/StreamPodLogs"
-	Service_PortForwardPod_FullMethodName           = "/k8s.v1.Service/PortForwardPod"
-	Service_CheckForwardedPortHealth_FullMethodName = "/k8s.v1.Service/CheckForwardedPortHealth"
-	Service_StopForwardedPort_FullMethodName        = "/k8s.v1.Service/StopForwardedPort"
+	Service_ListContexts_FullMethodName              = "/k8s.v1.Service/ListContexts"
+	Service_SetContext_FullMethodName                = "/k8s.v1.Service/SetContext"
+	Service_ListNamespaces_FullMethodName            = "/k8s.v1.Service/ListNamespaces"
+	Service_ListPods_FullMethodName                  = "/k8s.v1.Service/ListPods"
+	Service_GetPod_FullMethodName                    = "/k8s.v1.Service/GetPod"
+	Service_StreamPodLogs_FullMethodName             = "/k8s.v1.Service/StreamPodLogs"
+	Service_PortForwardPod_FullMethodName            = "/k8s.v1.Service/PortForwardPod"
+	Service_StopForwardedPort_FullMethodName         = "/k8s.v1.Service/StopForwardedPort"
+	Service_CheckForwardedPortsHealth_FullMethodName = "/k8s.v1.Service/CheckForwardedPortsHealth"
 )
 
 // ServiceClient is the client API for Service service.
@@ -41,8 +41,8 @@ type ServiceClient interface {
 	GetPod(ctx context.Context, in *GetPodRequest, opts ...grpc.CallOption) (*GetPodResponse, error)
 	StreamPodLogs(ctx context.Context, in *StreamPodLogsRequest, opts ...grpc.CallOption) (grpc.ServerStreamingClient[StreamPodLogsResponse], error)
 	PortForwardPod(ctx context.Context, in *PortForwardPodRequest, opts ...grpc.CallOption) (*PortForwardPodResponse, error)
-	CheckForwardedPortHealth(ctx context.Context, in *CheckForwardedPortHealthRequest, opts ...grpc.CallOption) (*CheckForwardedPortHealthResponse, error)
 	StopForwardedPort(ctx context.Context, in *StopForwardedPortRequest, opts ...grpc.CallOption) (*StopForwardedPortResponse, error)
+	CheckForwardedPortsHealth(ctx context.Context, in *CheckForwardedPortsHealthRequest, opts ...grpc.CallOption) (*CheckForwardedPortsHealthResponse, error)
 }
 
 type serviceClient struct {
@@ -132,20 +132,20 @@ func (c *serviceClient) PortForwardPod(ctx context.Context, in *PortForwardPodRe
 	return out, nil
 }
 
-func (c *serviceClient) CheckForwardedPortHealth(ctx context.Context, in *CheckForwardedPortHealthRequest, opts ...grpc.CallOption) (*CheckForwardedPortHealthResponse, error) {
+func (c *serviceClient) StopForwardedPort(ctx context.Context, in *StopForwardedPortRequest, opts ...grpc.CallOption) (*StopForwardedPortResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(CheckForwardedPortHealthResponse)
-	err := c.cc.Invoke(ctx, Service_CheckForwardedPortHealth_FullMethodName, in, out, cOpts...)
+	out := new(StopForwardedPortResponse)
+	err := c.cc.Invoke(ctx, Service_StopForwardedPort_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *serviceClient) StopForwardedPort(ctx context.Context, in *StopForwardedPortRequest, opts ...grpc.CallOption) (*StopForwardedPortResponse, error) {
+func (c *serviceClient) CheckForwardedPortsHealth(ctx context.Context, in *CheckForwardedPortsHealthRequest, opts ...grpc.CallOption) (*CheckForwardedPortsHealthResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(StopForwardedPortResponse)
-	err := c.cc.Invoke(ctx, Service_StopForwardedPort_FullMethodName, in, out, cOpts...)
+	out := new(CheckForwardedPortsHealthResponse)
+	err := c.cc.Invoke(ctx, Service_CheckForwardedPortsHealth_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
@@ -163,8 +163,8 @@ type ServiceServer interface {
 	GetPod(context.Context, *GetPodRequest) (*GetPodResponse, error)
 	StreamPodLogs(*StreamPodLogsRequest, grpc.ServerStreamingServer[StreamPodLogsResponse]) error
 	PortForwardPod(context.Context, *PortForwardPodRequest) (*PortForwardPodResponse, error)
-	CheckForwardedPortHealth(context.Context, *CheckForwardedPortHealthRequest) (*CheckForwardedPortHealthResponse, error)
 	StopForwardedPort(context.Context, *StopForwardedPortRequest) (*StopForwardedPortResponse, error)
+	CheckForwardedPortsHealth(context.Context, *CheckForwardedPortsHealthRequest) (*CheckForwardedPortsHealthResponse, error)
 }
 
 // UnimplementedServiceServer should be embedded to have
@@ -195,11 +195,11 @@ func (UnimplementedServiceServer) StreamPodLogs(*StreamPodLogsRequest, grpc.Serv
 func (UnimplementedServiceServer) PortForwardPod(context.Context, *PortForwardPodRequest) (*PortForwardPodResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method PortForwardPod not implemented")
 }
-func (UnimplementedServiceServer) CheckForwardedPortHealth(context.Context, *CheckForwardedPortHealthRequest) (*CheckForwardedPortHealthResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method CheckForwardedPortHealth not implemented")
-}
 func (UnimplementedServiceServer) StopForwardedPort(context.Context, *StopForwardedPortRequest) (*StopForwardedPortResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method StopForwardedPort not implemented")
+}
+func (UnimplementedServiceServer) CheckForwardedPortsHealth(context.Context, *CheckForwardedPortsHealthRequest) (*CheckForwardedPortsHealthResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method CheckForwardedPortsHealth not implemented")
 }
 func (UnimplementedServiceServer) testEmbeddedByValue() {}
 
@@ -340,24 +340,6 @@ func _Service_PortForwardPod_Handler(srv interface{}, ctx context.Context, dec f
 	return interceptor(ctx, in, info, handler)
 }
 
-func _Service_CheckForwardedPortHealth_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(CheckForwardedPortHealthRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(ServiceServer).CheckForwardedPortHealth(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: Service_CheckForwardedPortHealth_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(ServiceServer).CheckForwardedPortHealth(ctx, req.(*CheckForwardedPortHealthRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
 func _Service_StopForwardedPort_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(StopForwardedPortRequest)
 	if err := dec(in); err != nil {
@@ -372,6 +354,24 @@ func _Service_StopForwardedPort_Handler(srv interface{}, ctx context.Context, de
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(ServiceServer).StopForwardedPort(ctx, req.(*StopForwardedPortRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Service_CheckForwardedPortsHealth_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(CheckForwardedPortsHealthRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ServiceServer).CheckForwardedPortsHealth(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Service_CheckForwardedPortsHealth_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ServiceServer).CheckForwardedPortsHealth(ctx, req.(*CheckForwardedPortsHealthRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -408,12 +408,12 @@ var Service_ServiceDesc = grpc.ServiceDesc{
 			Handler:    _Service_PortForwardPod_Handler,
 		},
 		{
-			MethodName: "CheckForwardedPortHealth",
-			Handler:    _Service_CheckForwardedPortHealth_Handler,
-		},
-		{
 			MethodName: "StopForwardedPort",
 			Handler:    _Service_StopForwardedPort_Handler,
+		},
+		{
+			MethodName: "CheckForwardedPortsHealth",
+			Handler:    _Service_CheckForwardedPortsHealth_Handler,
 		},
 	},
 	Streams: []grpc.StreamDesc{

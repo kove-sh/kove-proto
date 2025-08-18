@@ -12,8 +12,8 @@ service Service {
   rpc GetPod(GetPodRequest) returns (GetPodResponse) {}
   rpc StreamPodLogs(StreamPodLogsRequest) returns (stream StreamPodLogsResponse) {}
   rpc PortForwardPod(PortForwardPodRequest) returns (PortForwardPodResponse) {}
-  rpc CheckForwardedPortHealth(CheckForwardedPortHealthRequest) returns (CheckForwardedPortHealthResponse) {}
   rpc StopForwardedPort(StopForwardedPortRequest) returns (StopForwardedPortResponse) {}
+  rpc CheckForwardedPortsHealth(CheckForwardedPortsHealthRequest) returns (CheckForwardedPortsHealthResponse) {}
 }
 
 message ListContextsRequest {}
@@ -79,11 +79,16 @@ message StopForwardedPortRequest {
 
 message StopForwardedPortResponse {}
 
-message CheckForwardedPortHealthRequest {
-  string port_forward_id = 1;
+message CheckForwardedPortsHealthRequest {
+  repeated string port_forward_ids = 1;
 }
 
-message CheckForwardedPortHealthResponse {
-  bool healthy = 1;
-  optional string stop_error = 2;
+message CheckForwardedPortsHealthResponse {
+  message PortHealth {
+    string port_forward_id = 1;
+    bool healthy = 2;
+    optional string error = 3;
+  }
+
+  repeated PortHealth ports = 1;
 }

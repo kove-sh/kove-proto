@@ -749,27 +749,27 @@ func (*StopForwardedPortResponse) Descriptor() ([]byte, []int) {
 	return file_k8s_v1_service_proto_rawDescGZIP(), []int{15}
 }
 
-type CheckForwardedPortHealthRequest struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	PortForwardId string                 `protobuf:"bytes,1,opt,name=port_forward_id,json=portForwardId,proto3" json:"port_forward_id,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
+type CheckForwardedPortsHealthRequest struct {
+	state          protoimpl.MessageState `protogen:"open.v1"`
+	PortForwardIds []string               `protobuf:"bytes,1,rep,name=port_forward_ids,json=portForwardIds,proto3" json:"port_forward_ids,omitempty"`
+	unknownFields  protoimpl.UnknownFields
+	sizeCache      protoimpl.SizeCache
 }
 
-func (x *CheckForwardedPortHealthRequest) Reset() {
-	*x = CheckForwardedPortHealthRequest{}
+func (x *CheckForwardedPortsHealthRequest) Reset() {
+	*x = CheckForwardedPortsHealthRequest{}
 	mi := &file_k8s_v1_service_proto_msgTypes[16]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
 
-func (x *CheckForwardedPortHealthRequest) String() string {
+func (x *CheckForwardedPortsHealthRequest) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*CheckForwardedPortHealthRequest) ProtoMessage() {}
+func (*CheckForwardedPortsHealthRequest) ProtoMessage() {}
 
-func (x *CheckForwardedPortHealthRequest) ProtoReflect() protoreflect.Message {
+func (x *CheckForwardedPortsHealthRequest) ProtoReflect() protoreflect.Message {
 	mi := &file_k8s_v1_service_proto_msgTypes[16]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -781,66 +781,118 @@ func (x *CheckForwardedPortHealthRequest) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use CheckForwardedPortHealthRequest.ProtoReflect.Descriptor instead.
-func (*CheckForwardedPortHealthRequest) Descriptor() ([]byte, []int) {
+// Deprecated: Use CheckForwardedPortsHealthRequest.ProtoReflect.Descriptor instead.
+func (*CheckForwardedPortsHealthRequest) Descriptor() ([]byte, []int) {
 	return file_k8s_v1_service_proto_rawDescGZIP(), []int{16}
 }
 
-func (x *CheckForwardedPortHealthRequest) GetPortForwardId() string {
+func (x *CheckForwardedPortsHealthRequest) GetPortForwardIds() []string {
+	if x != nil {
+		return x.PortForwardIds
+	}
+	return nil
+}
+
+type CheckForwardedPortsHealthResponse struct {
+	state         protoimpl.MessageState                          `protogen:"open.v1"`
+	Ports         []*CheckForwardedPortsHealthResponse_PortHealth `protobuf:"bytes,1,rep,name=ports,proto3" json:"ports,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *CheckForwardedPortsHealthResponse) Reset() {
+	*x = CheckForwardedPortsHealthResponse{}
+	mi := &file_k8s_v1_service_proto_msgTypes[17]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *CheckForwardedPortsHealthResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*CheckForwardedPortsHealthResponse) ProtoMessage() {}
+
+func (x *CheckForwardedPortsHealthResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_k8s_v1_service_proto_msgTypes[17]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use CheckForwardedPortsHealthResponse.ProtoReflect.Descriptor instead.
+func (*CheckForwardedPortsHealthResponse) Descriptor() ([]byte, []int) {
+	return file_k8s_v1_service_proto_rawDescGZIP(), []int{17}
+}
+
+func (x *CheckForwardedPortsHealthResponse) GetPorts() []*CheckForwardedPortsHealthResponse_PortHealth {
+	if x != nil {
+		return x.Ports
+	}
+	return nil
+}
+
+type CheckForwardedPortsHealthResponse_PortHealth struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	PortForwardId string                 `protobuf:"bytes,1,opt,name=port_forward_id,json=portForwardId,proto3" json:"port_forward_id,omitempty"`
+	Healthy       bool                   `protobuf:"varint,2,opt,name=healthy,proto3" json:"healthy,omitempty"`
+	Error         *string                `protobuf:"bytes,3,opt,name=error,proto3,oneof" json:"error,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *CheckForwardedPortsHealthResponse_PortHealth) Reset() {
+	*x = CheckForwardedPortsHealthResponse_PortHealth{}
+	mi := &file_k8s_v1_service_proto_msgTypes[18]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *CheckForwardedPortsHealthResponse_PortHealth) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*CheckForwardedPortsHealthResponse_PortHealth) ProtoMessage() {}
+
+func (x *CheckForwardedPortsHealthResponse_PortHealth) ProtoReflect() protoreflect.Message {
+	mi := &file_k8s_v1_service_proto_msgTypes[18]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use CheckForwardedPortsHealthResponse_PortHealth.ProtoReflect.Descriptor instead.
+func (*CheckForwardedPortsHealthResponse_PortHealth) Descriptor() ([]byte, []int) {
+	return file_k8s_v1_service_proto_rawDescGZIP(), []int{17, 0}
+}
+
+func (x *CheckForwardedPortsHealthResponse_PortHealth) GetPortForwardId() string {
 	if x != nil {
 		return x.PortForwardId
 	}
 	return ""
 }
 
-type CheckForwardedPortHealthResponse struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	Healthy       bool                   `protobuf:"varint,1,opt,name=healthy,proto3" json:"healthy,omitempty"`
-	StopError     *string                `protobuf:"bytes,2,opt,name=stop_error,json=stopError,proto3,oneof" json:"stop_error,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
-}
-
-func (x *CheckForwardedPortHealthResponse) Reset() {
-	*x = CheckForwardedPortHealthResponse{}
-	mi := &file_k8s_v1_service_proto_msgTypes[17]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *CheckForwardedPortHealthResponse) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*CheckForwardedPortHealthResponse) ProtoMessage() {}
-
-func (x *CheckForwardedPortHealthResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_k8s_v1_service_proto_msgTypes[17]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use CheckForwardedPortHealthResponse.ProtoReflect.Descriptor instead.
-func (*CheckForwardedPortHealthResponse) Descriptor() ([]byte, []int) {
-	return file_k8s_v1_service_proto_rawDescGZIP(), []int{17}
-}
-
-func (x *CheckForwardedPortHealthResponse) GetHealthy() bool {
+func (x *CheckForwardedPortsHealthResponse_PortHealth) GetHealthy() bool {
 	if x != nil {
 		return x.Healthy
 	}
 	return false
 }
 
-func (x *CheckForwardedPortHealthResponse) GetStopError() string {
-	if x != nil && x.StopError != nil {
-		return *x.StopError
+func (x *CheckForwardedPortsHealthResponse_PortHealth) GetError() string {
+	if x != nil && x.Error != nil {
+		return *x.Error
 	}
 	return ""
 }
@@ -890,14 +942,17 @@ const file_k8s_v1_service_proto_rawDesc = "" +
 	"\x0fport_forward_id\x18\x01 \x01(\tR\rportForwardId\"B\n" +
 	"\x18StopForwardedPortRequest\x12&\n" +
 	"\x0fport_forward_id\x18\x01 \x01(\tR\rportForwardId\"\x1b\n" +
-	"\x19StopForwardedPortResponse\"I\n" +
-	"\x1fCheckForwardedPortHealthRequest\x12&\n" +
-	"\x0fport_forward_id\x18\x01 \x01(\tR\rportForwardId\"o\n" +
-	" CheckForwardedPortHealthResponse\x12\x18\n" +
-	"\ahealthy\x18\x01 \x01(\bR\ahealthy\x12\"\n" +
+	"\x19StopForwardedPortResponse\"L\n" +
+	" CheckForwardedPortsHealthRequest\x12(\n" +
+	"\x10port_forward_ids\x18\x01 \x03(\tR\x0eportForwardIds\"\xe4\x01\n" +
+	"!CheckForwardedPortsHealthResponse\x12J\n" +
+	"\x05ports\x18\x01 \x03(\v24.k8s.v1.CheckForwardedPortsHealthResponse.PortHealthR\x05ports\x1as\n" +
 	"\n" +
-	"stop_error\x18\x02 \x01(\tH\x00R\tstopError\x88\x01\x01B\r\n" +
-	"\v_stop_error2\xde\x05\n" +
+	"PortHealth\x12&\n" +
+	"\x0fport_forward_id\x18\x01 \x01(\tR\rportForwardId\x12\x18\n" +
+	"\ahealthy\x18\x02 \x01(\bR\ahealthy\x12\x19\n" +
+	"\x05error\x18\x03 \x01(\tH\x00R\x05error\x88\x01\x01B\b\n" +
+	"\x06_error2\xe1\x05\n" +
 	"\aService\x12K\n" +
 	"\fListContexts\x12\x1b.k8s.v1.ListContextsRequest\x1a\x1c.k8s.v1.ListContextsResponse\"\x00\x12E\n" +
 	"\n" +
@@ -906,9 +961,9 @@ const file_k8s_v1_service_proto_rawDesc = "" +
 	"\bListPods\x12\x17.k8s.v1.ListPodsRequest\x1a\x18.k8s.v1.ListPodsResponse\"\x00\x129\n" +
 	"\x06GetPod\x12\x15.k8s.v1.GetPodRequest\x1a\x16.k8s.v1.GetPodResponse\"\x00\x12P\n" +
 	"\rStreamPodLogs\x12\x1c.k8s.v1.StreamPodLogsRequest\x1a\x1d.k8s.v1.StreamPodLogsResponse\"\x000\x01\x12Q\n" +
-	"\x0ePortForwardPod\x12\x1d.k8s.v1.PortForwardPodRequest\x1a\x1e.k8s.v1.PortForwardPodResponse\"\x00\x12o\n" +
-	"\x18CheckForwardedPortHealth\x12'.k8s.v1.CheckForwardedPortHealthRequest\x1a(.k8s.v1.CheckForwardedPortHealthResponse\"\x00\x12Z\n" +
-	"\x11StopForwardedPort\x12 .k8s.v1.StopForwardedPortRequest\x1a!.k8s.v1.StopForwardedPortResponse\"\x00B\x86\x01\n" +
+	"\x0ePortForwardPod\x12\x1d.k8s.v1.PortForwardPodRequest\x1a\x1e.k8s.v1.PortForwardPodResponse\"\x00\x12Z\n" +
+	"\x11StopForwardedPort\x12 .k8s.v1.StopForwardedPortRequest\x1a!.k8s.v1.StopForwardedPortResponse\"\x00\x12r\n" +
+	"\x19CheckForwardedPortsHealth\x12(.k8s.v1.CheckForwardedPortsHealthRequest\x1a).k8s.v1.CheckForwardedPortsHealthResponse\"\x00B\x86\x01\n" +
 	"\n" +
 	"com.k8s.v1B\fServiceProtoP\x01Z1github.com/kove-sh/kove-proto/gen/go/k8s/v1;k8sv1\xa2\x02\x03KXX\xaa\x02\x06K8s.V1\xca\x02\x06K8s\\V1\xe2\x02\x12K8s\\V1\\GPBMetadata\xea\x02\aK8s::V1b\x06proto3"
 
@@ -924,58 +979,60 @@ func file_k8s_v1_service_proto_rawDescGZIP() []byte {
 	return file_k8s_v1_service_proto_rawDescData
 }
 
-var file_k8s_v1_service_proto_msgTypes = make([]protoimpl.MessageInfo, 18)
+var file_k8s_v1_service_proto_msgTypes = make([]protoimpl.MessageInfo, 19)
 var file_k8s_v1_service_proto_goTypes = []any{
-	(*ListContextsRequest)(nil),              // 0: k8s.v1.ListContextsRequest
-	(*ListContextsResponse)(nil),             // 1: k8s.v1.ListContextsResponse
-	(*SetContextRequest)(nil),                // 2: k8s.v1.SetContextRequest
-	(*SetContextResponse)(nil),               // 3: k8s.v1.SetContextResponse
-	(*ListNamespacesRequest)(nil),            // 4: k8s.v1.ListNamespacesRequest
-	(*ListNamespacesResponse)(nil),           // 5: k8s.v1.ListNamespacesResponse
-	(*ListPodsRequest)(nil),                  // 6: k8s.v1.ListPodsRequest
-	(*ListPodsResponse)(nil),                 // 7: k8s.v1.ListPodsResponse
-	(*GetPodRequest)(nil),                    // 8: k8s.v1.GetPodRequest
-	(*GetPodResponse)(nil),                   // 9: k8s.v1.GetPodResponse
-	(*StreamPodLogsRequest)(nil),             // 10: k8s.v1.StreamPodLogsRequest
-	(*StreamPodLogsResponse)(nil),            // 11: k8s.v1.StreamPodLogsResponse
-	(*PortForwardPodRequest)(nil),            // 12: k8s.v1.PortForwardPodRequest
-	(*PortForwardPodResponse)(nil),           // 13: k8s.v1.PortForwardPodResponse
-	(*StopForwardedPortRequest)(nil),         // 14: k8s.v1.StopForwardedPortRequest
-	(*StopForwardedPortResponse)(nil),        // 15: k8s.v1.StopForwardedPortResponse
-	(*CheckForwardedPortHealthRequest)(nil),  // 16: k8s.v1.CheckForwardedPortHealthRequest
-	(*CheckForwardedPortHealthResponse)(nil), // 17: k8s.v1.CheckForwardedPortHealthResponse
-	(*Context)(nil),                          // 18: k8s.v1.Context
-	(*Pod)(nil),                              // 19: k8s.v1.Pod
-	(*ContainerLog)(nil),                     // 20: k8s.v1.ContainerLog
+	(*ListContextsRequest)(nil),                          // 0: k8s.v1.ListContextsRequest
+	(*ListContextsResponse)(nil),                         // 1: k8s.v1.ListContextsResponse
+	(*SetContextRequest)(nil),                            // 2: k8s.v1.SetContextRequest
+	(*SetContextResponse)(nil),                           // 3: k8s.v1.SetContextResponse
+	(*ListNamespacesRequest)(nil),                        // 4: k8s.v1.ListNamespacesRequest
+	(*ListNamespacesResponse)(nil),                       // 5: k8s.v1.ListNamespacesResponse
+	(*ListPodsRequest)(nil),                              // 6: k8s.v1.ListPodsRequest
+	(*ListPodsResponse)(nil),                             // 7: k8s.v1.ListPodsResponse
+	(*GetPodRequest)(nil),                                // 8: k8s.v1.GetPodRequest
+	(*GetPodResponse)(nil),                               // 9: k8s.v1.GetPodResponse
+	(*StreamPodLogsRequest)(nil),                         // 10: k8s.v1.StreamPodLogsRequest
+	(*StreamPodLogsResponse)(nil),                        // 11: k8s.v1.StreamPodLogsResponse
+	(*PortForwardPodRequest)(nil),                        // 12: k8s.v1.PortForwardPodRequest
+	(*PortForwardPodResponse)(nil),                       // 13: k8s.v1.PortForwardPodResponse
+	(*StopForwardedPortRequest)(nil),                     // 14: k8s.v1.StopForwardedPortRequest
+	(*StopForwardedPortResponse)(nil),                    // 15: k8s.v1.StopForwardedPortResponse
+	(*CheckForwardedPortsHealthRequest)(nil),             // 16: k8s.v1.CheckForwardedPortsHealthRequest
+	(*CheckForwardedPortsHealthResponse)(nil),            // 17: k8s.v1.CheckForwardedPortsHealthResponse
+	(*CheckForwardedPortsHealthResponse_PortHealth)(nil), // 18: k8s.v1.CheckForwardedPortsHealthResponse.PortHealth
+	(*Context)(nil),                                      // 19: k8s.v1.Context
+	(*Pod)(nil),                                          // 20: k8s.v1.Pod
+	(*ContainerLog)(nil),                                 // 21: k8s.v1.ContainerLog
 }
 var file_k8s_v1_service_proto_depIdxs = []int32{
-	18, // 0: k8s.v1.ListContextsResponse.contexts:type_name -> k8s.v1.Context
-	19, // 1: k8s.v1.ListPodsResponse.pods:type_name -> k8s.v1.Pod
-	19, // 2: k8s.v1.GetPodResponse.pod:type_name -> k8s.v1.Pod
-	20, // 3: k8s.v1.StreamPodLogsResponse.log_batch:type_name -> k8s.v1.ContainerLog
-	0,  // 4: k8s.v1.Service.ListContexts:input_type -> k8s.v1.ListContextsRequest
-	2,  // 5: k8s.v1.Service.SetContext:input_type -> k8s.v1.SetContextRequest
-	4,  // 6: k8s.v1.Service.ListNamespaces:input_type -> k8s.v1.ListNamespacesRequest
-	6,  // 7: k8s.v1.Service.ListPods:input_type -> k8s.v1.ListPodsRequest
-	8,  // 8: k8s.v1.Service.GetPod:input_type -> k8s.v1.GetPodRequest
-	10, // 9: k8s.v1.Service.StreamPodLogs:input_type -> k8s.v1.StreamPodLogsRequest
-	12, // 10: k8s.v1.Service.PortForwardPod:input_type -> k8s.v1.PortForwardPodRequest
-	16, // 11: k8s.v1.Service.CheckForwardedPortHealth:input_type -> k8s.v1.CheckForwardedPortHealthRequest
+	19, // 0: k8s.v1.ListContextsResponse.contexts:type_name -> k8s.v1.Context
+	20, // 1: k8s.v1.ListPodsResponse.pods:type_name -> k8s.v1.Pod
+	20, // 2: k8s.v1.GetPodResponse.pod:type_name -> k8s.v1.Pod
+	21, // 3: k8s.v1.StreamPodLogsResponse.log_batch:type_name -> k8s.v1.ContainerLog
+	18, // 4: k8s.v1.CheckForwardedPortsHealthResponse.ports:type_name -> k8s.v1.CheckForwardedPortsHealthResponse.PortHealth
+	0,  // 5: k8s.v1.Service.ListContexts:input_type -> k8s.v1.ListContextsRequest
+	2,  // 6: k8s.v1.Service.SetContext:input_type -> k8s.v1.SetContextRequest
+	4,  // 7: k8s.v1.Service.ListNamespaces:input_type -> k8s.v1.ListNamespacesRequest
+	6,  // 8: k8s.v1.Service.ListPods:input_type -> k8s.v1.ListPodsRequest
+	8,  // 9: k8s.v1.Service.GetPod:input_type -> k8s.v1.GetPodRequest
+	10, // 10: k8s.v1.Service.StreamPodLogs:input_type -> k8s.v1.StreamPodLogsRequest
+	12, // 11: k8s.v1.Service.PortForwardPod:input_type -> k8s.v1.PortForwardPodRequest
 	14, // 12: k8s.v1.Service.StopForwardedPort:input_type -> k8s.v1.StopForwardedPortRequest
-	1,  // 13: k8s.v1.Service.ListContexts:output_type -> k8s.v1.ListContextsResponse
-	3,  // 14: k8s.v1.Service.SetContext:output_type -> k8s.v1.SetContextResponse
-	5,  // 15: k8s.v1.Service.ListNamespaces:output_type -> k8s.v1.ListNamespacesResponse
-	7,  // 16: k8s.v1.Service.ListPods:output_type -> k8s.v1.ListPodsResponse
-	9,  // 17: k8s.v1.Service.GetPod:output_type -> k8s.v1.GetPodResponse
-	11, // 18: k8s.v1.Service.StreamPodLogs:output_type -> k8s.v1.StreamPodLogsResponse
-	13, // 19: k8s.v1.Service.PortForwardPod:output_type -> k8s.v1.PortForwardPodResponse
-	17, // 20: k8s.v1.Service.CheckForwardedPortHealth:output_type -> k8s.v1.CheckForwardedPortHealthResponse
+	16, // 13: k8s.v1.Service.CheckForwardedPortsHealth:input_type -> k8s.v1.CheckForwardedPortsHealthRequest
+	1,  // 14: k8s.v1.Service.ListContexts:output_type -> k8s.v1.ListContextsResponse
+	3,  // 15: k8s.v1.Service.SetContext:output_type -> k8s.v1.SetContextResponse
+	5,  // 16: k8s.v1.Service.ListNamespaces:output_type -> k8s.v1.ListNamespacesResponse
+	7,  // 17: k8s.v1.Service.ListPods:output_type -> k8s.v1.ListPodsResponse
+	9,  // 18: k8s.v1.Service.GetPod:output_type -> k8s.v1.GetPodResponse
+	11, // 19: k8s.v1.Service.StreamPodLogs:output_type -> k8s.v1.StreamPodLogsResponse
+	13, // 20: k8s.v1.Service.PortForwardPod:output_type -> k8s.v1.PortForwardPodResponse
 	15, // 21: k8s.v1.Service.StopForwardedPort:output_type -> k8s.v1.StopForwardedPortResponse
-	13, // [13:22] is the sub-list for method output_type
-	4,  // [4:13] is the sub-list for method input_type
-	4,  // [4:4] is the sub-list for extension type_name
-	4,  // [4:4] is the sub-list for extension extendee
-	0,  // [0:4] is the sub-list for field type_name
+	17, // 22: k8s.v1.Service.CheckForwardedPortsHealth:output_type -> k8s.v1.CheckForwardedPortsHealthResponse
+	14, // [14:23] is the sub-list for method output_type
+	5,  // [5:14] is the sub-list for method input_type
+	5,  // [5:5] is the sub-list for extension type_name
+	5,  // [5:5] is the sub-list for extension extendee
+	0,  // [0:5] is the sub-list for field type_name
 }
 
 func init() { file_k8s_v1_service_proto_init() }
@@ -984,14 +1041,14 @@ func file_k8s_v1_service_proto_init() {
 		return
 	}
 	file_k8s_v1_types_proto_init()
-	file_k8s_v1_service_proto_msgTypes[17].OneofWrappers = []any{}
+	file_k8s_v1_service_proto_msgTypes[18].OneofWrappers = []any{}
 	type x struct{}
 	out := protoimpl.TypeBuilder{
 		File: protoimpl.DescBuilder{
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_k8s_v1_service_proto_rawDesc), len(file_k8s_v1_service_proto_rawDesc)),
 			NumEnums:      0,
-			NumMessages:   18,
+			NumMessages:   19,
 			NumExtensions: 0,
 			NumServices:   1,
 		},
