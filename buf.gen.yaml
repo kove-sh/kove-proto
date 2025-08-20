@@ -24,7 +24,7 @@ plugins:
     opt:
       - Visibility=Public
 
-  - plugin: buf.build/grpc/swift-protobuf:v2.0.0
+  - plugin: buf.build/grpc/swift-protobuf:v2.1.0
     out: gen/swift
     opt:
       - Client=true
