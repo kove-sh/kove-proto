@@ -24,20 +24,19 @@ const (
 
 type Deployment struct {
 	state               protoimpl.MessageState `protogen:"open.v1"`
-	Namespace           string                 `protobuf:"bytes,1,opt,name=namespace,proto3" json:"namespace,omitempty"`
-	Name                string                 `protobuf:"bytes,2,opt,name=name,proto3" json:"name,omitempty"`
-	Selector            string                 `protobuf:"bytes,3,opt,name=selector,proto3" json:"selector,omitempty"` // formatted label selector
-	Images              []string               `protobuf:"bytes,4,rep,name=images,proto3" json:"images,omitempty"`     // unique container images
-	Replicas            *int32                 `protobuf:"varint,5,opt,name=replicas,proto3,oneof" json:"replicas,omitempty"`
-	UpdatedReplicas     int32                  `protobuf:"varint,6,opt,name=updated_replicas,json=updatedReplicas,proto3" json:"updated_replicas,omitempty"`
-	ReadyReplicas       int32                  `protobuf:"varint,7,opt,name=ready_replicas,json=readyReplicas,proto3" json:"ready_replicas,omitempty"`
-	AvailableReplicas   int32                  `protobuf:"varint,8,opt,name=available_replicas,json=availableReplicas,proto3" json:"available_replicas,omitempty"`
-	UnavailableReplicas int32                  `protobuf:"varint,9,opt,name=unavailable_replicas,json=unavailableReplicas,proto3" json:"unavailable_replicas,omitempty"`
-	Generation          int64                  `protobuf:"varint,10,opt,name=generation,proto3" json:"generation,omitempty"`
-	ObservedGeneration  int64                  `protobuf:"varint,11,opt,name=observed_generation,json=observedGeneration,proto3" json:"observed_generation,omitempty"`
-	Strategy            *DeploymentStrategy    `protobuf:"bytes,12,opt,name=strategy,proto3" json:"strategy,omitempty"`
-	Conditions          []*DeploymentCondition `protobuf:"bytes,13,rep,name=conditions,proto3" json:"conditions,omitempty"`
-	Pods                []*PodSummary          `protobuf:"bytes,14,rep,name=pods,proto3" json:"pods,omitempty"`
+	Meta                *ObjectMeta            `protobuf:"bytes,1,opt,name=meta,proto3" json:"meta,omitempty"`
+	Selector            string                 `protobuf:"bytes,2,opt,name=selector,proto3" json:"selector,omitempty"` // formatted label selector
+	Images              []string               `protobuf:"bytes,3,rep,name=images,proto3" json:"images,omitempty"`     // unique container images
+	Replicas            *int32                 `protobuf:"varint,4,opt,name=replicas,proto3,oneof" json:"replicas,omitempty"`
+	UpdatedReplicas     int32                  `protobuf:"varint,5,opt,name=updated_replicas,json=updatedReplicas,proto3" json:"updated_replicas,omitempty"`
+	ReadyReplicas       int32                  `protobuf:"varint,6,opt,name=ready_replicas,json=readyReplicas,proto3" json:"ready_replicas,omitempty"`
+	AvailableReplicas   int32                  `protobuf:"varint,7,opt,name=available_replicas,json=availableReplicas,proto3" json:"available_replicas,omitempty"`
+	UnavailableReplicas int32                  `protobuf:"varint,8,opt,name=unavailable_replicas,json=unavailableReplicas,proto3" json:"unavailable_replicas,omitempty"`
+	Generation          int64                  `protobuf:"varint,9,opt,name=generation,proto3" json:"generation,omitempty"`
+	ObservedGeneration  int64                  `protobuf:"varint,10,opt,name=observed_generation,json=observedGeneration,proto3" json:"observed_generation,omitempty"`
+	Strategy            *DeploymentStrategy    `protobuf:"bytes,11,opt,name=strategy,proto3" json:"strategy,omitempty"`
+	Conditions          []*DeploymentCondition `protobuf:"bytes,12,rep,name=conditions,proto3" json:"conditions,omitempty"`
+	Pods                []*PodSummary          `protobuf:"bytes,13,rep,name=pods,proto3" json:"pods,omitempty"`
 	unknownFields       protoimpl.UnknownFields
 	sizeCache           protoimpl.SizeCache
 }
@@ -72,18 +71,11 @@ func (*Deployment) Descriptor() ([]byte, []int) {
 	return file_k8s_v1_deployment_proto_rawDescGZIP(), []int{0}
 }
 
-func (x *Deployment) GetNamespace() string {
+func (x *Deployment) GetMeta() *ObjectMeta {
 	if x != nil {
-		return x.Namespace
+		return x.Meta
 	}
-	return ""
-}
-
-func (x *Deployment) GetName() string {
-	if x != nil {
-		return x.Name
-	}
-	return ""
+	return nil
 }
 
 func (x *Deployment) GetSelector() string {
@@ -367,28 +359,27 @@ var File_k8s_v1_deployment_proto protoreflect.FileDescriptor
 
 const file_k8s_v1_deployment_proto_rawDesc = "" +
 	"\n" +
-	"\x17k8s/v1/deployment.proto\x12\x06k8s.v1\x1a\x1fgoogle/protobuf/timestamp.proto\x1a\x10k8s/v1/pod.proto\"\xc2\x04\n" +
+	"\x17k8s/v1/deployment.proto\x12\x06k8s.v1\x1a\x1fgoogle/protobuf/timestamp.proto\x1a\x11k8s/v1/base.proto\x1a\x10k8s/v1/pod.proto\"\xb8\x04\n" +
 	"\n" +
-	"Deployment\x12\x1c\n" +
-	"\tnamespace\x18\x01 \x01(\tR\tnamespace\x12\x12\n" +
-	"\x04name\x18\x02 \x01(\tR\x04name\x12\x1a\n" +
-	"\bselector\x18\x03 \x01(\tR\bselector\x12\x16\n" +
-	"\x06images\x18\x04 \x03(\tR\x06images\x12\x1f\n" +
-	"\breplicas\x18\x05 \x01(\x05H\x00R\breplicas\x88\x01\x01\x12)\n" +
-	"\x10updated_replicas\x18\x06 \x01(\x05R\x0fupdatedReplicas\x12%\n" +
-	"\x0eready_replicas\x18\a \x01(\x05R\rreadyReplicas\x12-\n" +
-	"\x12available_replicas\x18\b \x01(\x05R\x11availableReplicas\x121\n" +
-	"\x14unavailable_replicas\x18\t \x01(\x05R\x13unavailableReplicas\x12\x1e\n" +
+	"Deployment\x12&\n" +
+	"\x04meta\x18\x01 \x01(\v2\x12.k8s.v1.ObjectMetaR\x04meta\x12\x1a\n" +
+	"\bselector\x18\x02 \x01(\tR\bselector\x12\x16\n" +
+	"\x06images\x18\x03 \x03(\tR\x06images\x12\x1f\n" +
+	"\breplicas\x18\x04 \x01(\x05H\x00R\breplicas\x88\x01\x01\x12)\n" +
+	"\x10updated_replicas\x18\x05 \x01(\x05R\x0fupdatedReplicas\x12%\n" +
+	"\x0eready_replicas\x18\x06 \x01(\x05R\rreadyReplicas\x12-\n" +
+	"\x12available_replicas\x18\a \x01(\x05R\x11availableReplicas\x121\n" +
+	"\x14unavailable_replicas\x18\b \x01(\x05R\x13unavailableReplicas\x12\x1e\n" +
 	"\n" +
-	"generation\x18\n" +
-	" \x01(\x03R\n" +
+	"generation\x18\t \x01(\x03R\n" +
 	"generation\x12/\n" +
-	"\x13observed_generation\x18\v \x01(\x03R\x12observedGeneration\x126\n" +
-	"\bstrategy\x18\f \x01(\v2\x1a.k8s.v1.DeploymentStrategyR\bstrategy\x12;\n" +
+	"\x13observed_generation\x18\n" +
+	" \x01(\x03R\x12observedGeneration\x126\n" +
+	"\bstrategy\x18\v \x01(\v2\x1a.k8s.v1.DeploymentStrategyR\bstrategy\x12;\n" +
 	"\n" +
-	"conditions\x18\r \x03(\v2\x1b.k8s.v1.DeploymentConditionR\n" +
+	"conditions\x18\f \x03(\v2\x1b.k8s.v1.DeploymentConditionR\n" +
 	"conditions\x12&\n" +
-	"\x04pods\x18\x0e \x03(\v2\x12.k8s.v1.PodSummaryR\x04podsB\v\n" +
+	"\x04pods\x18\r \x03(\v2\x12.k8s.v1.PodSummaryR\x04podsB\v\n" +
 	"\t_replicas\"p\n" +
 	"\x12DeploymentStrategy\x12\x12\n" +
 	"\x04type\x18\x01 \x01(\tR\x04type\x12F\n" +
@@ -424,21 +415,23 @@ var file_k8s_v1_deployment_proto_goTypes = []any{
 	(*DeploymentStrategy)(nil),      // 1: k8s.v1.DeploymentStrategy
 	(*RollingUpdateDeployment)(nil), // 2: k8s.v1.RollingUpdateDeployment
 	(*DeploymentCondition)(nil),     // 3: k8s.v1.DeploymentCondition
-	(*PodSummary)(nil),              // 4: k8s.v1.PodSummary
-	(*timestamppb.Timestamp)(nil),   // 5: google.protobuf.Timestamp
+	(*ObjectMeta)(nil),              // 4: k8s.v1.ObjectMeta
+	(*PodSummary)(nil),              // 5: k8s.v1.PodSummary
+	(*timestamppb.Timestamp)(nil),   // 6: google.protobuf.Timestamp
 }
 var file_k8s_v1_deployment_proto_depIdxs = []int32{
-	1, // 0: k8s.v1.Deployment.strategy:type_name -> k8s.v1.DeploymentStrategy
-	3, // 1: k8s.v1.Deployment.conditions:type_name -> k8s.v1.DeploymentCondition
-	4, // 2: k8s.v1.Deployment.pods:type_name -> k8s.v1.PodSummary
-	2, // 3: k8s.v1.DeploymentStrategy.rolling_update:type_name -> k8s.v1.RollingUpdateDeployment
-	5, // 4: k8s.v1.DeploymentCondition.last_update_time:type_name -> google.protobuf.Timestamp
-	5, // 5: k8s.v1.DeploymentCondition.last_transition_time:type_name -> google.protobuf.Timestamp
-	6, // [6:6] is the sub-list for method output_type
-	6, // [6:6] is the sub-list for method input_type
-	6, // [6:6] is the sub-list for extension type_name
-	6, // [6:6] is the sub-list for extension extendee
-	0, // [0:6] is the sub-list for field type_name
+	4, // 0: k8s.v1.Deployment.meta:type_name -> k8s.v1.ObjectMeta
+	1, // 1: k8s.v1.Deployment.strategy:type_name -> k8s.v1.DeploymentStrategy
+	3, // 2: k8s.v1.Deployment.conditions:type_name -> k8s.v1.DeploymentCondition
+	5, // 3: k8s.v1.Deployment.pods:type_name -> k8s.v1.PodSummary
+	2, // 4: k8s.v1.DeploymentStrategy.rolling_update:type_name -> k8s.v1.RollingUpdateDeployment
+	6, // 5: k8s.v1.DeploymentCondition.last_update_time:type_name -> google.protobuf.Timestamp
+	6, // 6: k8s.v1.DeploymentCondition.last_transition_time:type_name -> google.protobuf.Timestamp
+	7, // [7:7] is the sub-list for method output_type
+	7, // [7:7] is the sub-list for method input_type
+	7, // [7:7] is the sub-list for extension type_name
+	7, // [7:7] is the sub-list for extension extendee
+	0, // [0:7] is the sub-list for field type_name
 }
 
 func init() { file_k8s_v1_deployment_proto_init() }
@@ -446,6 +439,7 @@ func file_k8s_v1_deployment_proto_init() {
 	if File_k8s_v1_deployment_proto != nil {
 		return
 	}
+	file_k8s_v1_base_proto_init()
 	file_k8s_v1_pod_proto_init()
 	file_k8s_v1_deployment_proto_msgTypes[0].OneofWrappers = []any{}
 	type x struct{}

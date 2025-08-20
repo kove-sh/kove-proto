@@ -3,24 +3,23 @@ syntax = "proto3";
 package k8s.v1;
 
 import "google/protobuf/timestamp.proto";
+import "k8s/v1/base.proto";
 import "k8s/v1/pod.proto";
 
 message Deployment {
-  string namespace = 1;
-  string name = 2;
-  string selector = 3; // formatted label selector
-  repeated string images = 4; // unique container images
-
-  optional int32 replicas = 5;
-  int32 updated_replicas = 6;
-  int32 ready_replicas = 7;
-  int32 available_replicas = 8;
-  int32 unavailable_replicas = 9;
-  int64 generation = 10;
-  int64 observed_generation = 11;
-  DeploymentStrategy strategy = 12;
-  repeated DeploymentCondition conditions = 13;
-  repeated PodSummary pods = 14;
+  ObjectMeta meta = 1;
+  string selector = 2; // formatted label selector
+  repeated string images = 3; // unique container images
+  optional int32 replicas = 4;
+  int32 updated_replicas = 5;
+  int32 ready_replicas = 6;
+  int32 available_replicas = 7;
+  int32 unavailable_replicas = 8;
+  int64 generation = 9;
+  int64 observed_generation = 10;
+  DeploymentStrategy strategy = 11;
+  repeated DeploymentCondition conditions = 12;
+  repeated PodSummary pods = 13;
 }
 
 // Mirrors the essentials of apps/v1.DeploymentStrategy.

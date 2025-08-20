@@ -20,61 +20,95 @@ fileprivate struct _GeneratedWithProtocGenSwiftVersion: SwiftProtobuf.ProtobufAP
   typealias Version = _2
 }
 
-public struct K8s_V1_Deployment: Sendable {
+public struct K8s_V1_Deployment: @unchecked Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
-  public var namespace: String = String()
-
-  public var name: String = String()
+  public var meta: K8s_V1_ObjectMeta {
+    get {return _storage._meta ?? K8s_V1_ObjectMeta()}
+    set {_uniqueStorage()._meta = newValue}
+  }
+  /// Returns true if `meta` has been explicitly set.
+  public var hasMeta: Bool {return _storage._meta != nil}
+  /// Clears the value of `meta`. Subsequent reads from it will return its default value.
+  public mutating func clearMeta() {_uniqueStorage()._meta = nil}
 
   /// formatted label selector
-  public var selector: String = String()
+  public var selector: String {
+    get {return _storage._selector}
+    set {_uniqueStorage()._selector = newValue}
+  }
 
   /// unique container images
-  public var images: [String] = []
+  public var images: [String] {
+    get {return _storage._images}
+    set {_uniqueStorage()._images = newValue}
+  }
 
   public var replicas: Int32 {
-    get {return _replicas ?? 0}
-    set {_replicas = newValue}
+    get {return _storage._replicas ?? 0}
+    set {_uniqueStorage()._replicas = newValue}
   }
   /// Returns true if `replicas` has been explicitly set.
-  public var hasReplicas: Bool {return self._replicas != nil}
+  public var hasReplicas: Bool {return _storage._replicas != nil}
   /// Clears the value of `replicas`. Subsequent reads from it will return its default value.
-  public mutating func clearReplicas() {self._replicas = nil}
+  public mutating func clearReplicas() {_uniqueStorage()._replicas = nil}
 
-  public var updatedReplicas: Int32 = 0
+  public var updatedReplicas: Int32 {
+    get {return _storage._updatedReplicas}
+    set {_uniqueStorage()._updatedReplicas = newValue}
+  }
 
-  public var readyReplicas: Int32 = 0
+  public var readyReplicas: Int32 {
+    get {return _storage._readyReplicas}
+    set {_uniqueStorage()._readyReplicas = newValue}
+  }
 
-  public var availableReplicas: Int32 = 0
+  public var availableReplicas: Int32 {
+    get {return _storage._availableReplicas}
+    set {_uniqueStorage()._availableReplicas = newValue}
+  }
 
-  public var unavailableReplicas: Int32 = 0
+  public var unavailableReplicas: Int32 {
+    get {return _storage._unavailableReplicas}
+    set {_uniqueStorage()._unavailableReplicas = newValue}
+  }
 
-  public var generation: Int64 = 0
+  public var generation: Int64 {
+    get {return _storage._generation}
+    set {_uniqueStorage()._generation = newValue}
+  }
 
-  public var observedGeneration: Int64 = 0
+  public var observedGeneration: Int64 {
+    get {return _storage._observedGeneration}
+    set {_uniqueStorage()._observedGeneration = newValue}
+  }
 
   public var strategy: K8s_V1_DeploymentStrategy {
-    get {return _strategy ?? K8s_V1_DeploymentStrategy()}
-    set {_strategy = newValue}
+    get {return _storage._strategy ?? K8s_V1_DeploymentStrategy()}
+    set {_uniqueStorage()._strategy = newValue}
   }
   /// Returns true if `strategy` has been explicitly set.
-  public var hasStrategy: Bool {return self._strategy != nil}
+  public var hasStrategy: Bool {return _storage._strategy != nil}
   /// Clears the value of `strategy`. Subsequent reads from it will return its default value.
-  public mutating func clearStrategy() {self._strategy = nil}
+  public mutating func clearStrategy() {_uniqueStorage()._strategy = nil}
 
-  public var conditions: [K8s_V1_DeploymentCondition] = []
+  public var conditions: [K8s_V1_DeploymentCondition] {
+    get {return _storage._conditions}
+    set {_uniqueStorage()._conditions = newValue}
+  }
 
-  public var pods: [K8s_V1_PodSummary] = []
+  public var pods: [K8s_V1_PodSummary] {
+    get {return _storage._pods}
+    set {_uniqueStorage()._pods = newValue}
+  }
 
   public var unknownFields = SwiftProtobuf.UnknownStorage()
 
   public init() {}
 
-  fileprivate var _replicas: Int32? = nil
-  fileprivate var _strategy: K8s_V1_DeploymentStrategy? = nil
+  fileprivate var _storage = _StorageClass.defaultInstance
 }
 
 /// Mirrors the essentials of apps/v1.DeploymentStrategy.
@@ -164,98 +198,153 @@ fileprivate let _protobuf_package = "k8s.v1"
 
 extension K8s_V1_Deployment: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".Deployment"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}namespace\0\u{1}name\0\u{1}selector\0\u{1}images\0\u{1}replicas\0\u{3}updated_replicas\0\u{3}ready_replicas\0\u{3}available_replicas\0\u{3}unavailable_replicas\0\u{1}generation\0\u{3}observed_generation\0\u{1}strategy\0\u{1}conditions\0\u{1}pods\0")
+  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}meta\0\u{1}selector\0\u{1}images\0\u{1}replicas\0\u{3}updated_replicas\0\u{3}ready_replicas\0\u{3}available_replicas\0\u{3}unavailable_replicas\0\u{1}generation\0\u{3}observed_generation\0\u{1}strategy\0\u{1}conditions\0\u{1}pods\0")
+
+  fileprivate class _StorageClass {
+    var _meta: K8s_V1_ObjectMeta? = nil
+    var _selector: String = String()
+    var _images: [String] = []
+    var _replicas: Int32? = nil
+    var _updatedReplicas: Int32 = 0
+    var _readyReplicas: Int32 = 0
+    var _availableReplicas: Int32 = 0
+    var _unavailableReplicas: Int32 = 0
+    var _generation: Int64 = 0
+    var _observedGeneration: Int64 = 0
+    var _strategy: K8s_V1_DeploymentStrategy? = nil
+    var _conditions: [K8s_V1_DeploymentCondition] = []
+    var _pods: [K8s_V1_PodSummary] = []
+
+      // This property is used as the initial default value for new instances of the type.
+      // The type itself is protecting the reference to its storage via CoW semantics.
+      // This will force a copy to be made of this reference when the first mutation occurs;
+      // hence, it is safe to mark this as `nonisolated(unsafe)`.
+      static nonisolated(unsafe) let defaultInstance = _StorageClass()
+
+    private init() {}
+
+    init(copying source: _StorageClass) {
+      _meta = source._meta
+      _selector = source._selector
+      _images = source._images
+      _replicas = source._replicas
+      _updatedReplicas = source._updatedReplicas
+      _readyReplicas = source._readyReplicas
+      _availableReplicas = source._availableReplicas
+      _unavailableReplicas = source._unavailableReplicas
+      _generation = source._generation
+      _observedGeneration = source._observedGeneration
+      _strategy = source._strategy
+      _conditions = source._conditions
+      _pods = source._pods
+    }
+  }
+
+  fileprivate mutating func _uniqueStorage() -> _StorageClass {
+    if !isKnownUniquelyReferenced(&_storage) {
+      _storage = _StorageClass(copying: _storage)
+    }
+    return _storage
+  }
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
-    while let fieldNumber = try decoder.nextFieldNumber() {
-      // The use of inline closures is to circumvent an issue where the compiler
-      // allocates stack space for every case branch when no optimizations are
-      // enabled. https://github.com/apple/swift-protobuf/issues/1034
-      switch fieldNumber {
-      case 1: try { try decoder.decodeSingularStringField(value: &self.namespace) }()
-      case 2: try { try decoder.decodeSingularStringField(value: &self.name) }()
-      case 3: try { try decoder.decodeSingularStringField(value: &self.selector) }()
-      case 4: try { try decoder.decodeRepeatedStringField(value: &self.images) }()
-      case 5: try { try decoder.decodeSingularInt32Field(value: &self._replicas) }()
-      case 6: try { try decoder.decodeSingularInt32Field(value: &self.updatedReplicas) }()
-      case 7: try { try decoder.decodeSingularInt32Field(value: &self.readyReplicas) }()
-      case 8: try { try decoder.decodeSingularInt32Field(value: &self.availableReplicas) }()
-      case 9: try { try decoder.decodeSingularInt32Field(value: &self.unavailableReplicas) }()
-      case 10: try { try decoder.decodeSingularInt64Field(value: &self.generation) }()
-      case 11: try { try decoder.decodeSingularInt64Field(value: &self.observedGeneration) }()
-      case 12: try { try decoder.decodeSingularMessageField(value: &self._strategy) }()
-      case 13: try { try decoder.decodeRepeatedMessageField(value: &self.conditions) }()
-      case 14: try { try decoder.decodeRepeatedMessageField(value: &self.pods) }()
-      default: break
+    _ = _uniqueStorage()
+    try withExtendedLifetime(_storage) { (_storage: _StorageClass) in
+      while let fieldNumber = try decoder.nextFieldNumber() {
+        // The use of inline closures is to circumvent an issue where the compiler
+        // allocates stack space for every case branch when no optimizations are
+        // enabled. https://github.com/apple/swift-protobuf/issues/1034
+        switch fieldNumber {
+        case 1: try { try decoder.decodeSingularMessageField(value: &_storage._meta) }()
+        case 2: try { try decoder.decodeSingularStringField(value: &_storage._selector) }()
+        case 3: try { try decoder.decodeRepeatedStringField(value: &_storage._images) }()
+        case 4: try { try decoder.decodeSingularInt32Field(value: &_storage._replicas) }()
+        case 5: try { try decoder.decodeSingularInt32Field(value: &_storage._updatedReplicas) }()
+        case 6: try { try decoder.decodeSingularInt32Field(value: &_storage._readyReplicas) }()
+        case 7: try { try decoder.decodeSingularInt32Field(value: &_storage._availableReplicas) }()
+        case 8: try { try decoder.decodeSingularInt32Field(value: &_storage._unavailableReplicas) }()
+        case 9: try { try decoder.decodeSingularInt64Field(value: &_storage._generation) }()
+        case 10: try { try decoder.decodeSingularInt64Field(value: &_storage._observedGeneration) }()
+        case 11: try { try decoder.decodeSingularMessageField(value: &_storage._strategy) }()
+        case 12: try { try decoder.decodeRepeatedMessageField(value: &_storage._conditions) }()
+        case 13: try { try decoder.decodeRepeatedMessageField(value: &_storage._pods) }()
+        default: break
+        }
       }
     }
   }
 
   public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
-    // The use of inline closures is to circumvent an issue where the compiler
-    // allocates stack space for every if/case branch local when no optimizations
-    // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
-    // https://github.com/apple/swift-protobuf/issues/1182
-    if !self.namespace.isEmpty {
-      try visitor.visitSingularStringField(value: self.namespace, fieldNumber: 1)
-    }
-    if !self.name.isEmpty {
-      try visitor.visitSingularStringField(value: self.name, fieldNumber: 2)
-    }
-    if !self.selector.isEmpty {
-      try visitor.visitSingularStringField(value: self.selector, fieldNumber: 3)
-    }
-    if !self.images.isEmpty {
-      try visitor.visitRepeatedStringField(value: self.images, fieldNumber: 4)
-    }
-    try { if let v = self._replicas {
-      try visitor.visitSingularInt32Field(value: v, fieldNumber: 5)
-    } }()
-    if self.updatedReplicas != 0 {
-      try visitor.visitSingularInt32Field(value: self.updatedReplicas, fieldNumber: 6)
-    }
-    if self.readyReplicas != 0 {
-      try visitor.visitSingularInt32Field(value: self.readyReplicas, fieldNumber: 7)
-    }
-    if self.availableReplicas != 0 {
-      try visitor.visitSingularInt32Field(value: self.availableReplicas, fieldNumber: 8)
-    }
-    if self.unavailableReplicas != 0 {
-      try visitor.visitSingularInt32Field(value: self.unavailableReplicas, fieldNumber: 9)
-    }
-    if self.generation != 0 {
-      try visitor.visitSingularInt64Field(value: self.generation, fieldNumber: 10)
-    }
-    if self.observedGeneration != 0 {
-      try visitor.visitSingularInt64Field(value: self.observedGeneration, fieldNumber: 11)
-    }
-    try { if let v = self._strategy {
-      try visitor.visitSingularMessageField(value: v, fieldNumber: 12)
-    } }()
-    if !self.conditions.isEmpty {
-      try visitor.visitRepeatedMessageField(value: self.conditions, fieldNumber: 13)
-    }
-    if !self.pods.isEmpty {
-      try visitor.visitRepeatedMessageField(value: self.pods, fieldNumber: 14)
+    try withExtendedLifetime(_storage) { (_storage: _StorageClass) in
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every if/case branch local when no optimizations
+      // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
+      // https://github.com/apple/swift-protobuf/issues/1182
+      try { if let v = _storage._meta {
+        try visitor.visitSingularMessageField(value: v, fieldNumber: 1)
+      } }()
+      if !_storage._selector.isEmpty {
+        try visitor.visitSingularStringField(value: _storage._selector, fieldNumber: 2)
+      }
+      if !_storage._images.isEmpty {
+        try visitor.visitRepeatedStringField(value: _storage._images, fieldNumber: 3)
+      }
+      try { if let v = _storage._replicas {
+        try visitor.visitSingularInt32Field(value: v, fieldNumber: 4)
+      } }()
+      if _storage._updatedReplicas != 0 {
+        try visitor.visitSingularInt32Field(value: _storage._updatedReplicas, fieldNumber: 5)
+      }
+      if _storage._readyReplicas != 0 {
+        try visitor.visitSingularInt32Field(value: _storage._readyReplicas, fieldNumber: 6)
+      }
+      if _storage._availableReplicas != 0 {
+        try visitor.visitSingularInt32Field(value: _storage._availableReplicas, fieldNumber: 7)
+      }
+      if _storage._unavailableReplicas != 0 {
+        try visitor.visitSingularInt32Field(value: _storage._unavailableReplicas, fieldNumber: 8)
+      }
+      if _storage._generation != 0 {
+        try visitor.visitSingularInt64Field(value: _storage._generation, fieldNumber: 9)
+      }
+      if _storage._observedGeneration != 0 {
+        try visitor.visitSingularInt64Field(value: _storage._observedGeneration, fieldNumber: 10)
+      }
+      try { if let v = _storage._strategy {
+        try visitor.visitSingularMessageField(value: v, fieldNumber: 11)
+      } }()
+      if !_storage._conditions.isEmpty {
+        try visitor.visitRepeatedMessageField(value: _storage._conditions, fieldNumber: 12)
+      }
+      if !_storage._pods.isEmpty {
+        try visitor.visitRepeatedMessageField(value: _storage._pods, fieldNumber: 13)
+      }
     }
     try unknownFields.traverse(visitor: &visitor)
   }
 
   public static func ==(lhs: K8s_V1_Deployment, rhs: K8s_V1_Deployment) -> Bool {
-    if lhs.namespace != rhs.namespace {return false}
-    if lhs.name != rhs.name {return false}
-    if lhs.selector != rhs.selector {return false}
-    if lhs.images != rhs.images {return false}
-    if lhs._replicas != rhs._replicas {return false}
-    if lhs.updatedReplicas != rhs.updatedReplicas {return false}
-    if lhs.readyReplicas != rhs.readyReplicas {return false}
-    if lhs.availableReplicas != rhs.availableReplicas {return false}
-    if lhs.unavailableReplicas != rhs.unavailableReplicas {return false}
-    if lhs.generation != rhs.generation {return false}
-    if lhs.observedGeneration != rhs.observedGeneration {return false}
-    if lhs._strategy != rhs._strategy {return false}
-    if lhs.conditions != rhs.conditions {return false}
-    if lhs.pods != rhs.pods {return false}
+    if lhs._storage !== rhs._storage {
+      let storagesAreEqual: Bool = withExtendedLifetime((lhs._storage, rhs._storage)) { (_args: (_StorageClass, _StorageClass)) in
+        let _storage = _args.0
+        let rhs_storage = _args.1
+        if _storage._meta != rhs_storage._meta {return false}
+        if _storage._selector != rhs_storage._selector {return false}
+        if _storage._images != rhs_storage._images {return false}
+        if _storage._replicas != rhs_storage._replicas {return false}
+        if _storage._updatedReplicas != rhs_storage._updatedReplicas {return false}
+        if _storage._readyReplicas != rhs_storage._readyReplicas {return false}
+        if _storage._availableReplicas != rhs_storage._availableReplicas {return false}
+        if _storage._unavailableReplicas != rhs_storage._unavailableReplicas {return false}
+        if _storage._generation != rhs_storage._generation {return false}
+        if _storage._observedGeneration != rhs_storage._observedGeneration {return false}
+        if _storage._strategy != rhs_storage._strategy {return false}
+        if _storage._conditions != rhs_storage._conditions {return false}
+        if _storage._pods != rhs_storage._pods {return false}
+        return true
+      }
+      if !storagesAreEqual {return false}
+    }
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }
