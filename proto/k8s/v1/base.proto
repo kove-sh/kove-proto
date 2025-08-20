@@ -1,0 +1,24 @@
+syntax = "proto3";
+
+package k8s.v1;
+
+import "google/protobuf/timestamp.proto";
+
+message Context {
+  string name = 1;
+  string cluster = 2;
+  string default_namespace = 3;
+}
+
+// https://pkg.go.dev/k8s.io/apimachinery/pkg/apis/meta/v1@v0.33.3#ObjectMeta
+message ObjectMeta {
+  string name = 1;
+  string namespace = 2;
+  string generate_name = 3;
+  string uid = 4;
+  string resource_version = 5;
+  int64 generation = 6;
+  google.protobuf.Timestamp creation_timestamp = 7;
+  optional google.protobuf.Timestamp deletion_timestamp = 8;
+  optional int64 deletion_grace_period_seconds = 9;
+}

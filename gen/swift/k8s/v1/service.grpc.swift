@@ -56,6 +56,30 @@ public enum K8s_V1_Service {
                 method: "ListNamespaces"
             )
         }
+        /// Namespace for "ListDeployments" metadata.
+        public enum ListDeployments {
+            /// Request type for "ListDeployments".
+            public typealias Input = K8s_V1_ListDeploymentsRequest
+            /// Response type for "ListDeployments".
+            public typealias Output = K8s_V1_ListDeploymentsResponse
+            /// Descriptor for "ListDeployments".
+            public static let descriptor = GRPCCore.MethodDescriptor(
+                service: GRPCCore.ServiceDescriptor(fullyQualifiedService: "k8s.v1.Service"),
+                method: "ListDeployments"
+            )
+        }
+        /// Namespace for "GetDeployment" metadata.
+        public enum GetDeployment {
+            /// Request type for "GetDeployment".
+            public typealias Input = K8s_V1_GetDeploymentRequest
+            /// Response type for "GetDeployment".
+            public typealias Output = K8s_V1_GetDeploymentResponse
+            /// Descriptor for "GetDeployment".
+            public static let descriptor = GRPCCore.MethodDescriptor(
+                service: GRPCCore.ServiceDescriptor(fullyQualifiedService: "k8s.v1.Service"),
+                method: "GetDeployment"
+            )
+        }
         /// Namespace for "ListPods" metadata.
         public enum ListPods {
             /// Request type for "ListPods".
@@ -104,28 +128,28 @@ public enum K8s_V1_Service {
                 method: "PortForwardPod"
             )
         }
-        /// Namespace for "StopForwardedPort" metadata.
-        public enum StopForwardedPort {
-            /// Request type for "StopForwardedPort".
-            public typealias Input = K8s_V1_StopForwardedPortRequest
-            /// Response type for "StopForwardedPort".
-            public typealias Output = K8s_V1_StopForwardedPortResponse
-            /// Descriptor for "StopForwardedPort".
+        /// Namespace for "StopPortForward" metadata.
+        public enum StopPortForward {
+            /// Request type for "StopPortForward".
+            public typealias Input = K8s_V1_StopPortForwardRequest
+            /// Response type for "StopPortForward".
+            public typealias Output = K8s_V1_StopPortForwardResponse
+            /// Descriptor for "StopPortForward".
             public static let descriptor = GRPCCore.MethodDescriptor(
                 service: GRPCCore.ServiceDescriptor(fullyQualifiedService: "k8s.v1.Service"),
-                method: "StopForwardedPort"
+                method: "StopPortForward"
             )
         }
-        /// Namespace for "CheckForwardedPortsHealth" metadata.
-        public enum CheckForwardedPortsHealth {
-            /// Request type for "CheckForwardedPortsHealth".
-            public typealias Input = K8s_V1_CheckForwardedPortsHealthRequest
-            /// Response type for "CheckForwardedPortsHealth".
-            public typealias Output = K8s_V1_CheckForwardedPortsHealthResponse
-            /// Descriptor for "CheckForwardedPortsHealth".
+        /// Namespace for "GetPortForwards" metadata.
+        public enum GetPortForwards {
+            /// Request type for "GetPortForwards".
+            public typealias Input = K8s_V1_GetPortForwardsRequest
+            /// Response type for "GetPortForwards".
+            public typealias Output = K8s_V1_GetPortForwardsResponse
+            /// Descriptor for "GetPortForwards".
             public static let descriptor = GRPCCore.MethodDescriptor(
                 service: GRPCCore.ServiceDescriptor(fullyQualifiedService: "k8s.v1.Service"),
-                method: "CheckForwardedPortsHealth"
+                method: "GetPortForwards"
             )
         }
         /// Descriptors for all methods in the "k8s.v1.Service" service.
@@ -133,12 +157,14 @@ public enum K8s_V1_Service {
             ListContexts.descriptor,
             SetContext.descriptor,
             ListNamespaces.descriptor,
+            ListDeployments.descriptor,
+            GetDeployment.descriptor,
             ListPods.descriptor,
             GetPod.descriptor,
             StreamPodLogs.descriptor,
             PortForwardPod.descriptor,
-            StopForwardedPort.descriptor,
-            CheckForwardedPortsHealth.descriptor
+            StopPortForward.descriptor,
+            GetPortForwards.descriptor
         ]
     }
 }
@@ -213,6 +239,44 @@ extension K8s_V1_Service {
             deserializer: some GRPCCore.MessageDeserializer<K8s_V1_ListNamespacesResponse>,
             options: GRPCCore.CallOptions,
             onResponse handleResponse: @Sendable @escaping (GRPCCore.ClientResponse<K8s_V1_ListNamespacesResponse>) async throws -> Result
+        ) async throws -> Result where Result: Sendable
+
+        /// Call the "ListDeployments" method.
+        ///
+        /// - Parameters:
+        ///   - request: A request containing a single `K8s_V1_ListDeploymentsRequest` message.
+        ///   - serializer: A serializer for `K8s_V1_ListDeploymentsRequest` messages.
+        ///   - deserializer: A deserializer for `K8s_V1_ListDeploymentsResponse` messages.
+        ///   - options: Options to apply to this RPC.
+        ///   - handleResponse: A closure which handles the response, the result of which is
+        ///       returned to the caller. Returning from the closure will cancel the RPC if it
+        ///       hasn't already finished.
+        /// - Returns: The result of `handleResponse`.
+        func listDeployments<Result>(
+            request: GRPCCore.ClientRequest<K8s_V1_ListDeploymentsRequest>,
+            serializer: some GRPCCore.MessageSerializer<K8s_V1_ListDeploymentsRequest>,
+            deserializer: some GRPCCore.MessageDeserializer<K8s_V1_ListDeploymentsResponse>,
+            options: GRPCCore.CallOptions,
+            onResponse handleResponse: @Sendable @escaping (GRPCCore.ClientResponse<K8s_V1_ListDeploymentsResponse>) async throws -> Result
+        ) async throws -> Result where Result: Sendable
+
+        /// Call the "GetDeployment" method.
+        ///
+        /// - Parameters:
+        ///   - request: A request containing a single `K8s_V1_GetDeploymentRequest` message.
+        ///   - serializer: A serializer for `K8s_V1_GetDeploymentRequest` messages.
+        ///   - deserializer: A deserializer for `K8s_V1_GetDeploymentResponse` messages.
+        ///   - options: Options to apply to this RPC.
+        ///   - handleResponse: A closure which handles the response, the result of which is
+        ///       returned to the caller. Returning from the closure will cancel the RPC if it
+        ///       hasn't already finished.
+        /// - Returns: The result of `handleResponse`.
+        func getDeployment<Result>(
+            request: GRPCCore.ClientRequest<K8s_V1_GetDeploymentRequest>,
+            serializer: some GRPCCore.MessageSerializer<K8s_V1_GetDeploymentRequest>,
+            deserializer: some GRPCCore.MessageDeserializer<K8s_V1_GetDeploymentResponse>,
+            options: GRPCCore.CallOptions,
+            onResponse handleResponse: @Sendable @escaping (GRPCCore.ClientResponse<K8s_V1_GetDeploymentResponse>) async throws -> Result
         ) async throws -> Result where Result: Sendable
 
         /// Call the "ListPods" method.
@@ -291,42 +355,42 @@ extension K8s_V1_Service {
             onResponse handleResponse: @Sendable @escaping (GRPCCore.ClientResponse<K8s_V1_PortForwardPodResponse>) async throws -> Result
         ) async throws -> Result where Result: Sendable
 
-        /// Call the "StopForwardedPort" method.
+        /// Call the "StopPortForward" method.
         ///
         /// - Parameters:
-        ///   - request: A request containing a single `K8s_V1_StopForwardedPortRequest` message.
-        ///   - serializer: A serializer for `K8s_V1_StopForwardedPortRequest` messages.
-        ///   - deserializer: A deserializer for `K8s_V1_StopForwardedPortResponse` messages.
+        ///   - request: A request containing a single `K8s_V1_StopPortForwardRequest` message.
+        ///   - serializer: A serializer for `K8s_V1_StopPortForwardRequest` messages.
+        ///   - deserializer: A deserializer for `K8s_V1_StopPortForwardResponse` messages.
         ///   - options: Options to apply to this RPC.
         ///   - handleResponse: A closure which handles the response, the result of which is
         ///       returned to the caller. Returning from the closure will cancel the RPC if it
         ///       hasn't already finished.
         /// - Returns: The result of `handleResponse`.
-        func stopForwardedPort<Result>(
-            request: GRPCCore.ClientRequest<K8s_V1_StopForwardedPortRequest>,
-            serializer: some GRPCCore.MessageSerializer<K8s_V1_StopForwardedPortRequest>,
-            deserializer: some GRPCCore.MessageDeserializer<K8s_V1_StopForwardedPortResponse>,
+        func stopPortForward<Result>(
+            request: GRPCCore.ClientRequest<K8s_V1_StopPortForwardRequest>,
+            serializer: some GRPCCore.MessageSerializer<K8s_V1_StopPortForwardRequest>,
+            deserializer: some GRPCCore.MessageDeserializer<K8s_V1_StopPortForwardResponse>,
             options: GRPCCore.CallOptions,
-            onResponse handleResponse: @Sendable @escaping (GRPCCore.ClientResponse<K8s_V1_StopForwardedPortResponse>) async throws -> Result
+            onResponse handleResponse: @Sendable @escaping (GRPCCore.ClientResponse<K8s_V1_StopPortForwardResponse>) async throws -> Result
         ) async throws -> Result where Result: Sendable
 
-        /// Call the "CheckForwardedPortsHealth" method.
+        /// Call the "GetPortForwards" method.
         ///
         /// - Parameters:
-        ///   - request: A request containing a single `K8s_V1_CheckForwardedPortsHealthRequest` message.
-        ///   - serializer: A serializer for `K8s_V1_CheckForwardedPortsHealthRequest` messages.
-        ///   - deserializer: A deserializer for `K8s_V1_CheckForwardedPortsHealthResponse` messages.
+        ///   - request: A request containing a single `K8s_V1_GetPortForwardsRequest` message.
+        ///   - serializer: A serializer for `K8s_V1_GetPortForwardsRequest` messages.
+        ///   - deserializer: A deserializer for `K8s_V1_GetPortForwardsResponse` messages.
         ///   - options: Options to apply to this RPC.
         ///   - handleResponse: A closure which handles the response, the result of which is
         ///       returned to the caller. Returning from the closure will cancel the RPC if it
         ///       hasn't already finished.
         /// - Returns: The result of `handleResponse`.
-        func checkForwardedPortsHealth<Result>(
-            request: GRPCCore.ClientRequest<K8s_V1_CheckForwardedPortsHealthRequest>,
-            serializer: some GRPCCore.MessageSerializer<K8s_V1_CheckForwardedPortsHealthRequest>,
-            deserializer: some GRPCCore.MessageDeserializer<K8s_V1_CheckForwardedPortsHealthResponse>,
+        func getPortForwards<Result>(
+            request: GRPCCore.ClientRequest<K8s_V1_GetPortForwardsRequest>,
+            serializer: some GRPCCore.MessageSerializer<K8s_V1_GetPortForwardsRequest>,
+            deserializer: some GRPCCore.MessageDeserializer<K8s_V1_GetPortForwardsResponse>,
             options: GRPCCore.CallOptions,
-            onResponse handleResponse: @Sendable @escaping (GRPCCore.ClientResponse<K8s_V1_CheckForwardedPortsHealthResponse>) async throws -> Result
+            onResponse handleResponse: @Sendable @escaping (GRPCCore.ClientResponse<K8s_V1_GetPortForwardsResponse>) async throws -> Result
         ) async throws -> Result where Result: Sendable
     }
 
@@ -429,6 +493,66 @@ extension K8s_V1_Service {
             try await self.client.unary(
                 request: request,
                 descriptor: K8s_V1_Service.Method.ListNamespaces.descriptor,
+                serializer: serializer,
+                deserializer: deserializer,
+                options: options,
+                onResponse: handleResponse
+            )
+        }
+
+        /// Call the "ListDeployments" method.
+        ///
+        /// - Parameters:
+        ///   - request: A request containing a single `K8s_V1_ListDeploymentsRequest` message.
+        ///   - serializer: A serializer for `K8s_V1_ListDeploymentsRequest` messages.
+        ///   - deserializer: A deserializer for `K8s_V1_ListDeploymentsResponse` messages.
+        ///   - options: Options to apply to this RPC.
+        ///   - handleResponse: A closure which handles the response, the result of which is
+        ///       returned to the caller. Returning from the closure will cancel the RPC if it
+        ///       hasn't already finished.
+        /// - Returns: The result of `handleResponse`.
+        public func listDeployments<Result>(
+            request: GRPCCore.ClientRequest<K8s_V1_ListDeploymentsRequest>,
+            serializer: some GRPCCore.MessageSerializer<K8s_V1_ListDeploymentsRequest>,
+            deserializer: some GRPCCore.MessageDeserializer<K8s_V1_ListDeploymentsResponse>,
+            options: GRPCCore.CallOptions = .defaults,
+            onResponse handleResponse: @Sendable @escaping (GRPCCore.ClientResponse<K8s_V1_ListDeploymentsResponse>) async throws -> Result = { response in
+                try response.message
+            }
+        ) async throws -> Result where Result: Sendable {
+            try await self.client.unary(
+                request: request,
+                descriptor: K8s_V1_Service.Method.ListDeployments.descriptor,
+                serializer: serializer,
+                deserializer: deserializer,
+                options: options,
+                onResponse: handleResponse
+            )
+        }
+
+        /// Call the "GetDeployment" method.
+        ///
+        /// - Parameters:
+        ///   - request: A request containing a single `K8s_V1_GetDeploymentRequest` message.
+        ///   - serializer: A serializer for `K8s_V1_GetDeploymentRequest` messages.
+        ///   - deserializer: A deserializer for `K8s_V1_GetDeploymentResponse` messages.
+        ///   - options: Options to apply to this RPC.
+        ///   - handleResponse: A closure which handles the response, the result of which is
+        ///       returned to the caller. Returning from the closure will cancel the RPC if it
+        ///       hasn't already finished.
+        /// - Returns: The result of `handleResponse`.
+        public func getDeployment<Result>(
+            request: GRPCCore.ClientRequest<K8s_V1_GetDeploymentRequest>,
+            serializer: some GRPCCore.MessageSerializer<K8s_V1_GetDeploymentRequest>,
+            deserializer: some GRPCCore.MessageDeserializer<K8s_V1_GetDeploymentResponse>,
+            options: GRPCCore.CallOptions = .defaults,
+            onResponse handleResponse: @Sendable @escaping (GRPCCore.ClientResponse<K8s_V1_GetDeploymentResponse>) async throws -> Result = { response in
+                try response.message
+            }
+        ) async throws -> Result where Result: Sendable {
+            try await self.client.unary(
+                request: request,
+                descriptor: K8s_V1_Service.Method.GetDeployment.descriptor,
                 serializer: serializer,
                 deserializer: deserializer,
                 options: options,
@@ -554,29 +678,29 @@ extension K8s_V1_Service {
             )
         }
 
-        /// Call the "StopForwardedPort" method.
+        /// Call the "StopPortForward" method.
         ///
         /// - Parameters:
-        ///   - request: A request containing a single `K8s_V1_StopForwardedPortRequest` message.
-        ///   - serializer: A serializer for `K8s_V1_StopForwardedPortRequest` messages.
-        ///   - deserializer: A deserializer for `K8s_V1_StopForwardedPortResponse` messages.
+        ///   - request: A request containing a single `K8s_V1_StopPortForwardRequest` message.
+        ///   - serializer: A serializer for `K8s_V1_StopPortForwardRequest` messages.
+        ///   - deserializer: A deserializer for `K8s_V1_StopPortForwardResponse` messages.
         ///   - options: Options to apply to this RPC.
         ///   - handleResponse: A closure which handles the response, the result of which is
         ///       returned to the caller. Returning from the closure will cancel the RPC if it
         ///       hasn't already finished.
         /// - Returns: The result of `handleResponse`.
-        public func stopForwardedPort<Result>(
-            request: GRPCCore.ClientRequest<K8s_V1_StopForwardedPortRequest>,
-            serializer: some GRPCCore.MessageSerializer<K8s_V1_StopForwardedPortRequest>,
-            deserializer: some GRPCCore.MessageDeserializer<K8s_V1_StopForwardedPortResponse>,
+        public func stopPortForward<Result>(
+            request: GRPCCore.ClientRequest<K8s_V1_StopPortForwardRequest>,
+            serializer: some GRPCCore.MessageSerializer<K8s_V1_StopPortForwardRequest>,
+            deserializer: some GRPCCore.MessageDeserializer<K8s_V1_StopPortForwardResponse>,
             options: GRPCCore.CallOptions = .defaults,
-            onResponse handleResponse: @Sendable @escaping (GRPCCore.ClientResponse<K8s_V1_StopForwardedPortResponse>) async throws -> Result = { response in
+            onResponse handleResponse: @Sendable @escaping (GRPCCore.ClientResponse<K8s_V1_StopPortForwardResponse>) async throws -> Result = { response in
                 try response.message
             }
         ) async throws -> Result where Result: Sendable {
             try await self.client.unary(
                 request: request,
-                descriptor: K8s_V1_Service.Method.StopForwardedPort.descriptor,
+                descriptor: K8s_V1_Service.Method.StopPortForward.descriptor,
                 serializer: serializer,
                 deserializer: deserializer,
                 options: options,
@@ -584,29 +708,29 @@ extension K8s_V1_Service {
             )
         }
 
-        /// Call the "CheckForwardedPortsHealth" method.
+        /// Call the "GetPortForwards" method.
         ///
         /// - Parameters:
-        ///   - request: A request containing a single `K8s_V1_CheckForwardedPortsHealthRequest` message.
-        ///   - serializer: A serializer for `K8s_V1_CheckForwardedPortsHealthRequest` messages.
-        ///   - deserializer: A deserializer for `K8s_V1_CheckForwardedPortsHealthResponse` messages.
+        ///   - request: A request containing a single `K8s_V1_GetPortForwardsRequest` message.
+        ///   - serializer: A serializer for `K8s_V1_GetPortForwardsRequest` messages.
+        ///   - deserializer: A deserializer for `K8s_V1_GetPortForwardsResponse` messages.
         ///   - options: Options to apply to this RPC.
         ///   - handleResponse: A closure which handles the response, the result of which is
         ///       returned to the caller. Returning from the closure will cancel the RPC if it
         ///       hasn't already finished.
         /// - Returns: The result of `handleResponse`.
-        public func checkForwardedPortsHealth<Result>(
-            request: GRPCCore.ClientRequest<K8s_V1_CheckForwardedPortsHealthRequest>,
-            serializer: some GRPCCore.MessageSerializer<K8s_V1_CheckForwardedPortsHealthRequest>,
-            deserializer: some GRPCCore.MessageDeserializer<K8s_V1_CheckForwardedPortsHealthResponse>,
+        public func getPortForwards<Result>(
+            request: GRPCCore.ClientRequest<K8s_V1_GetPortForwardsRequest>,
+            serializer: some GRPCCore.MessageSerializer<K8s_V1_GetPortForwardsRequest>,
+            deserializer: some GRPCCore.MessageDeserializer<K8s_V1_GetPortForwardsResponse>,
             options: GRPCCore.CallOptions = .defaults,
-            onResponse handleResponse: @Sendable @escaping (GRPCCore.ClientResponse<K8s_V1_CheckForwardedPortsHealthResponse>) async throws -> Result = { response in
+            onResponse handleResponse: @Sendable @escaping (GRPCCore.ClientResponse<K8s_V1_GetPortForwardsResponse>) async throws -> Result = { response in
                 try response.message
             }
         ) async throws -> Result where Result: Sendable {
             try await self.client.unary(
                 request: request,
-                descriptor: K8s_V1_Service.Method.CheckForwardedPortsHealth.descriptor,
+                descriptor: K8s_V1_Service.Method.GetPortForwards.descriptor,
                 serializer: serializer,
                 deserializer: deserializer,
                 options: options,
@@ -689,6 +813,56 @@ extension K8s_V1_Service.ClientProtocol {
             request: request,
             serializer: GRPCProtobuf.ProtobufSerializer<K8s_V1_ListNamespacesRequest>(),
             deserializer: GRPCProtobuf.ProtobufDeserializer<K8s_V1_ListNamespacesResponse>(),
+            options: options,
+            onResponse: handleResponse
+        )
+    }
+
+    /// Call the "ListDeployments" method.
+    ///
+    /// - Parameters:
+    ///   - request: A request containing a single `K8s_V1_ListDeploymentsRequest` message.
+    ///   - options: Options to apply to this RPC.
+    ///   - handleResponse: A closure which handles the response, the result of which is
+    ///       returned to the caller. Returning from the closure will cancel the RPC if it
+    ///       hasn't already finished.
+    /// - Returns: The result of `handleResponse`.
+    public func listDeployments<Result>(
+        request: GRPCCore.ClientRequest<K8s_V1_ListDeploymentsRequest>,
+        options: GRPCCore.CallOptions = .defaults,
+        onResponse handleResponse: @Sendable @escaping (GRPCCore.ClientResponse<K8s_V1_ListDeploymentsResponse>) async throws -> Result = { response in
+            try response.message
+        }
+    ) async throws -> Result where Result: Sendable {
+        try await self.listDeployments(
+            request: request,
+            serializer: GRPCProtobuf.ProtobufSerializer<K8s_V1_ListDeploymentsRequest>(),
+            deserializer: GRPCProtobuf.ProtobufDeserializer<K8s_V1_ListDeploymentsResponse>(),
+            options: options,
+            onResponse: handleResponse
+        )
+    }
+
+    /// Call the "GetDeployment" method.
+    ///
+    /// - Parameters:
+    ///   - request: A request containing a single `K8s_V1_GetDeploymentRequest` message.
+    ///   - options: Options to apply to this RPC.
+    ///   - handleResponse: A closure which handles the response, the result of which is
+    ///       returned to the caller. Returning from the closure will cancel the RPC if it
+    ///       hasn't already finished.
+    /// - Returns: The result of `handleResponse`.
+    public func getDeployment<Result>(
+        request: GRPCCore.ClientRequest<K8s_V1_GetDeploymentRequest>,
+        options: GRPCCore.CallOptions = .defaults,
+        onResponse handleResponse: @Sendable @escaping (GRPCCore.ClientResponse<K8s_V1_GetDeploymentResponse>) async throws -> Result = { response in
+            try response.message
+        }
+    ) async throws -> Result where Result: Sendable {
+        try await self.getDeployment(
+            request: request,
+            serializer: GRPCProtobuf.ProtobufSerializer<K8s_V1_GetDeploymentRequest>(),
+            deserializer: GRPCProtobuf.ProtobufDeserializer<K8s_V1_GetDeploymentResponse>(),
             options: options,
             onResponse: handleResponse
         )
@@ -792,51 +966,51 @@ extension K8s_V1_Service.ClientProtocol {
         )
     }
 
-    /// Call the "StopForwardedPort" method.
+    /// Call the "StopPortForward" method.
     ///
     /// - Parameters:
-    ///   - request: A request containing a single `K8s_V1_StopForwardedPortRequest` message.
+    ///   - request: A request containing a single `K8s_V1_StopPortForwardRequest` message.
     ///   - options: Options to apply to this RPC.
     ///   - handleResponse: A closure which handles the response, the result of which is
     ///       returned to the caller. Returning from the closure will cancel the RPC if it
     ///       hasn't already finished.
     /// - Returns: The result of `handleResponse`.
-    public func stopForwardedPort<Result>(
-        request: GRPCCore.ClientRequest<K8s_V1_StopForwardedPortRequest>,
+    public func stopPortForward<Result>(
+        request: GRPCCore.ClientRequest<K8s_V1_StopPortForwardRequest>,
         options: GRPCCore.CallOptions = .defaults,
-        onResponse handleResponse: @Sendable @escaping (GRPCCore.ClientResponse<K8s_V1_StopForwardedPortResponse>) async throws -> Result = { response in
+        onResponse handleResponse: @Sendable @escaping (GRPCCore.ClientResponse<K8s_V1_StopPortForwardResponse>) async throws -> Result = { response in
             try response.message
         }
     ) async throws -> Result where Result: Sendable {
-        try await self.stopForwardedPort(
+        try await self.stopPortForward(
             request: request,
-            serializer: GRPCProtobuf.ProtobufSerializer<K8s_V1_StopForwardedPortRequest>(),
-            deserializer: GRPCProtobuf.ProtobufDeserializer<K8s_V1_StopForwardedPortResponse>(),
+            serializer: GRPCProtobuf.ProtobufSerializer<K8s_V1_StopPortForwardRequest>(),
+            deserializer: GRPCProtobuf.ProtobufDeserializer<K8s_V1_StopPortForwardResponse>(),
             options: options,
             onResponse: handleResponse
         )
     }
 
-    /// Call the "CheckForwardedPortsHealth" method.
+    /// Call the "GetPortForwards" method.
     ///
     /// - Parameters:
-    ///   - request: A request containing a single `K8s_V1_CheckForwardedPortsHealthRequest` message.
+    ///   - request: A request containing a single `K8s_V1_GetPortForwardsRequest` message.
     ///   - options: Options to apply to this RPC.
     ///   - handleResponse: A closure which handles the response, the result of which is
     ///       returned to the caller. Returning from the closure will cancel the RPC if it
     ///       hasn't already finished.
     /// - Returns: The result of `handleResponse`.
-    public func checkForwardedPortsHealth<Result>(
-        request: GRPCCore.ClientRequest<K8s_V1_CheckForwardedPortsHealthRequest>,
+    public func getPortForwards<Result>(
+        request: GRPCCore.ClientRequest<K8s_V1_GetPortForwardsRequest>,
         options: GRPCCore.CallOptions = .defaults,
-        onResponse handleResponse: @Sendable @escaping (GRPCCore.ClientResponse<K8s_V1_CheckForwardedPortsHealthResponse>) async throws -> Result = { response in
+        onResponse handleResponse: @Sendable @escaping (GRPCCore.ClientResponse<K8s_V1_GetPortForwardsResponse>) async throws -> Result = { response in
             try response.message
         }
     ) async throws -> Result where Result: Sendable {
-        try await self.checkForwardedPortsHealth(
+        try await self.getPortForwards(
             request: request,
-            serializer: GRPCProtobuf.ProtobufSerializer<K8s_V1_CheckForwardedPortsHealthRequest>(),
-            deserializer: GRPCProtobuf.ProtobufDeserializer<K8s_V1_CheckForwardedPortsHealthResponse>(),
+            serializer: GRPCProtobuf.ProtobufSerializer<K8s_V1_GetPortForwardsRequest>(),
+            deserializer: GRPCProtobuf.ProtobufDeserializer<K8s_V1_GetPortForwardsResponse>(),
             options: options,
             onResponse: handleResponse
         )
@@ -927,6 +1101,64 @@ extension K8s_V1_Service.ClientProtocol {
             metadata: metadata
         )
         return try await self.listNamespaces(
+            request: request,
+            options: options,
+            onResponse: handleResponse
+        )
+    }
+
+    /// Call the "ListDeployments" method.
+    ///
+    /// - Parameters:
+    ///   - message: request message to send.
+    ///   - metadata: Additional metadata to send, defaults to empty.
+    ///   - options: Options to apply to this RPC, defaults to `.defaults`.
+    ///   - handleResponse: A closure which handles the response, the result of which is
+    ///       returned to the caller. Returning from the closure will cancel the RPC if it
+    ///       hasn't already finished.
+    /// - Returns: The result of `handleResponse`.
+    public func listDeployments<Result>(
+        _ message: K8s_V1_ListDeploymentsRequest,
+        metadata: GRPCCore.Metadata = [:],
+        options: GRPCCore.CallOptions = .defaults,
+        onResponse handleResponse: @Sendable @escaping (GRPCCore.ClientResponse<K8s_V1_ListDeploymentsResponse>) async throws -> Result = { response in
+            try response.message
+        }
+    ) async throws -> Result where Result: Sendable {
+        let request = GRPCCore.ClientRequest<K8s_V1_ListDeploymentsRequest>(
+            message: message,
+            metadata: metadata
+        )
+        return try await self.listDeployments(
+            request: request,
+            options: options,
+            onResponse: handleResponse
+        )
+    }
+
+    /// Call the "GetDeployment" method.
+    ///
+    /// - Parameters:
+    ///   - message: request message to send.
+    ///   - metadata: Additional metadata to send, defaults to empty.
+    ///   - options: Options to apply to this RPC, defaults to `.defaults`.
+    ///   - handleResponse: A closure which handles the response, the result of which is
+    ///       returned to the caller. Returning from the closure will cancel the RPC if it
+    ///       hasn't already finished.
+    /// - Returns: The result of `handleResponse`.
+    public func getDeployment<Result>(
+        _ message: K8s_V1_GetDeploymentRequest,
+        metadata: GRPCCore.Metadata = [:],
+        options: GRPCCore.CallOptions = .defaults,
+        onResponse handleResponse: @Sendable @escaping (GRPCCore.ClientResponse<K8s_V1_GetDeploymentResponse>) async throws -> Result = { response in
+            try response.message
+        }
+    ) async throws -> Result where Result: Sendable {
+        let request = GRPCCore.ClientRequest<K8s_V1_GetDeploymentRequest>(
+            message: message,
+            metadata: metadata
+        )
+        return try await self.getDeployment(
             request: request,
             options: options,
             onResponse: handleResponse
@@ -1047,7 +1279,7 @@ extension K8s_V1_Service.ClientProtocol {
         )
     }
 
-    /// Call the "StopForwardedPort" method.
+    /// Call the "StopPortForward" method.
     ///
     /// - Parameters:
     ///   - message: request message to send.
@@ -1057,26 +1289,26 @@ extension K8s_V1_Service.ClientProtocol {
     ///       returned to the caller. Returning from the closure will cancel the RPC if it
     ///       hasn't already finished.
     /// - Returns: The result of `handleResponse`.
-    public func stopForwardedPort<Result>(
-        _ message: K8s_V1_StopForwardedPortRequest,
+    public func stopPortForward<Result>(
+        _ message: K8s_V1_StopPortForwardRequest,
         metadata: GRPCCore.Metadata = [:],
         options: GRPCCore.CallOptions = .defaults,
-        onResponse handleResponse: @Sendable @escaping (GRPCCore.ClientResponse<K8s_V1_StopForwardedPortResponse>) async throws -> Result = { response in
+        onResponse handleResponse: @Sendable @escaping (GRPCCore.ClientResponse<K8s_V1_StopPortForwardResponse>) async throws -> Result = { response in
             try response.message
         }
     ) async throws -> Result where Result: Sendable {
-        let request = GRPCCore.ClientRequest<K8s_V1_StopForwardedPortRequest>(
+        let request = GRPCCore.ClientRequest<K8s_V1_StopPortForwardRequest>(
             message: message,
             metadata: metadata
         )
-        return try await self.stopForwardedPort(
+        return try await self.stopPortForward(
             request: request,
             options: options,
             onResponse: handleResponse
         )
     }
 
-    /// Call the "CheckForwardedPortsHealth" method.
+    /// Call the "GetPortForwards" method.
     ///
     /// - Parameters:
     ///   - message: request message to send.
@@ -1086,19 +1318,19 @@ extension K8s_V1_Service.ClientProtocol {
     ///       returned to the caller. Returning from the closure will cancel the RPC if it
     ///       hasn't already finished.
     /// - Returns: The result of `handleResponse`.
-    public func checkForwardedPortsHealth<Result>(
-        _ message: K8s_V1_CheckForwardedPortsHealthRequest,
+    public func getPortForwards<Result>(
+        _ message: K8s_V1_GetPortForwardsRequest,
         metadata: GRPCCore.Metadata = [:],
         options: GRPCCore.CallOptions = .defaults,
-        onResponse handleResponse: @Sendable @escaping (GRPCCore.ClientResponse<K8s_V1_CheckForwardedPortsHealthResponse>) async throws -> Result = { response in
+        onResponse handleResponse: @Sendable @escaping (GRPCCore.ClientResponse<K8s_V1_GetPortForwardsResponse>) async throws -> Result = { response in
             try response.message
         }
     ) async throws -> Result where Result: Sendable {
-        let request = GRPCCore.ClientRequest<K8s_V1_CheckForwardedPortsHealthRequest>(
+        let request = GRPCCore.ClientRequest<K8s_V1_GetPortForwardsRequest>(
             message: message,
             metadata: metadata
         )
-        return try await self.checkForwardedPortsHealth(
+        return try await self.getPortForwards(
             request: request,
             options: options,
             onResponse: handleResponse

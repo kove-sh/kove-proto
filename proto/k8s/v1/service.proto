@@ -2,18 +2,22 @@ syntax = "proto3";
 
 package k8s.v1;
 
-import "k8s/v1/types.proto";
+import "k8s/v1/base.proto";
+import "k8s/v1/deployment.proto";
+import "k8s/v1/pod.proto";
 
 service Service {
   rpc ListContexts(ListContextsRequest) returns (ListContextsResponse) {}
   rpc SetContext(SetContextRequest) returns (SetContextResponse) {}
   rpc ListNamespaces(ListNamespacesRequest) returns (ListNamespacesResponse) {}
+  rpc ListDeployments(ListDeploymentsRequest) returns (ListDeploymentsResponse) {}
+  rpc GetDeployment(GetDeploymentRequest) returns (GetDeploymentResponse) {}
   rpc ListPods(ListPodsRequest) returns (ListPodsResponse) {}
   rpc GetPod(GetPodRequest) returns (GetPodResponse) {}
   rpc StreamPodLogs(StreamPodLogsRequest) returns (stream StreamPodLogsResponse) {}
   rpc PortForwardPod(PortForwardPodRequest) returns (PortForwardPodResponse) {}
-  rpc StopForwardedPort(StopForwardedPortRequest) returns (StopForwardedPortResponse) {}
-  rpc CheckForwardedPortsHealth(CheckForwardedPortsHealthRequest) returns (CheckForwardedPortsHealthResponse) {}
+  rpc StopPortForward(StopPortForwardRequest) returns (StopPortForwardResponse) {}
+  rpc GetPortForwards(GetPortForwardsRequest) returns (GetPortForwardsResponse) {}
 }
 
 message ListContextsRequest {}
@@ -32,6 +36,23 @@ message ListNamespacesRequest {}
 
 message ListNamespacesResponse {
   repeated string namespaces = 1;
+}
+
+message ListDeploymentsRequest {
+  string namespace = 1;
+}
+
+message ListDeploymentsResponse {
+  repeated Deployment deployment = 1;
+}
+
+message GetDeploymentRequest {
+  string namespace = 1;
+  string deployment_name = 2;
+}
+
+message GetDeploymentResponse {
+  Deployment deployment = 1;
 }
 
 message ListPodsRequest {
@@ -70,25 +91,19 @@ message PortForwardPodRequest {
 }
 
 message PortForwardPodResponse {
+  repeated PortForward port_forwards = 1;
+}
+
+message StopPortForwardRequest {
   string port_forward_id = 1;
 }
 
-message StopForwardedPortRequest {
-  string port_forward_id = 1;
+message StopPortForwardResponse {
+  repeated PortForward port_forwards = 1;
 }
 
-message StopForwardedPortResponse {}
+message GetPortForwardsRequest {}
 
-message CheckForwardedPortsHealthRequest {
-  repeated string port_forward_ids = 1;
-}
-
-message CheckForwardedPortsHealthResponse {
-  message PortHealth {
-    string port_forward_id = 1;
-    bool healthy = 2;
-    optional string error = 3;
-  }
-
-  repeated PortHealth ports = 1;
+message GetPortForwardsResponse {
+  repeated PortForward port_forwards = 1;
 }

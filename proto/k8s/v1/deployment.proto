@@ -1,0 +1,48 @@
+syntax = "proto3";
+
+package k8s.v1;
+
+import "google/protobuf/timestamp.proto";
+import "k8s/v1/pod.proto";
+
+message Deployment {
+  string namespace = 1;
+  string name = 2;
+  string selector = 3; // formatted label selector
+  repeated string images = 4; // unique container images
+
+  optional int32 replicas = 5;
+  int32 updated_replicas = 6;
+  int32 ready_replicas = 7;
+  int32 available_replicas = 8;
+  int32 unavailable_replicas = 9;
+  int64 generation = 10;
+  int64 observed_generation = 11;
+  DeploymentStrategy strategy = 12;
+  repeated DeploymentCondition conditions = 13;
+  repeated PodSummary pods = 14;
+}
+
+// Mirrors the essentials of apps/v1.DeploymentStrategy.
+message DeploymentStrategy {
+  string type = 1;
+  // Present when type == ROLLING_UPDATE.
+  RollingUpdateDeployment rolling_update = 2;
+}
+
+// Mirrors the key fields of apps/v1.RollingUpdateDeployment.
+// Kubernetes uses IntOrString for these; encode as strings (e.g., "25%", "1").
+message RollingUpdateDeployment {
+  string max_unavailable = 1;
+  string max_surge = 2;
+}
+
+// Mirrors the essentials of apps/v1.DeploymentCondition.
+message DeploymentCondition {
+  string type = 1;
+  string status = 2;
+  string reason = 3;
+  string message = 4;
+  google.protobuf.Timestamp last_update_time = 5;
+  google.protobuf.Timestamp last_transition_time = 6;
+}

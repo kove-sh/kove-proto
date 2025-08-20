@@ -2,7 +2,7 @@
 // versions:
 // 	protoc-gen-go v1.36.7
 // 	protoc        (unknown)
-// source: k8s/v1/types.proto
+// source: k8s/v1/pod.proto
 
 package k8sv1
 
@@ -22,30 +22,34 @@ const (
 	_ = protoimpl.EnforceVersion(protoimpl.MaxVersion - 20)
 )
 
-type Context struct {
-	state            protoimpl.MessageState `protogen:"open.v1"`
-	Name             string                 `protobuf:"bytes,1,opt,name=name,proto3" json:"name,omitempty"`
-	Cluster          string                 `protobuf:"bytes,2,opt,name=cluster,proto3" json:"cluster,omitempty"`
-	DefaultNamespace string                 `protobuf:"bytes,3,opt,name=default_namespace,json=defaultNamespace,proto3" json:"default_namespace,omitempty"`
-	unknownFields    protoimpl.UnknownFields
-	sizeCache        protoimpl.SizeCache
+type PodSummary struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Name          string                 `protobuf:"bytes,1,opt,name=name,proto3" json:"name,omitempty"`
+	Node          string                 `protobuf:"bytes,2,opt,name=node,proto3" json:"node,omitempty"`
+	Phase         string                 `protobuf:"bytes,3,opt,name=phase,proto3" json:"phase,omitempty"`
+	Ready         bool                   `protobuf:"varint,4,opt,name=ready,proto3" json:"ready,omitempty"`
+	Restarts      int32                  `protobuf:"varint,5,opt,name=restarts,proto3" json:"restarts,omitempty"`
+	Ip            string                 `protobuf:"bytes,6,opt,name=ip,proto3" json:"ip,omitempty"`
+	StartTime     *timestamppb.Timestamp `protobuf:"bytes,7,opt,name=start_time,json=startTime,proto3" json:"start_time,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
 }
 
-func (x *Context) Reset() {
-	*x = Context{}
-	mi := &file_k8s_v1_types_proto_msgTypes[0]
+func (x *PodSummary) Reset() {
+	*x = PodSummary{}
+	mi := &file_k8s_v1_pod_proto_msgTypes[0]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
 
-func (x *Context) String() string {
+func (x *PodSummary) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*Context) ProtoMessage() {}
+func (*PodSummary) ProtoMessage() {}
 
-func (x *Context) ProtoReflect() protoreflect.Message {
-	mi := &file_k8s_v1_types_proto_msgTypes[0]
+func (x *PodSummary) ProtoReflect() protoreflect.Message {
+	mi := &file_k8s_v1_pod_proto_msgTypes[0]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -56,139 +60,58 @@ func (x *Context) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use Context.ProtoReflect.Descriptor instead.
-func (*Context) Descriptor() ([]byte, []int) {
-	return file_k8s_v1_types_proto_rawDescGZIP(), []int{0}
+// Deprecated: Use PodSummary.ProtoReflect.Descriptor instead.
+func (*PodSummary) Descriptor() ([]byte, []int) {
+	return file_k8s_v1_pod_proto_rawDescGZIP(), []int{0}
 }
 
-func (x *Context) GetName() string {
+func (x *PodSummary) GetName() string {
 	if x != nil {
 		return x.Name
 	}
 	return ""
 }
 
-func (x *Context) GetCluster() string {
+func (x *PodSummary) GetNode() string {
 	if x != nil {
-		return x.Cluster
+		return x.Node
 	}
 	return ""
 }
 
-func (x *Context) GetDefaultNamespace() string {
+func (x *PodSummary) GetPhase() string {
 	if x != nil {
-		return x.DefaultNamespace
+		return x.Phase
 	}
 	return ""
 }
 
-// https://pkg.go.dev/k8s.io/apimachinery/pkg/apis/meta/v1@v0.33.3#ObjectMeta
-type ObjectMeta struct {
-	state                      protoimpl.MessageState `protogen:"open.v1"`
-	Name                       string                 `protobuf:"bytes,1,opt,name=name,proto3" json:"name,omitempty"`
-	Namespace                  string                 `protobuf:"bytes,2,opt,name=namespace,proto3" json:"namespace,omitempty"`
-	GenerateName               string                 `protobuf:"bytes,3,opt,name=generate_name,json=generateName,proto3" json:"generate_name,omitempty"`
-	Uid                        string                 `protobuf:"bytes,4,opt,name=uid,proto3" json:"uid,omitempty"`
-	ResourceVersion            string                 `protobuf:"bytes,5,opt,name=resource_version,json=resourceVersion,proto3" json:"resource_version,omitempty"`
-	Generation                 int64                  `protobuf:"varint,6,opt,name=generation,proto3" json:"generation,omitempty"`
-	CreationTimestamp          *timestamppb.Timestamp `protobuf:"bytes,7,opt,name=creation_timestamp,json=creationTimestamp,proto3" json:"creation_timestamp,omitempty"`
-	DeletionTimestamp          *timestamppb.Timestamp `protobuf:"bytes,8,opt,name=deletion_timestamp,json=deletionTimestamp,proto3,oneof" json:"deletion_timestamp,omitempty"`
-	DeletionGracePeriodSeconds *int64                 `protobuf:"varint,9,opt,name=deletion_grace_period_seconds,json=deletionGracePeriodSeconds,proto3,oneof" json:"deletion_grace_period_seconds,omitempty"`
-	unknownFields              protoimpl.UnknownFields
-	sizeCache                  protoimpl.SizeCache
-}
-
-func (x *ObjectMeta) Reset() {
-	*x = ObjectMeta{}
-	mi := &file_k8s_v1_types_proto_msgTypes[1]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *ObjectMeta) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*ObjectMeta) ProtoMessage() {}
-
-func (x *ObjectMeta) ProtoReflect() protoreflect.Message {
-	mi := &file_k8s_v1_types_proto_msgTypes[1]
+func (x *PodSummary) GetReady() bool {
 	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
+		return x.Ready
 	}
-	return mi.MessageOf(x)
+	return false
 }
 
-// Deprecated: Use ObjectMeta.ProtoReflect.Descriptor instead.
-func (*ObjectMeta) Descriptor() ([]byte, []int) {
-	return file_k8s_v1_types_proto_rawDescGZIP(), []int{1}
-}
-
-func (x *ObjectMeta) GetName() string {
+func (x *PodSummary) GetRestarts() int32 {
 	if x != nil {
-		return x.Name
-	}
-	return ""
-}
-
-func (x *ObjectMeta) GetNamespace() string {
-	if x != nil {
-		return x.Namespace
-	}
-	return ""
-}
-
-func (x *ObjectMeta) GetGenerateName() string {
-	if x != nil {
-		return x.GenerateName
-	}
-	return ""
-}
-
-func (x *ObjectMeta) GetUid() string {
-	if x != nil {
-		return x.Uid
-	}
-	return ""
-}
-
-func (x *ObjectMeta) GetResourceVersion() string {
-	if x != nil {
-		return x.ResourceVersion
-	}
-	return ""
-}
-
-func (x *ObjectMeta) GetGeneration() int64 {
-	if x != nil {
-		return x.Generation
+		return x.Restarts
 	}
 	return 0
 }
 
-func (x *ObjectMeta) GetCreationTimestamp() *timestamppb.Timestamp {
+func (x *PodSummary) GetIp() string {
 	if x != nil {
-		return x.CreationTimestamp
+		return x.Ip
 	}
-	return nil
+	return ""
 }
 
-func (x *ObjectMeta) GetDeletionTimestamp() *timestamppb.Timestamp {
+func (x *PodSummary) GetStartTime() *timestamppb.Timestamp {
 	if x != nil {
-		return x.DeletionTimestamp
+		return x.StartTime
 	}
 	return nil
-}
-
-func (x *ObjectMeta) GetDeletionGracePeriodSeconds() int64 {
-	if x != nil && x.DeletionGracePeriodSeconds != nil {
-		return *x.DeletionGracePeriodSeconds
-	}
-	return 0
 }
 
 // https://pkg.go.dev/k8s.io/api/core/v1@v0.33.3#Pod
@@ -203,7 +126,7 @@ type Pod struct {
 
 func (x *Pod) Reset() {
 	*x = Pod{}
-	mi := &file_k8s_v1_types_proto_msgTypes[2]
+	mi := &file_k8s_v1_pod_proto_msgTypes[1]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -215,7 +138,7 @@ func (x *Pod) String() string {
 func (*Pod) ProtoMessage() {}
 
 func (x *Pod) ProtoReflect() protoreflect.Message {
-	mi := &file_k8s_v1_types_proto_msgTypes[2]
+	mi := &file_k8s_v1_pod_proto_msgTypes[1]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -228,7 +151,7 @@ func (x *Pod) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use Pod.ProtoReflect.Descriptor instead.
 func (*Pod) Descriptor() ([]byte, []int) {
-	return file_k8s_v1_types_proto_rawDescGZIP(), []int{2}
+	return file_k8s_v1_pod_proto_rawDescGZIP(), []int{1}
 }
 
 func (x *Pod) GetMeta() *ObjectMeta {
@@ -270,7 +193,7 @@ type PodSpec struct {
 
 func (x *PodSpec) Reset() {
 	*x = PodSpec{}
-	mi := &file_k8s_v1_types_proto_msgTypes[3]
+	mi := &file_k8s_v1_pod_proto_msgTypes[2]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -282,7 +205,7 @@ func (x *PodSpec) String() string {
 func (*PodSpec) ProtoMessage() {}
 
 func (x *PodSpec) ProtoReflect() protoreflect.Message {
-	mi := &file_k8s_v1_types_proto_msgTypes[3]
+	mi := &file_k8s_v1_pod_proto_msgTypes[2]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -295,7 +218,7 @@ func (x *PodSpec) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use PodSpec.ProtoReflect.Descriptor instead.
 func (*PodSpec) Descriptor() ([]byte, []int) {
-	return file_k8s_v1_types_proto_rawDescGZIP(), []int{3}
+	return file_k8s_v1_pod_proto_rawDescGZIP(), []int{2}
 }
 
 func (x *PodSpec) GetContainers() []*Container {
@@ -372,7 +295,7 @@ type PodStatus struct {
 
 func (x *PodStatus) Reset() {
 	*x = PodStatus{}
-	mi := &file_k8s_v1_types_proto_msgTypes[4]
+	mi := &file_k8s_v1_pod_proto_msgTypes[3]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -384,7 +307,7 @@ func (x *PodStatus) String() string {
 func (*PodStatus) ProtoMessage() {}
 
 func (x *PodStatus) ProtoReflect() protoreflect.Message {
-	mi := &file_k8s_v1_types_proto_msgTypes[4]
+	mi := &file_k8s_v1_pod_proto_msgTypes[3]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -397,7 +320,7 @@ func (x *PodStatus) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use PodStatus.ProtoReflect.Descriptor instead.
 func (*PodStatus) Descriptor() ([]byte, []int) {
-	return file_k8s_v1_types_proto_rawDescGZIP(), []int{4}
+	return file_k8s_v1_pod_proto_rawDescGZIP(), []int{3}
 }
 
 func (x *PodStatus) GetPhase() string {
@@ -432,7 +355,7 @@ type Container struct {
 
 func (x *Container) Reset() {
 	*x = Container{}
-	mi := &file_k8s_v1_types_proto_msgTypes[5]
+	mi := &file_k8s_v1_pod_proto_msgTypes[4]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -444,7 +367,7 @@ func (x *Container) String() string {
 func (*Container) ProtoMessage() {}
 
 func (x *Container) ProtoReflect() protoreflect.Message {
-	mi := &file_k8s_v1_types_proto_msgTypes[5]
+	mi := &file_k8s_v1_pod_proto_msgTypes[4]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -457,7 +380,7 @@ func (x *Container) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use Container.ProtoReflect.Descriptor instead.
 func (*Container) Descriptor() ([]byte, []int) {
-	return file_k8s_v1_types_proto_rawDescGZIP(), []int{5}
+	return file_k8s_v1_pod_proto_rawDescGZIP(), []int{4}
 }
 
 func (x *Container) GetName() string {
@@ -536,7 +459,7 @@ type Resource struct {
 
 func (x *Resource) Reset() {
 	*x = Resource{}
-	mi := &file_k8s_v1_types_proto_msgTypes[6]
+	mi := &file_k8s_v1_pod_proto_msgTypes[5]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -548,7 +471,7 @@ func (x *Resource) String() string {
 func (*Resource) ProtoMessage() {}
 
 func (x *Resource) ProtoReflect() protoreflect.Message {
-	mi := &file_k8s_v1_types_proto_msgTypes[6]
+	mi := &file_k8s_v1_pod_proto_msgTypes[5]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -561,7 +484,7 @@ func (x *Resource) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use Resource.ProtoReflect.Descriptor instead.
 func (*Resource) Descriptor() ([]byte, []int) {
-	return file_k8s_v1_types_proto_rawDescGZIP(), []int{6}
+	return file_k8s_v1_pod_proto_rawDescGZIP(), []int{5}
 }
 
 func (x *Resource) GetRequests() string {
@@ -613,7 +536,7 @@ type ContainerPort struct {
 
 func (x *ContainerPort) Reset() {
 	*x = ContainerPort{}
-	mi := &file_k8s_v1_types_proto_msgTypes[7]
+	mi := &file_k8s_v1_pod_proto_msgTypes[6]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -625,7 +548,7 @@ func (x *ContainerPort) String() string {
 func (*ContainerPort) ProtoMessage() {}
 
 func (x *ContainerPort) ProtoReflect() protoreflect.Message {
-	mi := &file_k8s_v1_types_proto_msgTypes[7]
+	mi := &file_k8s_v1_pod_proto_msgTypes[6]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -638,7 +561,7 @@ func (x *ContainerPort) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ContainerPort.ProtoReflect.Descriptor instead.
 func (*ContainerPort) Descriptor() ([]byte, []int) {
-	return file_k8s_v1_types_proto_rawDescGZIP(), []int{7}
+	return file_k8s_v1_pod_proto_rawDescGZIP(), []int{6}
 }
 
 func (x *ContainerPort) GetName() string {
@@ -687,7 +610,7 @@ type EnvVar struct {
 
 func (x *EnvVar) Reset() {
 	*x = EnvVar{}
-	mi := &file_k8s_v1_types_proto_msgTypes[8]
+	mi := &file_k8s_v1_pod_proto_msgTypes[7]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -699,7 +622,7 @@ func (x *EnvVar) String() string {
 func (*EnvVar) ProtoMessage() {}
 
 func (x *EnvVar) ProtoReflect() protoreflect.Message {
-	mi := &file_k8s_v1_types_proto_msgTypes[8]
+	mi := &file_k8s_v1_pod_proto_msgTypes[7]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -712,7 +635,7 @@ func (x *EnvVar) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use EnvVar.ProtoReflect.Descriptor instead.
 func (*EnvVar) Descriptor() ([]byte, []int) {
-	return file_k8s_v1_types_proto_rawDescGZIP(), []int{8}
+	return file_k8s_v1_pod_proto_rawDescGZIP(), []int{7}
 }
 
 func (x *EnvVar) GetName() string {
@@ -761,7 +684,7 @@ type Probe struct {
 
 func (x *Probe) Reset() {
 	*x = Probe{}
-	mi := &file_k8s_v1_types_proto_msgTypes[9]
+	mi := &file_k8s_v1_pod_proto_msgTypes[8]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -773,7 +696,7 @@ func (x *Probe) String() string {
 func (*Probe) ProtoMessage() {}
 
 func (x *Probe) ProtoReflect() protoreflect.Message {
-	mi := &file_k8s_v1_types_proto_msgTypes[9]
+	mi := &file_k8s_v1_pod_proto_msgTypes[8]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -786,7 +709,7 @@ func (x *Probe) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use Probe.ProtoReflect.Descriptor instead.
 func (*Probe) Descriptor() ([]byte, []int) {
-	return file_k8s_v1_types_proto_rawDescGZIP(), []int{9}
+	return file_k8s_v1_pod_proto_rawDescGZIP(), []int{8}
 }
 
 func (x *Probe) GetInitDelaySeconds() int32 {
@@ -842,7 +765,7 @@ type ContainerLog struct {
 
 func (x *ContainerLog) Reset() {
 	*x = ContainerLog{}
-	mi := &file_k8s_v1_types_proto_msgTypes[10]
+	mi := &file_k8s_v1_pod_proto_msgTypes[9]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -854,7 +777,7 @@ func (x *ContainerLog) String() string {
 func (*ContainerLog) ProtoMessage() {}
 
 func (x *ContainerLog) ProtoReflect() protoreflect.Message {
-	mi := &file_k8s_v1_types_proto_msgTypes[10]
+	mi := &file_k8s_v1_pod_proto_msgTypes[9]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -867,7 +790,7 @@ func (x *ContainerLog) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ContainerLog.ProtoReflect.Descriptor instead.
 func (*ContainerLog) Descriptor() ([]byte, []int) {
-	return file_k8s_v1_types_proto_rawDescGZIP(), []int{10}
+	return file_k8s_v1_pod_proto_rawDescGZIP(), []int{9}
 }
 
 func (x *ContainerLog) GetContainerName() string {
@@ -891,30 +814,105 @@ func (x *ContainerLog) GetLine() string {
 	return ""
 }
 
-var File_k8s_v1_types_proto protoreflect.FileDescriptor
+type PortForward struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Id            string                 `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
+	Namespace     string                 `protobuf:"bytes,2,opt,name=namespace,proto3" json:"namespace,omitempty"`
+	PodName       string                 `protobuf:"bytes,3,opt,name=pod_name,json=podName,proto3" json:"pod_name,omitempty"`
+	LocalPort     int32                  `protobuf:"varint,4,opt,name=local_port,json=localPort,proto3" json:"local_port,omitempty"`
+	RemotePort    int32                  `protobuf:"varint,5,opt,name=remote_port,json=remotePort,proto3" json:"remote_port,omitempty"`
+	Error         *string                `protobuf:"bytes,6,opt,name=error,proto3,oneof" json:"error,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
 
-const file_k8s_v1_types_proto_rawDesc = "" +
+func (x *PortForward) Reset() {
+	*x = PortForward{}
+	mi := &file_k8s_v1_pod_proto_msgTypes[10]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *PortForward) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*PortForward) ProtoMessage() {}
+
+func (x *PortForward) ProtoReflect() protoreflect.Message {
+	mi := &file_k8s_v1_pod_proto_msgTypes[10]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use PortForward.ProtoReflect.Descriptor instead.
+func (*PortForward) Descriptor() ([]byte, []int) {
+	return file_k8s_v1_pod_proto_rawDescGZIP(), []int{10}
+}
+
+func (x *PortForward) GetId() string {
+	if x != nil {
+		return x.Id
+	}
+	return ""
+}
+
+func (x *PortForward) GetNamespace() string {
+	if x != nil {
+		return x.Namespace
+	}
+	return ""
+}
+
+func (x *PortForward) GetPodName() string {
+	if x != nil {
+		return x.PodName
+	}
+	return ""
+}
+
+func (x *PortForward) GetLocalPort() int32 {
+	if x != nil {
+		return x.LocalPort
+	}
+	return 0
+}
+
+func (x *PortForward) GetRemotePort() int32 {
+	if x != nil {
+		return x.RemotePort
+	}
+	return 0
+}
+
+func (x *PortForward) GetError() string {
+	if x != nil && x.Error != nil {
+		return *x.Error
+	}
+	return ""
+}
+
+var File_k8s_v1_pod_proto protoreflect.FileDescriptor
+
+const file_k8s_v1_pod_proto_rawDesc = "" +
 	"\n" +
-	"\x12k8s/v1/types.proto\x12\x06k8s.v1\x1a\x1fgoogle/protobuf/timestamp.proto\"d\n" +
-	"\aContext\x12\x12\n" +
-	"\x04name\x18\x01 \x01(\tR\x04name\x12\x18\n" +
-	"\acluster\x18\x02 \x01(\tR\acluster\x12+\n" +
-	"\x11default_namespace\x18\x03 \x01(\tR\x10defaultNamespace\"\xdc\x03\n" +
+	"\x10k8s/v1/pod.proto\x12\x06k8s.v1\x1a\x1fgoogle/protobuf/timestamp.proto\x1a\x11k8s/v1/base.proto\"\xc7\x01\n" +
 	"\n" +
-	"ObjectMeta\x12\x12\n" +
-	"\x04name\x18\x01 \x01(\tR\x04name\x12\x1c\n" +
-	"\tnamespace\x18\x02 \x01(\tR\tnamespace\x12#\n" +
-	"\rgenerate_name\x18\x03 \x01(\tR\fgenerateName\x12\x10\n" +
-	"\x03uid\x18\x04 \x01(\tR\x03uid\x12)\n" +
-	"\x10resource_version\x18\x05 \x01(\tR\x0fresourceVersion\x12\x1e\n" +
+	"PodSummary\x12\x12\n" +
+	"\x04name\x18\x01 \x01(\tR\x04name\x12\x12\n" +
+	"\x04node\x18\x02 \x01(\tR\x04node\x12\x14\n" +
+	"\x05phase\x18\x03 \x01(\tR\x05phase\x12\x14\n" +
+	"\x05ready\x18\x04 \x01(\bR\x05ready\x12\x1a\n" +
+	"\brestarts\x18\x05 \x01(\x05R\brestarts\x12\x0e\n" +
+	"\x02ip\x18\x06 \x01(\tR\x02ip\x129\n" +
 	"\n" +
-	"generation\x18\x06 \x01(\x03R\n" +
-	"generation\x12I\n" +
-	"\x12creation_timestamp\x18\a \x01(\v2\x1a.google.protobuf.TimestampR\x11creationTimestamp\x12N\n" +
-	"\x12deletion_timestamp\x18\b \x01(\v2\x1a.google.protobuf.TimestampH\x00R\x11deletionTimestamp\x88\x01\x01\x12F\n" +
-	"\x1ddeletion_grace_period_seconds\x18\t \x01(\x03H\x01R\x1adeletionGracePeriodSeconds\x88\x01\x01B\x15\n" +
-	"\x13_deletion_timestampB \n" +
-	"\x1e_deletion_grace_period_seconds\"}\n" +
+	"start_time\x18\a \x01(\v2\x1a.google.protobuf.TimestampR\tstartTime\"}\n" +
 	"\x03Pod\x12&\n" +
 	"\x04meta\x18\x01 \x01(\v2\x12.k8s.v1.ObjectMetaR\x04meta\x12#\n" +
 	"\x04spec\x18\x02 \x01(\v2\x0f.k8s.v1.PodSpecR\x04spec\x12)\n" +
@@ -976,82 +974,92 @@ const file_k8s_v1_types_proto_rawDesc = "" +
 	"\fContainerLog\x12%\n" +
 	"\x0econtainer_name\x18\x01 \x01(\tR\rcontainerName\x128\n" +
 	"\ttimestamp\x18\x02 \x01(\v2\x1a.google.protobuf.TimestampR\ttimestamp\x12\x12\n" +
-	"\x04line\x18\x03 \x01(\tR\x04lineB\x84\x01\n" +
+	"\x04line\x18\x03 \x01(\tR\x04line\"\xbb\x01\n" +
+	"\vPortForward\x12\x0e\n" +
+	"\x02id\x18\x01 \x01(\tR\x02id\x12\x1c\n" +
+	"\tnamespace\x18\x02 \x01(\tR\tnamespace\x12\x19\n" +
+	"\bpod_name\x18\x03 \x01(\tR\apodName\x12\x1d\n" +
 	"\n" +
-	"com.k8s.v1B\n" +
-	"TypesProtoP\x01Z1github.com/kove-sh/kove-proto/gen/go/k8s/v1;k8sv1\xa2\x02\x03KXX\xaa\x02\x06K8s.V1\xca\x02\x06K8s\\V1\xe2\x02\x12K8s\\V1\\GPBMetadata\xea\x02\aK8s::V1b\x06proto3"
+	"local_port\x18\x04 \x01(\x05R\tlocalPort\x12\x1f\n" +
+	"\vremote_port\x18\x05 \x01(\x05R\n" +
+	"remotePort\x12\x19\n" +
+	"\x05error\x18\x06 \x01(\tH\x00R\x05error\x88\x01\x01B\b\n" +
+	"\x06_errorB\x82\x01\n" +
+	"\n" +
+	"com.k8s.v1B\bPodProtoP\x01Z1github.com/kove-sh/kove-proto/gen/go/k8s/v1;k8sv1\xa2\x02\x03KXX\xaa\x02\x06K8s.V1\xca\x02\x06K8s\\V1\xe2\x02\x12K8s\\V1\\GPBMetadata\xea\x02\aK8s::V1b\x06proto3"
 
 var (
-	file_k8s_v1_types_proto_rawDescOnce sync.Once
-	file_k8s_v1_types_proto_rawDescData []byte
+	file_k8s_v1_pod_proto_rawDescOnce sync.Once
+	file_k8s_v1_pod_proto_rawDescData []byte
 )
 
-func file_k8s_v1_types_proto_rawDescGZIP() []byte {
-	file_k8s_v1_types_proto_rawDescOnce.Do(func() {
-		file_k8s_v1_types_proto_rawDescData = protoimpl.X.CompressGZIP(unsafe.Slice(unsafe.StringData(file_k8s_v1_types_proto_rawDesc), len(file_k8s_v1_types_proto_rawDesc)))
+func file_k8s_v1_pod_proto_rawDescGZIP() []byte {
+	file_k8s_v1_pod_proto_rawDescOnce.Do(func() {
+		file_k8s_v1_pod_proto_rawDescData = protoimpl.X.CompressGZIP(unsafe.Slice(unsafe.StringData(file_k8s_v1_pod_proto_rawDesc), len(file_k8s_v1_pod_proto_rawDesc)))
 	})
-	return file_k8s_v1_types_proto_rawDescData
+	return file_k8s_v1_pod_proto_rawDescData
 }
 
-var file_k8s_v1_types_proto_msgTypes = make([]protoimpl.MessageInfo, 11)
-var file_k8s_v1_types_proto_goTypes = []any{
-	(*Context)(nil),               // 0: k8s.v1.Context
-	(*ObjectMeta)(nil),            // 1: k8s.v1.ObjectMeta
-	(*Pod)(nil),                   // 2: k8s.v1.Pod
-	(*PodSpec)(nil),               // 3: k8s.v1.PodSpec
-	(*PodStatus)(nil),             // 4: k8s.v1.PodStatus
-	(*Container)(nil),             // 5: k8s.v1.Container
-	(*Resource)(nil),              // 6: k8s.v1.Resource
-	(*ContainerPort)(nil),         // 7: k8s.v1.ContainerPort
-	(*EnvVar)(nil),                // 8: k8s.v1.EnvVar
-	(*Probe)(nil),                 // 9: k8s.v1.Probe
-	(*ContainerLog)(nil),          // 10: k8s.v1.ContainerLog
+var file_k8s_v1_pod_proto_msgTypes = make([]protoimpl.MessageInfo, 11)
+var file_k8s_v1_pod_proto_goTypes = []any{
+	(*PodSummary)(nil),            // 0: k8s.v1.PodSummary
+	(*Pod)(nil),                   // 1: k8s.v1.Pod
+	(*PodSpec)(nil),               // 2: k8s.v1.PodSpec
+	(*PodStatus)(nil),             // 3: k8s.v1.PodStatus
+	(*Container)(nil),             // 4: k8s.v1.Container
+	(*Resource)(nil),              // 5: k8s.v1.Resource
+	(*ContainerPort)(nil),         // 6: k8s.v1.ContainerPort
+	(*EnvVar)(nil),                // 7: k8s.v1.EnvVar
+	(*Probe)(nil),                 // 8: k8s.v1.Probe
+	(*ContainerLog)(nil),          // 9: k8s.v1.ContainerLog
+	(*PortForward)(nil),           // 10: k8s.v1.PortForward
 	(*timestamppb.Timestamp)(nil), // 11: google.protobuf.Timestamp
+	(*ObjectMeta)(nil),            // 12: k8s.v1.ObjectMeta
 }
-var file_k8s_v1_types_proto_depIdxs = []int32{
-	11, // 0: k8s.v1.ObjectMeta.creation_timestamp:type_name -> google.protobuf.Timestamp
-	11, // 1: k8s.v1.ObjectMeta.deletion_timestamp:type_name -> google.protobuf.Timestamp
-	1,  // 2: k8s.v1.Pod.meta:type_name -> k8s.v1.ObjectMeta
-	3,  // 3: k8s.v1.Pod.spec:type_name -> k8s.v1.PodSpec
-	4,  // 4: k8s.v1.Pod.status:type_name -> k8s.v1.PodStatus
-	5,  // 5: k8s.v1.PodSpec.containers:type_name -> k8s.v1.Container
-	5,  // 6: k8s.v1.PodSpec.ephemeral_containers:type_name -> k8s.v1.Container
-	6,  // 7: k8s.v1.PodSpec.cpu:type_name -> k8s.v1.Resource
-	6,  // 8: k8s.v1.PodSpec.memory:type_name -> k8s.v1.Resource
-	7,  // 9: k8s.v1.Container.ports:type_name -> k8s.v1.ContainerPort
-	8,  // 10: k8s.v1.Container.env:type_name -> k8s.v1.EnvVar
-	6,  // 11: k8s.v1.Container.cpu:type_name -> k8s.v1.Resource
-	6,  // 12: k8s.v1.Container.memory:type_name -> k8s.v1.Resource
-	11, // 13: k8s.v1.ContainerLog.timestamp:type_name -> google.protobuf.Timestamp
-	14, // [14:14] is the sub-list for method output_type
-	14, // [14:14] is the sub-list for method input_type
-	14, // [14:14] is the sub-list for extension type_name
-	14, // [14:14] is the sub-list for extension extendee
-	0,  // [0:14] is the sub-list for field type_name
+var file_k8s_v1_pod_proto_depIdxs = []int32{
+	11, // 0: k8s.v1.PodSummary.start_time:type_name -> google.protobuf.Timestamp
+	12, // 1: k8s.v1.Pod.meta:type_name -> k8s.v1.ObjectMeta
+	2,  // 2: k8s.v1.Pod.spec:type_name -> k8s.v1.PodSpec
+	3,  // 3: k8s.v1.Pod.status:type_name -> k8s.v1.PodStatus
+	4,  // 4: k8s.v1.PodSpec.containers:type_name -> k8s.v1.Container
+	4,  // 5: k8s.v1.PodSpec.ephemeral_containers:type_name -> k8s.v1.Container
+	5,  // 6: k8s.v1.PodSpec.cpu:type_name -> k8s.v1.Resource
+	5,  // 7: k8s.v1.PodSpec.memory:type_name -> k8s.v1.Resource
+	6,  // 8: k8s.v1.Container.ports:type_name -> k8s.v1.ContainerPort
+	7,  // 9: k8s.v1.Container.env:type_name -> k8s.v1.EnvVar
+	5,  // 10: k8s.v1.Container.cpu:type_name -> k8s.v1.Resource
+	5,  // 11: k8s.v1.Container.memory:type_name -> k8s.v1.Resource
+	11, // 12: k8s.v1.ContainerLog.timestamp:type_name -> google.protobuf.Timestamp
+	13, // [13:13] is the sub-list for method output_type
+	13, // [13:13] is the sub-list for method input_type
+	13, // [13:13] is the sub-list for extension type_name
+	13, // [13:13] is the sub-list for extension extendee
+	0,  // [0:13] is the sub-list for field type_name
 }
 
-func init() { file_k8s_v1_types_proto_init() }
-func file_k8s_v1_types_proto_init() {
-	if File_k8s_v1_types_proto != nil {
+func init() { file_k8s_v1_pod_proto_init() }
+func file_k8s_v1_pod_proto_init() {
+	if File_k8s_v1_pod_proto != nil {
 		return
 	}
-	file_k8s_v1_types_proto_msgTypes[1].OneofWrappers = []any{}
-	file_k8s_v1_types_proto_msgTypes[9].OneofWrappers = []any{}
+	file_k8s_v1_base_proto_init()
+	file_k8s_v1_pod_proto_msgTypes[8].OneofWrappers = []any{}
+	file_k8s_v1_pod_proto_msgTypes[10].OneofWrappers = []any{}
 	type x struct{}
 	out := protoimpl.TypeBuilder{
 		File: protoimpl.DescBuilder{
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
-			RawDescriptor: unsafe.Slice(unsafe.StringData(file_k8s_v1_types_proto_rawDesc), len(file_k8s_v1_types_proto_rawDesc)),
+			RawDescriptor: unsafe.Slice(unsafe.StringData(file_k8s_v1_pod_proto_rawDesc), len(file_k8s_v1_pod_proto_rawDesc)),
 			NumEnums:      0,
 			NumMessages:   11,
 			NumExtensions: 0,
 			NumServices:   0,
 		},
-		GoTypes:           file_k8s_v1_types_proto_goTypes,
-		DependencyIndexes: file_k8s_v1_types_proto_depIdxs,
-		MessageInfos:      file_k8s_v1_types_proto_msgTypes,
+		GoTypes:           file_k8s_v1_pod_proto_goTypes,
+		DependencyIndexes: file_k8s_v1_pod_proto_depIdxs,
+		MessageInfos:      file_k8s_v1_pod_proto_msgTypes,
 	}.Build()
-	File_k8s_v1_types_proto = out.File
-	file_k8s_v1_types_proto_goTypes = nil
-	file_k8s_v1_types_proto_depIdxs = nil
+	File_k8s_v1_pod_proto = out.File
+	file_k8s_v1_pod_proto_goTypes = nil
+	file_k8s_v1_pod_proto_depIdxs = nil
 }
