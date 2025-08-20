@@ -39,7 +39,7 @@ message ListNamespacesResponse {
 }
 
 message ListDeploymentsRequest {
-  string namespace = 1;
+  repeated string namespaces = 1;
 }
 
 message ListDeploymentsResponse {
@@ -56,7 +56,7 @@ message GetDeploymentResponse {
 }
 
 message ListPodsRequest {
-  string namespace = 1;
+  repeated string namespaces = 1;
 }
 
 message ListPodsResponse {

@@ -91,7 +91,7 @@ public struct K8s_V1_ListDeploymentsRequest: Sendable {
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
-  public var namespace: String = String()
+  public var namespaces: [String] = []
 
   public var unknownFields = SwiftProtobuf.UnknownStorage()
 
@@ -150,7 +150,7 @@ public struct K8s_V1_ListPodsRequest: Sendable {
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
-  public var namespace: String = String()
+  public var namespaces: [String] = []
 
   public var unknownFields = SwiftProtobuf.UnknownStorage()
 
@@ -463,7 +463,7 @@ extension K8s_V1_ListNamespacesResponse: SwiftProtobuf.Message, SwiftProtobuf._M
 
 extension K8s_V1_ListDeploymentsRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".ListDeploymentsRequest"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}namespace\0")
+  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}namespaces\0")
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -471,21 +471,21 @@ extension K8s_V1_ListDeploymentsRequest: SwiftProtobuf.Message, SwiftProtobuf._M
       // allocates stack space for every case branch when no optimizations are
       // enabled. https://github.com/apple/swift-protobuf/issues/1034
       switch fieldNumber {
-      case 1: try { try decoder.decodeSingularStringField(value: &self.namespace) }()
+      case 1: try { try decoder.decodeRepeatedStringField(value: &self.namespaces) }()
       default: break
       }
     }
   }
 
   public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
-    if !self.namespace.isEmpty {
-      try visitor.visitSingularStringField(value: self.namespace, fieldNumber: 1)
+    if !self.namespaces.isEmpty {
+      try visitor.visitRepeatedStringField(value: self.namespaces, fieldNumber: 1)
     }
     try unknownFields.traverse(visitor: &visitor)
   }
 
   public static func ==(lhs: K8s_V1_ListDeploymentsRequest, rhs: K8s_V1_ListDeploymentsRequest) -> Bool {
-    if lhs.namespace != rhs.namespace {return false}
+    if lhs.namespaces != rhs.namespaces {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }
@@ -592,7 +592,7 @@ extension K8s_V1_GetDeploymentResponse: SwiftProtobuf.Message, SwiftProtobuf._Me
 
 extension K8s_V1_ListPodsRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".ListPodsRequest"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}namespace\0")
+  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}namespaces\0")
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -600,21 +600,21 @@ extension K8s_V1_ListPodsRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageI
       // allocates stack space for every case branch when no optimizations are
       // enabled. https://github.com/apple/swift-protobuf/issues/1034
       switch fieldNumber {
-      case 1: try { try decoder.decodeSingularStringField(value: &self.namespace) }()
+      case 1: try { try decoder.decodeRepeatedStringField(value: &self.namespaces) }()
       default: break
       }
     }
   }
 
   public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
-    if !self.namespace.isEmpty {
-      try visitor.visitSingularStringField(value: self.namespace, fieldNumber: 1)
+    if !self.namespaces.isEmpty {
+      try visitor.visitRepeatedStringField(value: self.namespaces, fieldNumber: 1)
     }
     try unknownFields.traverse(visitor: &visitor)
   }
 
   public static func ==(lhs: K8s_V1_ListPodsRequest, rhs: K8s_V1_ListPodsRequest) -> Bool {
-    if lhs.namespace != rhs.namespace {return false}
+    if lhs.namespaces != rhs.namespaces {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }
