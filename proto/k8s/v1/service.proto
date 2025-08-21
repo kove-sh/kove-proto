@@ -14,10 +14,10 @@ service Service {
   rpc GetDeployment(GetDeploymentRequest) returns (GetDeploymentResponse) {}
   rpc ListPods(ListPodsRequest) returns (ListPodsResponse) {}
   rpc GetPod(GetPodRequest) returns (GetPodResponse) {}
-  rpc StreamPodLogs(StreamPodLogsRequest) returns (stream StreamPodLogsResponse) {}
   rpc PortForwardPod(PortForwardPodRequest) returns (PortForwardPodResponse) {}
   rpc StopPortForward(StopPortForwardRequest) returns (StopPortForwardResponse) {}
   rpc GetPortForwards(GetPortForwardsRequest) returns (GetPortForwardsResponse) {}
+  rpc StreamLogs(StreamLogsRequest) returns (stream StreamLogsResponse) {}
 }
 
 message ListContextsRequest {}
@@ -72,17 +72,6 @@ message GetPodResponse {
   Pod pod = 1;
 }
 
-message StreamPodLogsRequest {
-  string namespace = 1;
-  string pod_name = 2;
-  repeated string containers = 3;
-  int64 since_seconds = 4;
-}
-
-message StreamPodLogsResponse {
-  repeated ContainerLog log_batch = 1;
-}
-
 message PortForwardPodRequest {
   string namespace = 1;
   string pod_name = 2;
@@ -106,4 +95,15 @@ message GetPortForwardsRequest {}
 
 message GetPortForwardsResponse {
   repeated PortForward port_forwards = 1;
+}
+
+message StreamLogsRequest {
+  string namespace = 1;
+  repeated string pods = 2;
+  repeated string containers = 3;
+  int64 since_seconds = 4;
+}
+
+message StreamLogsResponse {
+  repeated ContainerLog log_batch = 1;
 }

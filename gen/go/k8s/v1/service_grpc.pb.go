@@ -26,10 +26,10 @@ const (
 	Service_GetDeployment_FullMethodName   = "/k8s.v1.Service/GetDeployment"
 	Service_ListPods_FullMethodName        = "/k8s.v1.Service/ListPods"
 	Service_GetPod_FullMethodName          = "/k8s.v1.Service/GetPod"
-	Service_StreamPodLogs_FullMethodName   = "/k8s.v1.Service/StreamPodLogs"
 	Service_PortForwardPod_FullMethodName  = "/k8s.v1.Service/PortForwardPod"
 	Service_StopPortForward_FullMethodName = "/k8s.v1.Service/StopPortForward"
 	Service_GetPortForwards_FullMethodName = "/k8s.v1.Service/GetPortForwards"
+	Service_StreamLogs_FullMethodName      = "/k8s.v1.Service/StreamLogs"
 )
 
 // ServiceClient is the client API for Service service.
@@ -43,10 +43,10 @@ type ServiceClient interface {
 	GetDeployment(ctx context.Context, in *GetDeploymentRequest, opts ...grpc.CallOption) (*GetDeploymentResponse, error)
 	ListPods(ctx context.Context, in *ListPodsRequest, opts ...grpc.CallOption) (*ListPodsResponse, error)
 	GetPod(ctx context.Context, in *GetPodRequest, opts ...grpc.CallOption) (*GetPodResponse, error)
-	StreamPodLogs(ctx context.Context, in *StreamPodLogsRequest, opts ...grpc.CallOption) (grpc.ServerStreamingClient[StreamPodLogsResponse], error)
 	PortForwardPod(ctx context.Context, in *PortForwardPodRequest, opts ...grpc.CallOption) (*PortForwardPodResponse, error)
 	StopPortForward(ctx context.Context, in *StopPortForwardRequest, opts ...grpc.CallOption) (*StopPortForwardResponse, error)
 	GetPortForwards(ctx context.Context, in *GetPortForwardsRequest, opts ...grpc.CallOption) (*GetPortForwardsResponse, error)
+	StreamLogs(ctx context.Context, in *StreamLogsRequest, opts ...grpc.CallOption) (grpc.ServerStreamingClient[StreamLogsResponse], error)
 }
 
 type serviceClient struct {
@@ -127,25 +127,6 @@ func (c *serviceClient) GetPod(ctx context.Context, in *GetPodRequest, opts ...g
 	return out, nil
 }
 
-func (c *serviceClient) StreamPodLogs(ctx context.Context, in *StreamPodLogsRequest, opts ...grpc.CallOption) (grpc.ServerStreamingClient[StreamPodLogsResponse], error) {
-	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	stream, err := c.cc.NewStream(ctx, &Service_ServiceDesc.Streams[0], Service_StreamPodLogs_FullMethodName, cOpts...)
-	if err != nil {
-		return nil, err
-	}
-	x := &grpc.GenericClientStream[StreamPodLogsRequest, StreamPodLogsResponse]{ClientStream: stream}
-	if err := x.ClientStream.SendMsg(in); err != nil {
-		return nil, err
-	}
-	if err := x.ClientStream.CloseSend(); err != nil {
-		return nil, err
-	}
-	return x, nil
-}
-
-// This type alias is provided for backwards compatibility with existing code that references the prior non-generic stream type by name.
-type Service_StreamPodLogsClient = grpc.ServerStreamingClient[StreamPodLogsResponse]
-
 func (c *serviceClient) PortForwardPod(ctx context.Context, in *PortForwardPodRequest, opts ...grpc.CallOption) (*PortForwardPodResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(PortForwardPodResponse)
@@ -176,6 +157,25 @@ func (c *serviceClient) GetPortForwards(ctx context.Context, in *GetPortForwards
 	return out, nil
 }
 
+func (c *serviceClient) StreamLogs(ctx context.Context, in *StreamLogsRequest, opts ...grpc.CallOption) (grpc.ServerStreamingClient[StreamLogsResponse], error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	stream, err := c.cc.NewStream(ctx, &Service_ServiceDesc.Streams[0], Service_StreamLogs_FullMethodName, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	x := &grpc.GenericClientStream[StreamLogsRequest, StreamLogsResponse]{ClientStream: stream}
+	if err := x.ClientStream.SendMsg(in); err != nil {
+		return nil, err
+	}
+	if err := x.ClientStream.CloseSend(); err != nil {
+		return nil, err
+	}
+	return x, nil
+}
+
+// This type alias is provided for backwards compatibility with existing code that references the prior non-generic stream type by name.
+type Service_StreamLogsClient = grpc.ServerStreamingClient[StreamLogsResponse]
+
 // ServiceServer is the server API for Service service.
 // All implementations should embed UnimplementedServiceServer
 // for forward compatibility.
@@ -187,10 +187,10 @@ type ServiceServer interface {
 	GetDeployment(context.Context, *GetDeploymentRequest) (*GetDeploymentResponse, error)
 	ListPods(context.Context, *ListPodsRequest) (*ListPodsResponse, error)
 	GetPod(context.Context, *GetPodRequest) (*GetPodResponse, error)
-	StreamPodLogs(*StreamPodLogsRequest, grpc.ServerStreamingServer[StreamPodLogsResponse]) error
 	PortForwardPod(context.Context, *PortForwardPodRequest) (*PortForwardPodResponse, error)
 	StopPortForward(context.Context, *StopPortForwardRequest) (*StopPortForwardResponse, error)
 	GetPortForwards(context.Context, *GetPortForwardsRequest) (*GetPortForwardsResponse, error)
+	StreamLogs(*StreamLogsRequest, grpc.ServerStreamingServer[StreamLogsResponse]) error
 }
 
 // UnimplementedServiceServer should be embedded to have
@@ -221,9 +221,6 @@ func (UnimplementedServiceServer) ListPods(context.Context, *ListPodsRequest) (*
 func (UnimplementedServiceServer) GetPod(context.Context, *GetPodRequest) (*GetPodResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetPod not implemented")
 }
-func (UnimplementedServiceServer) StreamPodLogs(*StreamPodLogsRequest, grpc.ServerStreamingServer[StreamPodLogsResponse]) error {
-	return status.Errorf(codes.Unimplemented, "method StreamPodLogs not implemented")
-}
 func (UnimplementedServiceServer) PortForwardPod(context.Context, *PortForwardPodRequest) (*PortForwardPodResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method PortForwardPod not implemented")
 }
@@ -232,6 +229,9 @@ func (UnimplementedServiceServer) StopPortForward(context.Context, *StopPortForw
 }
 func (UnimplementedServiceServer) GetPortForwards(context.Context, *GetPortForwardsRequest) (*GetPortForwardsResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetPortForwards not implemented")
+}
+func (UnimplementedServiceServer) StreamLogs(*StreamLogsRequest, grpc.ServerStreamingServer[StreamLogsResponse]) error {
+	return status.Errorf(codes.Unimplemented, "method StreamLogs not implemented")
 }
 func (UnimplementedServiceServer) testEmbeddedByValue() {}
 
@@ -379,17 +379,6 @@ func _Service_GetPod_Handler(srv interface{}, ctx context.Context, dec func(inte
 	return interceptor(ctx, in, info, handler)
 }
 
-func _Service_StreamPodLogs_Handler(srv interface{}, stream grpc.ServerStream) error {
-	m := new(StreamPodLogsRequest)
-	if err := stream.RecvMsg(m); err != nil {
-		return err
-	}
-	return srv.(ServiceServer).StreamPodLogs(m, &grpc.GenericServerStream[StreamPodLogsRequest, StreamPodLogsResponse]{ServerStream: stream})
-}
-
-// This type alias is provided for backwards compatibility with existing code that references the prior non-generic stream type by name.
-type Service_StreamPodLogsServer = grpc.ServerStreamingServer[StreamPodLogsResponse]
-
 func _Service_PortForwardPod_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(PortForwardPodRequest)
 	if err := dec(in); err != nil {
@@ -444,6 +433,17 @@ func _Service_GetPortForwards_Handler(srv interface{}, ctx context.Context, dec 
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Service_StreamLogs_Handler(srv interface{}, stream grpc.ServerStream) error {
+	m := new(StreamLogsRequest)
+	if err := stream.RecvMsg(m); err != nil {
+		return err
+	}
+	return srv.(ServiceServer).StreamLogs(m, &grpc.GenericServerStream[StreamLogsRequest, StreamLogsResponse]{ServerStream: stream})
+}
+
+// This type alias is provided for backwards compatibility with existing code that references the prior non-generic stream type by name.
+type Service_StreamLogsServer = grpc.ServerStreamingServer[StreamLogsResponse]
+
 // Service_ServiceDesc is the grpc.ServiceDesc for Service service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -494,8 +494,8 @@ var Service_ServiceDesc = grpc.ServiceDesc{
 	},
 	Streams: []grpc.StreamDesc{
 		{
-			StreamName:    "StreamPodLogs",
-			Handler:       _Service_StreamPodLogs_Handler,
+			StreamName:    "StreamLogs",
+			Handler:       _Service_StreamLogs_Handler,
 			ServerStreams: true,
 		},
 	},

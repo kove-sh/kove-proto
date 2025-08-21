@@ -104,18 +104,6 @@ public enum K8s_V1_Service {
                 method: "GetPod"
             )
         }
-        /// Namespace for "StreamPodLogs" metadata.
-        public enum StreamPodLogs {
-            /// Request type for "StreamPodLogs".
-            public typealias Input = K8s_V1_StreamPodLogsRequest
-            /// Response type for "StreamPodLogs".
-            public typealias Output = K8s_V1_StreamPodLogsResponse
-            /// Descriptor for "StreamPodLogs".
-            public static let descriptor = GRPCCore.MethodDescriptor(
-                service: GRPCCore.ServiceDescriptor(fullyQualifiedService: "k8s.v1.Service"),
-                method: "StreamPodLogs"
-            )
-        }
         /// Namespace for "PortForwardPod" metadata.
         public enum PortForwardPod {
             /// Request type for "PortForwardPod".
@@ -152,6 +140,18 @@ public enum K8s_V1_Service {
                 method: "GetPortForwards"
             )
         }
+        /// Namespace for "StreamLogs" metadata.
+        public enum StreamLogs {
+            /// Request type for "StreamLogs".
+            public typealias Input = K8s_V1_StreamLogsRequest
+            /// Response type for "StreamLogs".
+            public typealias Output = K8s_V1_StreamLogsResponse
+            /// Descriptor for "StreamLogs".
+            public static let descriptor = GRPCCore.MethodDescriptor(
+                service: GRPCCore.ServiceDescriptor(fullyQualifiedService: "k8s.v1.Service"),
+                method: "StreamLogs"
+            )
+        }
         /// Descriptors for all methods in the "k8s.v1.Service" service.
         public static let descriptors: [GRPCCore.MethodDescriptor] = [
             ListContexts.descriptor,
@@ -161,10 +161,10 @@ public enum K8s_V1_Service {
             GetDeployment.descriptor,
             ListPods.descriptor,
             GetPod.descriptor,
-            StreamPodLogs.descriptor,
             PortForwardPod.descriptor,
             StopPortForward.descriptor,
-            GetPortForwards.descriptor
+            GetPortForwards.descriptor,
+            StreamLogs.descriptor
         ]
     }
 }
@@ -317,25 +317,6 @@ extension K8s_V1_Service {
             onResponse handleResponse: @Sendable @escaping (GRPCCore.ClientResponse<K8s_V1_GetPodResponse>) async throws -> Result
         ) async throws -> Result where Result: Sendable
 
-        /// Call the "StreamPodLogs" method.
-        ///
-        /// - Parameters:
-        ///   - request: A request containing a single `K8s_V1_StreamPodLogsRequest` message.
-        ///   - serializer: A serializer for `K8s_V1_StreamPodLogsRequest` messages.
-        ///   - deserializer: A deserializer for `K8s_V1_StreamPodLogsResponse` messages.
-        ///   - options: Options to apply to this RPC.
-        ///   - handleResponse: A closure which handles the response, the result of which is
-        ///       returned to the caller. Returning from the closure will cancel the RPC if it
-        ///       hasn't already finished.
-        /// - Returns: The result of `handleResponse`.
-        func streamPodLogs<Result>(
-            request: GRPCCore.ClientRequest<K8s_V1_StreamPodLogsRequest>,
-            serializer: some GRPCCore.MessageSerializer<K8s_V1_StreamPodLogsRequest>,
-            deserializer: some GRPCCore.MessageDeserializer<K8s_V1_StreamPodLogsResponse>,
-            options: GRPCCore.CallOptions,
-            onResponse handleResponse: @Sendable @escaping (GRPCCore.StreamingClientResponse<K8s_V1_StreamPodLogsResponse>) async throws -> Result
-        ) async throws -> Result where Result: Sendable
-
         /// Call the "PortForwardPod" method.
         ///
         /// - Parameters:
@@ -391,6 +372,25 @@ extension K8s_V1_Service {
             deserializer: some GRPCCore.MessageDeserializer<K8s_V1_GetPortForwardsResponse>,
             options: GRPCCore.CallOptions,
             onResponse handleResponse: @Sendable @escaping (GRPCCore.ClientResponse<K8s_V1_GetPortForwardsResponse>) async throws -> Result
+        ) async throws -> Result where Result: Sendable
+
+        /// Call the "StreamLogs" method.
+        ///
+        /// - Parameters:
+        ///   - request: A request containing a single `K8s_V1_StreamLogsRequest` message.
+        ///   - serializer: A serializer for `K8s_V1_StreamLogsRequest` messages.
+        ///   - deserializer: A deserializer for `K8s_V1_StreamLogsResponse` messages.
+        ///   - options: Options to apply to this RPC.
+        ///   - handleResponse: A closure which handles the response, the result of which is
+        ///       returned to the caller. Returning from the closure will cancel the RPC if it
+        ///       hasn't already finished.
+        /// - Returns: The result of `handleResponse`.
+        func streamLogs<Result>(
+            request: GRPCCore.ClientRequest<K8s_V1_StreamLogsRequest>,
+            serializer: some GRPCCore.MessageSerializer<K8s_V1_StreamLogsRequest>,
+            deserializer: some GRPCCore.MessageDeserializer<K8s_V1_StreamLogsResponse>,
+            options: GRPCCore.CallOptions,
+            onResponse handleResponse: @Sendable @escaping (GRPCCore.StreamingClientResponse<K8s_V1_StreamLogsResponse>) async throws -> Result
         ) async throws -> Result where Result: Sendable
     }
 
@@ -620,34 +620,6 @@ extension K8s_V1_Service {
             )
         }
 
-        /// Call the "StreamPodLogs" method.
-        ///
-        /// - Parameters:
-        ///   - request: A request containing a single `K8s_V1_StreamPodLogsRequest` message.
-        ///   - serializer: A serializer for `K8s_V1_StreamPodLogsRequest` messages.
-        ///   - deserializer: A deserializer for `K8s_V1_StreamPodLogsResponse` messages.
-        ///   - options: Options to apply to this RPC.
-        ///   - handleResponse: A closure which handles the response, the result of which is
-        ///       returned to the caller. Returning from the closure will cancel the RPC if it
-        ///       hasn't already finished.
-        /// - Returns: The result of `handleResponse`.
-        public func streamPodLogs<Result>(
-            request: GRPCCore.ClientRequest<K8s_V1_StreamPodLogsRequest>,
-            serializer: some GRPCCore.MessageSerializer<K8s_V1_StreamPodLogsRequest>,
-            deserializer: some GRPCCore.MessageDeserializer<K8s_V1_StreamPodLogsResponse>,
-            options: GRPCCore.CallOptions = .defaults,
-            onResponse handleResponse: @Sendable @escaping (GRPCCore.StreamingClientResponse<K8s_V1_StreamPodLogsResponse>) async throws -> Result
-        ) async throws -> Result where Result: Sendable {
-            try await self.client.serverStreaming(
-                request: request,
-                descriptor: K8s_V1_Service.Method.StreamPodLogs.descriptor,
-                serializer: serializer,
-                deserializer: deserializer,
-                options: options,
-                onResponse: handleResponse
-            )
-        }
-
         /// Call the "PortForwardPod" method.
         ///
         /// - Parameters:
@@ -731,6 +703,34 @@ extension K8s_V1_Service {
             try await self.client.unary(
                 request: request,
                 descriptor: K8s_V1_Service.Method.GetPortForwards.descriptor,
+                serializer: serializer,
+                deserializer: deserializer,
+                options: options,
+                onResponse: handleResponse
+            )
+        }
+
+        /// Call the "StreamLogs" method.
+        ///
+        /// - Parameters:
+        ///   - request: A request containing a single `K8s_V1_StreamLogsRequest` message.
+        ///   - serializer: A serializer for `K8s_V1_StreamLogsRequest` messages.
+        ///   - deserializer: A deserializer for `K8s_V1_StreamLogsResponse` messages.
+        ///   - options: Options to apply to this RPC.
+        ///   - handleResponse: A closure which handles the response, the result of which is
+        ///       returned to the caller. Returning from the closure will cancel the RPC if it
+        ///       hasn't already finished.
+        /// - Returns: The result of `handleResponse`.
+        public func streamLogs<Result>(
+            request: GRPCCore.ClientRequest<K8s_V1_StreamLogsRequest>,
+            serializer: some GRPCCore.MessageSerializer<K8s_V1_StreamLogsRequest>,
+            deserializer: some GRPCCore.MessageDeserializer<K8s_V1_StreamLogsResponse>,
+            options: GRPCCore.CallOptions = .defaults,
+            onResponse handleResponse: @Sendable @escaping (GRPCCore.StreamingClientResponse<K8s_V1_StreamLogsResponse>) async throws -> Result
+        ) async throws -> Result where Result: Sendable {
+            try await self.client.serverStreaming(
+                request: request,
+                descriptor: K8s_V1_Service.Method.StreamLogs.descriptor,
                 serializer: serializer,
                 deserializer: deserializer,
                 options: options,
@@ -918,29 +918,6 @@ extension K8s_V1_Service.ClientProtocol {
         )
     }
 
-    /// Call the "StreamPodLogs" method.
-    ///
-    /// - Parameters:
-    ///   - request: A request containing a single `K8s_V1_StreamPodLogsRequest` message.
-    ///   - options: Options to apply to this RPC.
-    ///   - handleResponse: A closure which handles the response, the result of which is
-    ///       returned to the caller. Returning from the closure will cancel the RPC if it
-    ///       hasn't already finished.
-    /// - Returns: The result of `handleResponse`.
-    public func streamPodLogs<Result>(
-        request: GRPCCore.ClientRequest<K8s_V1_StreamPodLogsRequest>,
-        options: GRPCCore.CallOptions = .defaults,
-        onResponse handleResponse: @Sendable @escaping (GRPCCore.StreamingClientResponse<K8s_V1_StreamPodLogsResponse>) async throws -> Result
-    ) async throws -> Result where Result: Sendable {
-        try await self.streamPodLogs(
-            request: request,
-            serializer: GRPCProtobuf.ProtobufSerializer<K8s_V1_StreamPodLogsRequest>(),
-            deserializer: GRPCProtobuf.ProtobufDeserializer<K8s_V1_StreamPodLogsResponse>(),
-            options: options,
-            onResponse: handleResponse
-        )
-    }
-
     /// Call the "PortForwardPod" method.
     ///
     /// - Parameters:
@@ -1011,6 +988,29 @@ extension K8s_V1_Service.ClientProtocol {
             request: request,
             serializer: GRPCProtobuf.ProtobufSerializer<K8s_V1_GetPortForwardsRequest>(),
             deserializer: GRPCProtobuf.ProtobufDeserializer<K8s_V1_GetPortForwardsResponse>(),
+            options: options,
+            onResponse: handleResponse
+        )
+    }
+
+    /// Call the "StreamLogs" method.
+    ///
+    /// - Parameters:
+    ///   - request: A request containing a single `K8s_V1_StreamLogsRequest` message.
+    ///   - options: Options to apply to this RPC.
+    ///   - handleResponse: A closure which handles the response, the result of which is
+    ///       returned to the caller. Returning from the closure will cancel the RPC if it
+    ///       hasn't already finished.
+    /// - Returns: The result of `handleResponse`.
+    public func streamLogs<Result>(
+        request: GRPCCore.ClientRequest<K8s_V1_StreamLogsRequest>,
+        options: GRPCCore.CallOptions = .defaults,
+        onResponse handleResponse: @Sendable @escaping (GRPCCore.StreamingClientResponse<K8s_V1_StreamLogsResponse>) async throws -> Result
+    ) async throws -> Result where Result: Sendable {
+        try await self.streamLogs(
+            request: request,
+            serializer: GRPCProtobuf.ProtobufSerializer<K8s_V1_StreamLogsRequest>(),
+            deserializer: GRPCProtobuf.ProtobufDeserializer<K8s_V1_StreamLogsResponse>(),
             options: options,
             onResponse: handleResponse
         )
@@ -1223,33 +1223,6 @@ extension K8s_V1_Service.ClientProtocol {
         )
     }
 
-    /// Call the "StreamPodLogs" method.
-    ///
-    /// - Parameters:
-    ///   - message: request message to send.
-    ///   - metadata: Additional metadata to send, defaults to empty.
-    ///   - options: Options to apply to this RPC, defaults to `.defaults`.
-    ///   - handleResponse: A closure which handles the response, the result of which is
-    ///       returned to the caller. Returning from the closure will cancel the RPC if it
-    ///       hasn't already finished.
-    /// - Returns: The result of `handleResponse`.
-    public func streamPodLogs<Result>(
-        _ message: K8s_V1_StreamPodLogsRequest,
-        metadata: GRPCCore.Metadata = [:],
-        options: GRPCCore.CallOptions = .defaults,
-        onResponse handleResponse: @Sendable @escaping (GRPCCore.StreamingClientResponse<K8s_V1_StreamPodLogsResponse>) async throws -> Result
-    ) async throws -> Result where Result: Sendable {
-        let request = GRPCCore.ClientRequest<K8s_V1_StreamPodLogsRequest>(
-            message: message,
-            metadata: metadata
-        )
-        return try await self.streamPodLogs(
-            request: request,
-            options: options,
-            onResponse: handleResponse
-        )
-    }
-
     /// Call the "PortForwardPod" method.
     ///
     /// - Parameters:
@@ -1331,6 +1304,33 @@ extension K8s_V1_Service.ClientProtocol {
             metadata: metadata
         )
         return try await self.getPortForwards(
+            request: request,
+            options: options,
+            onResponse: handleResponse
+        )
+    }
+
+    /// Call the "StreamLogs" method.
+    ///
+    /// - Parameters:
+    ///   - message: request message to send.
+    ///   - metadata: Additional metadata to send, defaults to empty.
+    ///   - options: Options to apply to this RPC, defaults to `.defaults`.
+    ///   - handleResponse: A closure which handles the response, the result of which is
+    ///       returned to the caller. Returning from the closure will cancel the RPC if it
+    ///       hasn't already finished.
+    /// - Returns: The result of `handleResponse`.
+    public func streamLogs<Result>(
+        _ message: K8s_V1_StreamLogsRequest,
+        metadata: GRPCCore.Metadata = [:],
+        options: GRPCCore.CallOptions = .defaults,
+        onResponse handleResponse: @Sendable @escaping (GRPCCore.StreamingClientResponse<K8s_V1_StreamLogsResponse>) async throws -> Result
+    ) async throws -> Result where Result: Sendable {
+        let request = GRPCCore.ClientRequest<K8s_V1_StreamLogsRequest>(
+            message: message,
+            metadata: metadata
+        )
+        return try await self.streamLogs(
             request: request,
             options: options,
             onResponse: handleResponse

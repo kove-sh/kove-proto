@@ -204,36 +204,6 @@ public struct K8s_V1_GetPodResponse: Sendable {
   fileprivate var _pod: K8s_V1_Pod? = nil
 }
 
-public struct K8s_V1_StreamPodLogsRequest: Sendable {
-  // SwiftProtobuf.Message conformance is added in an extension below. See the
-  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
-  // methods supported on all messages.
-
-  public var namespace: String = String()
-
-  public var podName: String = String()
-
-  public var containers: [String] = []
-
-  public var sinceSeconds: Int64 = 0
-
-  public var unknownFields = SwiftProtobuf.UnknownStorage()
-
-  public init() {}
-}
-
-public struct K8s_V1_StreamPodLogsResponse: Sendable {
-  // SwiftProtobuf.Message conformance is added in an extension below. See the
-  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
-  // methods supported on all messages.
-
-  public var logBatch: [K8s_V1_ContainerLog] = []
-
-  public var unknownFields = SwiftProtobuf.UnknownStorage()
-
-  public init() {}
-}
-
 public struct K8s_V1_PortForwardPodRequest: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
@@ -304,6 +274,36 @@ public struct K8s_V1_GetPortForwardsResponse: Sendable {
   // methods supported on all messages.
 
   public var portForwards: [K8s_V1_PortForward] = []
+
+  public var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  public init() {}
+}
+
+public struct K8s_V1_StreamLogsRequest: Sendable {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  public var namespace: String = String()
+
+  public var pods: [String] = []
+
+  public var containers: [String] = []
+
+  public var sinceSeconds: Int64 = 0
+
+  public var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  public init() {}
+}
+
+public struct K8s_V1_StreamLogsResponse: Sendable {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  public var logBatch: [K8s_V1_ContainerLog] = []
 
   public var unknownFields = SwiftProtobuf.UnknownStorage()
 
@@ -719,81 +719,6 @@ extension K8s_V1_GetPodResponse: SwiftProtobuf.Message, SwiftProtobuf._MessageIm
   }
 }
 
-extension K8s_V1_StreamPodLogsRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
-  public static let protoMessageName: String = _protobuf_package + ".StreamPodLogsRequest"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}namespace\0\u{3}pod_name\0\u{1}containers\0\u{3}since_seconds\0")
-
-  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
-    while let fieldNumber = try decoder.nextFieldNumber() {
-      // The use of inline closures is to circumvent an issue where the compiler
-      // allocates stack space for every case branch when no optimizations are
-      // enabled. https://github.com/apple/swift-protobuf/issues/1034
-      switch fieldNumber {
-      case 1: try { try decoder.decodeSingularStringField(value: &self.namespace) }()
-      case 2: try { try decoder.decodeSingularStringField(value: &self.podName) }()
-      case 3: try { try decoder.decodeRepeatedStringField(value: &self.containers) }()
-      case 4: try { try decoder.decodeSingularInt64Field(value: &self.sinceSeconds) }()
-      default: break
-      }
-    }
-  }
-
-  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
-    if !self.namespace.isEmpty {
-      try visitor.visitSingularStringField(value: self.namespace, fieldNumber: 1)
-    }
-    if !self.podName.isEmpty {
-      try visitor.visitSingularStringField(value: self.podName, fieldNumber: 2)
-    }
-    if !self.containers.isEmpty {
-      try visitor.visitRepeatedStringField(value: self.containers, fieldNumber: 3)
-    }
-    if self.sinceSeconds != 0 {
-      try visitor.visitSingularInt64Field(value: self.sinceSeconds, fieldNumber: 4)
-    }
-    try unknownFields.traverse(visitor: &visitor)
-  }
-
-  public static func ==(lhs: K8s_V1_StreamPodLogsRequest, rhs: K8s_V1_StreamPodLogsRequest) -> Bool {
-    if lhs.namespace != rhs.namespace {return false}
-    if lhs.podName != rhs.podName {return false}
-    if lhs.containers != rhs.containers {return false}
-    if lhs.sinceSeconds != rhs.sinceSeconds {return false}
-    if lhs.unknownFields != rhs.unknownFields {return false}
-    return true
-  }
-}
-
-extension K8s_V1_StreamPodLogsResponse: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
-  public static let protoMessageName: String = _protobuf_package + ".StreamPodLogsResponse"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{3}log_batch\0")
-
-  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
-    while let fieldNumber = try decoder.nextFieldNumber() {
-      // The use of inline closures is to circumvent an issue where the compiler
-      // allocates stack space for every case branch when no optimizations are
-      // enabled. https://github.com/apple/swift-protobuf/issues/1034
-      switch fieldNumber {
-      case 1: try { try decoder.decodeRepeatedMessageField(value: &self.logBatch) }()
-      default: break
-      }
-    }
-  }
-
-  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
-    if !self.logBatch.isEmpty {
-      try visitor.visitRepeatedMessageField(value: self.logBatch, fieldNumber: 1)
-    }
-    try unknownFields.traverse(visitor: &visitor)
-  }
-
-  public static func ==(lhs: K8s_V1_StreamPodLogsResponse, rhs: K8s_V1_StreamPodLogsResponse) -> Bool {
-    if lhs.logBatch != rhs.logBatch {return false}
-    if lhs.unknownFields != rhs.unknownFields {return false}
-    return true
-  }
-}
-
 extension K8s_V1_PortForwardPodRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".PortForwardPodRequest"
   public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}namespace\0\u{3}pod_name\0\u{3}local_port\0\u{3}remote_port\0")
@@ -973,6 +898,81 @@ extension K8s_V1_GetPortForwardsResponse: SwiftProtobuf.Message, SwiftProtobuf._
 
   public static func ==(lhs: K8s_V1_GetPortForwardsResponse, rhs: K8s_V1_GetPortForwardsResponse) -> Bool {
     if lhs.portForwards != rhs.portForwards {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension K8s_V1_StreamLogsRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  public static let protoMessageName: String = _protobuf_package + ".StreamLogsRequest"
+  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}namespace\0\u{1}pods\0\u{1}containers\0\u{3}since_seconds\0")
+
+  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch fieldNumber {
+      case 1: try { try decoder.decodeSingularStringField(value: &self.namespace) }()
+      case 2: try { try decoder.decodeRepeatedStringField(value: &self.pods) }()
+      case 3: try { try decoder.decodeRepeatedStringField(value: &self.containers) }()
+      case 4: try { try decoder.decodeSingularInt64Field(value: &self.sinceSeconds) }()
+      default: break
+      }
+    }
+  }
+
+  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    if !self.namespace.isEmpty {
+      try visitor.visitSingularStringField(value: self.namespace, fieldNumber: 1)
+    }
+    if !self.pods.isEmpty {
+      try visitor.visitRepeatedStringField(value: self.pods, fieldNumber: 2)
+    }
+    if !self.containers.isEmpty {
+      try visitor.visitRepeatedStringField(value: self.containers, fieldNumber: 3)
+    }
+    if self.sinceSeconds != 0 {
+      try visitor.visitSingularInt64Field(value: self.sinceSeconds, fieldNumber: 4)
+    }
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  public static func ==(lhs: K8s_V1_StreamLogsRequest, rhs: K8s_V1_StreamLogsRequest) -> Bool {
+    if lhs.namespace != rhs.namespace {return false}
+    if lhs.pods != rhs.pods {return false}
+    if lhs.containers != rhs.containers {return false}
+    if lhs.sinceSeconds != rhs.sinceSeconds {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension K8s_V1_StreamLogsResponse: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  public static let protoMessageName: String = _protobuf_package + ".StreamLogsResponse"
+  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{3}log_batch\0")
+
+  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch fieldNumber {
+      case 1: try { try decoder.decodeRepeatedMessageField(value: &self.logBatch) }()
+      default: break
+      }
+    }
+  }
+
+  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    if !self.logBatch.isEmpty {
+      try visitor.visitRepeatedMessageField(value: self.logBatch, fieldNumber: 1)
+    }
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  public static func ==(lhs: K8s_V1_StreamLogsResponse, rhs: K8s_V1_StreamLogsResponse) -> Bool {
+    if lhs.logBatch != rhs.logBatch {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }
