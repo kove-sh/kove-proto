@@ -303,7 +303,7 @@ public struct K8s_V1_StreamLogsResponse: Sendable {
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
-  public var logBatch: [K8s_V1_ContainerLog] = []
+  public var logBatch: [K8s_V1_Log] = []
 
   public var unknownFields = SwiftProtobuf.UnknownStorage()
 

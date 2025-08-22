@@ -979,7 +979,7 @@ func (x *StreamLogsRequest) GetSinceSeconds() int64 {
 
 type StreamLogsResponse struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	LogBatch      []*ContainerLog        `protobuf:"bytes,1,rep,name=log_batch,json=logBatch,proto3" json:"log_batch,omitempty"`
+	LogBatch      []*Log                 `protobuf:"bytes,1,rep,name=log_batch,json=logBatch,proto3" json:"log_batch,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -1014,7 +1014,7 @@ func (*StreamLogsResponse) Descriptor() ([]byte, []int) {
 	return file_k8s_v1_service_proto_rawDescGZIP(), []int{21}
 }
 
-func (x *StreamLogsResponse) GetLogBatch() []*ContainerLog {
+func (x *StreamLogsResponse) GetLogBatch() []*Log {
 	if x != nil {
 		return x.LogBatch
 	}
@@ -1085,9 +1085,9 @@ const file_k8s_v1_service_proto_rawDesc = "" +
 	"\n" +
 	"containers\x18\x03 \x03(\tR\n" +
 	"containers\x12#\n" +
-	"\rsince_seconds\x18\x04 \x01(\x03R\fsinceSeconds\"G\n" +
-	"\x12StreamLogsResponse\x121\n" +
-	"\tlog_batch\x18\x01 \x03(\v2\x14.k8s.v1.ContainerLogR\blogBatch2\xda\x06\n" +
+	"\rsince_seconds\x18\x04 \x01(\x03R\fsinceSeconds\">\n" +
+	"\x12StreamLogsResponse\x12(\n" +
+	"\tlog_batch\x18\x01 \x03(\v2\v.k8s.v1.LogR\blogBatch2\xda\x06\n" +
 	"\aService\x12K\n" +
 	"\fListContexts\x12\x1b.k8s.v1.ListContextsRequest\x1a\x1c.k8s.v1.ListContextsResponse\"\x00\x12E\n" +
 	"\n" +
@@ -1145,7 +1145,7 @@ var file_k8s_v1_service_proto_goTypes = []any{
 	(*Deployment)(nil),              // 23: k8s.v1.Deployment
 	(*Pod)(nil),                     // 24: k8s.v1.Pod
 	(*PortForward)(nil),             // 25: k8s.v1.PortForward
-	(*ContainerLog)(nil),            // 26: k8s.v1.ContainerLog
+	(*Log)(nil),                     // 26: k8s.v1.Log
 }
 var file_k8s_v1_service_proto_depIdxs = []int32{
 	22, // 0: k8s.v1.ListContextsResponse.contexts:type_name -> k8s.v1.Context
@@ -1156,7 +1156,7 @@ var file_k8s_v1_service_proto_depIdxs = []int32{
 	25, // 5: k8s.v1.PortForwardPodResponse.port_forwards:type_name -> k8s.v1.PortForward
 	25, // 6: k8s.v1.StopPortForwardResponse.port_forwards:type_name -> k8s.v1.PortForward
 	25, // 7: k8s.v1.GetPortForwardsResponse.port_forwards:type_name -> k8s.v1.PortForward
-	26, // 8: k8s.v1.StreamLogsResponse.log_batch:type_name -> k8s.v1.ContainerLog
+	26, // 8: k8s.v1.StreamLogsResponse.log_batch:type_name -> k8s.v1.Log
 	0,  // 9: k8s.v1.Service.ListContexts:input_type -> k8s.v1.ListContextsRequest
 	2,  // 10: k8s.v1.Service.SetContext:input_type -> k8s.v1.SetContextRequest
 	4,  // 11: k8s.v1.Service.ListNamespaces:input_type -> k8s.v1.ListNamespacesRequest

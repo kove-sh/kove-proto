@@ -22,3 +22,10 @@ message ObjectMeta {
   optional google.protobuf.Timestamp deletion_timestamp = 8;
   optional int64 deletion_grace_period_seconds = 9;
 }
+
+message Log {
+  string pod_name = 1;
+  string container_name = 2;
+  google.protobuf.Timestamp timestamp = 3;
+  string line = 4;
+}

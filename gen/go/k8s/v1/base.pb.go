@@ -191,6 +191,74 @@ func (x *ObjectMeta) GetDeletionGracePeriodSeconds() int64 {
 	return 0
 }
 
+type Log struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	PodName       string                 `protobuf:"bytes,1,opt,name=pod_name,json=podName,proto3" json:"pod_name,omitempty"`
+	ContainerName string                 `protobuf:"bytes,2,opt,name=container_name,json=containerName,proto3" json:"container_name,omitempty"`
+	Timestamp     *timestamppb.Timestamp `protobuf:"bytes,3,opt,name=timestamp,proto3" json:"timestamp,omitempty"`
+	Line          string                 `protobuf:"bytes,4,opt,name=line,proto3" json:"line,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *Log) Reset() {
+	*x = Log{}
+	mi := &file_k8s_v1_base_proto_msgTypes[2]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *Log) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*Log) ProtoMessage() {}
+
+func (x *Log) ProtoReflect() protoreflect.Message {
+	mi := &file_k8s_v1_base_proto_msgTypes[2]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use Log.ProtoReflect.Descriptor instead.
+func (*Log) Descriptor() ([]byte, []int) {
+	return file_k8s_v1_base_proto_rawDescGZIP(), []int{2}
+}
+
+func (x *Log) GetPodName() string {
+	if x != nil {
+		return x.PodName
+	}
+	return ""
+}
+
+func (x *Log) GetContainerName() string {
+	if x != nil {
+		return x.ContainerName
+	}
+	return ""
+}
+
+func (x *Log) GetTimestamp() *timestamppb.Timestamp {
+	if x != nil {
+		return x.Timestamp
+	}
+	return nil
+}
+
+func (x *Log) GetLine() string {
+	if x != nil {
+		return x.Line
+	}
+	return ""
+}
+
 var File_k8s_v1_base_proto protoreflect.FileDescriptor
 
 const file_k8s_v1_base_proto_rawDesc = "" +
@@ -214,7 +282,12 @@ const file_k8s_v1_base_proto_rawDesc = "" +
 	"\x12deletion_timestamp\x18\b \x01(\v2\x1a.google.protobuf.TimestampH\x00R\x11deletionTimestamp\x88\x01\x01\x12F\n" +
 	"\x1ddeletion_grace_period_seconds\x18\t \x01(\x03H\x01R\x1adeletionGracePeriodSeconds\x88\x01\x01B\x15\n" +
 	"\x13_deletion_timestampB \n" +
-	"\x1e_deletion_grace_period_secondsB\x83\x01\n" +
+	"\x1e_deletion_grace_period_seconds\"\x95\x01\n" +
+	"\x03Log\x12\x19\n" +
+	"\bpod_name\x18\x01 \x01(\tR\apodName\x12%\n" +
+	"\x0econtainer_name\x18\x02 \x01(\tR\rcontainerName\x128\n" +
+	"\ttimestamp\x18\x03 \x01(\v2\x1a.google.protobuf.TimestampR\ttimestamp\x12\x12\n" +
+	"\x04line\x18\x04 \x01(\tR\x04lineB\x83\x01\n" +
 	"\n" +
 	"com.k8s.v1B\tBaseProtoP\x01Z1github.com/kove-sh/kove-proto/gen/go/k8s/v1;k8sv1\xa2\x02\x03KXX\xaa\x02\x06K8s.V1\xca\x02\x06K8s\\V1\xe2\x02\x12K8s\\V1\\GPBMetadata\xea\x02\aK8s::V1b\x06proto3"
 
@@ -230,20 +303,22 @@ func file_k8s_v1_base_proto_rawDescGZIP() []byte {
 	return file_k8s_v1_base_proto_rawDescData
 }
 
-var file_k8s_v1_base_proto_msgTypes = make([]protoimpl.MessageInfo, 2)
+var file_k8s_v1_base_proto_msgTypes = make([]protoimpl.MessageInfo, 3)
 var file_k8s_v1_base_proto_goTypes = []any{
 	(*Context)(nil),               // 0: k8s.v1.Context
 	(*ObjectMeta)(nil),            // 1: k8s.v1.ObjectMeta
-	(*timestamppb.Timestamp)(nil), // 2: google.protobuf.Timestamp
+	(*Log)(nil),                   // 2: k8s.v1.Log
+	(*timestamppb.Timestamp)(nil), // 3: google.protobuf.Timestamp
 }
 var file_k8s_v1_base_proto_depIdxs = []int32{
-	2, // 0: k8s.v1.ObjectMeta.creation_timestamp:type_name -> google.protobuf.Timestamp
-	2, // 1: k8s.v1.ObjectMeta.deletion_timestamp:type_name -> google.protobuf.Timestamp
-	2, // [2:2] is the sub-list for method output_type
-	2, // [2:2] is the sub-list for method input_type
-	2, // [2:2] is the sub-list for extension type_name
-	2, // [2:2] is the sub-list for extension extendee
-	0, // [0:2] is the sub-list for field type_name
+	3, // 0: k8s.v1.ObjectMeta.creation_timestamp:type_name -> google.protobuf.Timestamp
+	3, // 1: k8s.v1.ObjectMeta.deletion_timestamp:type_name -> google.protobuf.Timestamp
+	3, // 2: k8s.v1.Log.timestamp:type_name -> google.protobuf.Timestamp
+	3, // [3:3] is the sub-list for method output_type
+	3, // [3:3] is the sub-list for method input_type
+	3, // [3:3] is the sub-list for extension type_name
+	3, // [3:3] is the sub-list for extension extendee
+	0, // [0:3] is the sub-list for field type_name
 }
 
 func init() { file_k8s_v1_base_proto_init() }
@@ -258,7 +333,7 @@ func file_k8s_v1_base_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_k8s_v1_base_proto_rawDesc), len(file_k8s_v1_base_proto_rawDesc)),
 			NumEnums:      0,
-			NumMessages:   2,
+			NumMessages:   3,
 			NumExtensions: 0,
 			NumServices:   0,
 		},

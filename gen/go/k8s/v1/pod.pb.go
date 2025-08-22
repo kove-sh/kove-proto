@@ -754,66 +754,6 @@ func (x *Probe) GetTerminationGracePeriodSeconds() int64 {
 	return 0
 }
 
-type ContainerLog struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	ContainerName string                 `protobuf:"bytes,1,opt,name=container_name,json=containerName,proto3" json:"container_name,omitempty"`
-	Timestamp     *timestamppb.Timestamp `protobuf:"bytes,2,opt,name=timestamp,proto3" json:"timestamp,omitempty"`
-	Line          string                 `protobuf:"bytes,3,opt,name=line,proto3" json:"line,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
-}
-
-func (x *ContainerLog) Reset() {
-	*x = ContainerLog{}
-	mi := &file_k8s_v1_pod_proto_msgTypes[9]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *ContainerLog) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*ContainerLog) ProtoMessage() {}
-
-func (x *ContainerLog) ProtoReflect() protoreflect.Message {
-	mi := &file_k8s_v1_pod_proto_msgTypes[9]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use ContainerLog.ProtoReflect.Descriptor instead.
-func (*ContainerLog) Descriptor() ([]byte, []int) {
-	return file_k8s_v1_pod_proto_rawDescGZIP(), []int{9}
-}
-
-func (x *ContainerLog) GetContainerName() string {
-	if x != nil {
-		return x.ContainerName
-	}
-	return ""
-}
-
-func (x *ContainerLog) GetTimestamp() *timestamppb.Timestamp {
-	if x != nil {
-		return x.Timestamp
-	}
-	return nil
-}
-
-func (x *ContainerLog) GetLine() string {
-	if x != nil {
-		return x.Line
-	}
-	return ""
-}
-
 type PortForward struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	Id            string                 `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
@@ -828,7 +768,7 @@ type PortForward struct {
 
 func (x *PortForward) Reset() {
 	*x = PortForward{}
-	mi := &file_k8s_v1_pod_proto_msgTypes[10]
+	mi := &file_k8s_v1_pod_proto_msgTypes[9]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -840,7 +780,7 @@ func (x *PortForward) String() string {
 func (*PortForward) ProtoMessage() {}
 
 func (x *PortForward) ProtoReflect() protoreflect.Message {
-	mi := &file_k8s_v1_pod_proto_msgTypes[10]
+	mi := &file_k8s_v1_pod_proto_msgTypes[9]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -853,7 +793,7 @@ func (x *PortForward) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use PortForward.ProtoReflect.Descriptor instead.
 func (*PortForward) Descriptor() ([]byte, []int) {
-	return file_k8s_v1_pod_proto_rawDescGZIP(), []int{10}
+	return file_k8s_v1_pod_proto_rawDescGZIP(), []int{9}
 }
 
 func (x *PortForward) GetId() string {
@@ -970,11 +910,7 @@ const file_k8s_v1_pod_proto_rawDesc = "" +
 	"\x0f_period_secondsB\x14\n" +
 	"\x12_success_thresholdB\x14\n" +
 	"\x12_failure_thresholdB#\n" +
-	"!_termination_grace_period_seconds\"\x83\x01\n" +
-	"\fContainerLog\x12%\n" +
-	"\x0econtainer_name\x18\x01 \x01(\tR\rcontainerName\x128\n" +
-	"\ttimestamp\x18\x02 \x01(\v2\x1a.google.protobuf.TimestampR\ttimestamp\x12\x12\n" +
-	"\x04line\x18\x03 \x01(\tR\x04line\"\xbb\x01\n" +
+	"!_termination_grace_period_seconds\"\xbb\x01\n" +
 	"\vPortForward\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\tR\x02id\x12\x1c\n" +
 	"\tnamespace\x18\x02 \x01(\tR\tnamespace\x12\x19\n" +
@@ -1000,7 +936,7 @@ func file_k8s_v1_pod_proto_rawDescGZIP() []byte {
 	return file_k8s_v1_pod_proto_rawDescData
 }
 
-var file_k8s_v1_pod_proto_msgTypes = make([]protoimpl.MessageInfo, 11)
+var file_k8s_v1_pod_proto_msgTypes = make([]protoimpl.MessageInfo, 10)
 var file_k8s_v1_pod_proto_goTypes = []any{
 	(*PodSummary)(nil),            // 0: k8s.v1.PodSummary
 	(*Pod)(nil),                   // 1: k8s.v1.Pod
@@ -1011,14 +947,13 @@ var file_k8s_v1_pod_proto_goTypes = []any{
 	(*ContainerPort)(nil),         // 6: k8s.v1.ContainerPort
 	(*EnvVar)(nil),                // 7: k8s.v1.EnvVar
 	(*Probe)(nil),                 // 8: k8s.v1.Probe
-	(*ContainerLog)(nil),          // 9: k8s.v1.ContainerLog
-	(*PortForward)(nil),           // 10: k8s.v1.PortForward
-	(*timestamppb.Timestamp)(nil), // 11: google.protobuf.Timestamp
-	(*ObjectMeta)(nil),            // 12: k8s.v1.ObjectMeta
+	(*PortForward)(nil),           // 9: k8s.v1.PortForward
+	(*timestamppb.Timestamp)(nil), // 10: google.protobuf.Timestamp
+	(*ObjectMeta)(nil),            // 11: k8s.v1.ObjectMeta
 }
 var file_k8s_v1_pod_proto_depIdxs = []int32{
-	11, // 0: k8s.v1.PodSummary.start_time:type_name -> google.protobuf.Timestamp
-	12, // 1: k8s.v1.Pod.meta:type_name -> k8s.v1.ObjectMeta
+	10, // 0: k8s.v1.PodSummary.start_time:type_name -> google.protobuf.Timestamp
+	11, // 1: k8s.v1.Pod.meta:type_name -> k8s.v1.ObjectMeta
 	2,  // 2: k8s.v1.Pod.spec:type_name -> k8s.v1.PodSpec
 	3,  // 3: k8s.v1.Pod.status:type_name -> k8s.v1.PodStatus
 	4,  // 4: k8s.v1.PodSpec.containers:type_name -> k8s.v1.Container
@@ -1029,12 +964,11 @@ var file_k8s_v1_pod_proto_depIdxs = []int32{
 	7,  // 9: k8s.v1.Container.env:type_name -> k8s.v1.EnvVar
 	5,  // 10: k8s.v1.Container.cpu:type_name -> k8s.v1.Resource
 	5,  // 11: k8s.v1.Container.memory:type_name -> k8s.v1.Resource
-	11, // 12: k8s.v1.ContainerLog.timestamp:type_name -> google.protobuf.Timestamp
-	13, // [13:13] is the sub-list for method output_type
-	13, // [13:13] is the sub-list for method input_type
-	13, // [13:13] is the sub-list for extension type_name
-	13, // [13:13] is the sub-list for extension extendee
-	0,  // [0:13] is the sub-list for field type_name
+	12, // [12:12] is the sub-list for method output_type
+	12, // [12:12] is the sub-list for method input_type
+	12, // [12:12] is the sub-list for extension type_name
+	12, // [12:12] is the sub-list for extension extendee
+	0,  // [0:12] is the sub-list for field type_name
 }
 
 func init() { file_k8s_v1_pod_proto_init() }
@@ -1044,14 +978,14 @@ func file_k8s_v1_pod_proto_init() {
 	}
 	file_k8s_v1_base_proto_init()
 	file_k8s_v1_pod_proto_msgTypes[8].OneofWrappers = []any{}
-	file_k8s_v1_pod_proto_msgTypes[10].OneofWrappers = []any{}
+	file_k8s_v1_pod_proto_msgTypes[9].OneofWrappers = []any{}
 	type x struct{}
 	out := protoimpl.TypeBuilder{
 		File: protoimpl.DescBuilder{
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_k8s_v1_pod_proto_rawDesc), len(file_k8s_v1_pod_proto_rawDesc)),
 			NumEnums:      0,
-			NumMessages:   11,
+			NumMessages:   10,
 			NumExtensions: 0,
 			NumServices:   0,
 		},

@@ -90,6 +90,33 @@ public struct K8s_V1_ObjectMeta: Sendable {
   fileprivate var _deletionGracePeriodSeconds: Int64? = nil
 }
 
+public struct K8s_V1_Log: Sendable {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  public var podName: String = String()
+
+  public var containerName: String = String()
+
+  public var timestamp: SwiftProtobuf.Google_Protobuf_Timestamp {
+    get {return _timestamp ?? SwiftProtobuf.Google_Protobuf_Timestamp()}
+    set {_timestamp = newValue}
+  }
+  /// Returns true if `timestamp` has been explicitly set.
+  public var hasTimestamp: Bool {return self._timestamp != nil}
+  /// Clears the value of `timestamp`. Subsequent reads from it will return its default value.
+  public mutating func clearTimestamp() {self._timestamp = nil}
+
+  public var line: String = String()
+
+  public var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  public init() {}
+
+  fileprivate var _timestamp: SwiftProtobuf.Google_Protobuf_Timestamp? = nil
+}
+
 // MARK: - Code below here is support for the SwiftProtobuf runtime.
 
 fileprivate let _protobuf_package = "k8s.v1"
@@ -203,6 +230,55 @@ extension K8s_V1_ObjectMeta: SwiftProtobuf.Message, SwiftProtobuf._MessageImplem
     if lhs._creationTimestamp != rhs._creationTimestamp {return false}
     if lhs._deletionTimestamp != rhs._deletionTimestamp {return false}
     if lhs._deletionGracePeriodSeconds != rhs._deletionGracePeriodSeconds {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension K8s_V1_Log: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  public static let protoMessageName: String = _protobuf_package + ".Log"
+  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{3}pod_name\0\u{3}container_name\0\u{1}timestamp\0\u{1}line\0")
+
+  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch fieldNumber {
+      case 1: try { try decoder.decodeSingularStringField(value: &self.podName) }()
+      case 2: try { try decoder.decodeSingularStringField(value: &self.containerName) }()
+      case 3: try { try decoder.decodeSingularMessageField(value: &self._timestamp) }()
+      case 4: try { try decoder.decodeSingularStringField(value: &self.line) }()
+      default: break
+      }
+    }
+  }
+
+  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    // The use of inline closures is to circumvent an issue where the compiler
+    // allocates stack space for every if/case branch local when no optimizations
+    // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
+    // https://github.com/apple/swift-protobuf/issues/1182
+    if !self.podName.isEmpty {
+      try visitor.visitSingularStringField(value: self.podName, fieldNumber: 1)
+    }
+    if !self.containerName.isEmpty {
+      try visitor.visitSingularStringField(value: self.containerName, fieldNumber: 2)
+    }
+    try { if let v = self._timestamp {
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 3)
+    } }()
+    if !self.line.isEmpty {
+      try visitor.visitSingularStringField(value: self.line, fieldNumber: 4)
+    }
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  public static func ==(lhs: K8s_V1_Log, rhs: K8s_V1_Log) -> Bool {
+    if lhs.podName != rhs.podName {return false}
+    if lhs.containerName != rhs.containerName {return false}
+    if lhs._timestamp != rhs._timestamp {return false}
+    if lhs.line != rhs.line {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }

@@ -105,5 +105,5 @@ message StreamLogsRequest {
 }
 
 message StreamLogsResponse {
-  repeated ContainerLog log_batch = 1;
+  repeated Log log_batch = 1;
 }
