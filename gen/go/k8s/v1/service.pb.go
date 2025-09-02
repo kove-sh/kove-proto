@@ -21,6 +21,55 @@ const (
 	_ = protoimpl.EnforceVersion(protoimpl.MaxVersion - 20)
 )
 
+type StreamLogsRequest_Filter_Operation int32
+
+const (
+	StreamLogsRequest_Filter_OPERATION_UNSPECIFIED StreamLogsRequest_Filter_Operation = 0
+	StreamLogsRequest_Filter_OPERATION_EQUALS      StreamLogsRequest_Filter_Operation = 1
+	StreamLogsRequest_Filter_OPERATION_CONTAINS    StreamLogsRequest_Filter_Operation = 2
+)
+
+// Enum value maps for StreamLogsRequest_Filter_Operation.
+var (
+	StreamLogsRequest_Filter_Operation_name = map[int32]string{
+		0: "OPERATION_UNSPECIFIED",
+		1: "OPERATION_EQUALS",
+		2: "OPERATION_CONTAINS",
+	}
+	StreamLogsRequest_Filter_Operation_value = map[string]int32{
+		"OPERATION_UNSPECIFIED": 0,
+		"OPERATION_EQUALS":      1,
+		"OPERATION_CONTAINS":    2,
+	}
+)
+
+func (x StreamLogsRequest_Filter_Operation) Enum() *StreamLogsRequest_Filter_Operation {
+	p := new(StreamLogsRequest_Filter_Operation)
+	*p = x
+	return p
+}
+
+func (x StreamLogsRequest_Filter_Operation) String() string {
+	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
+}
+
+func (StreamLogsRequest_Filter_Operation) Descriptor() protoreflect.EnumDescriptor {
+	return file_k8s_v1_service_proto_enumTypes[0].Descriptor()
+}
+
+func (StreamLogsRequest_Filter_Operation) Type() protoreflect.EnumType {
+	return &file_k8s_v1_service_proto_enumTypes[0]
+}
+
+func (x StreamLogsRequest_Filter_Operation) Number() protoreflect.EnumNumber {
+	return protoreflect.EnumNumber(x)
+}
+
+// Deprecated: Use StreamLogsRequest_Filter_Operation.Descriptor instead.
+func (StreamLogsRequest_Filter_Operation) EnumDescriptor() ([]byte, []int) {
+	return file_k8s_v1_service_proto_rawDescGZIP(), []int{20, 0, 0}
+}
+
 type ListContextsRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	unknownFields protoimpl.UnknownFields
@@ -910,11 +959,12 @@ func (x *GetPortForwardsResponse) GetPortForwards() []*PortForward {
 }
 
 type StreamLogsRequest struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	Namespace     string                 `protobuf:"bytes,1,opt,name=namespace,proto3" json:"namespace,omitempty"`
-	Pods          []string               `protobuf:"bytes,2,rep,name=pods,proto3" json:"pods,omitempty"`
-	Containers    []string               `protobuf:"bytes,3,rep,name=containers,proto3" json:"containers,omitempty"`
-	SinceSeconds  int64                  `protobuf:"varint,4,opt,name=since_seconds,json=sinceSeconds,proto3" json:"since_seconds,omitempty"`
+	state         protoimpl.MessageState      `protogen:"open.v1"`
+	Namespace     string                      `protobuf:"bytes,1,opt,name=namespace,proto3" json:"namespace,omitempty"`
+	Pods          []string                    `protobuf:"bytes,2,rep,name=pods,proto3" json:"pods,omitempty"`
+	Containers    []string                    `protobuf:"bytes,3,rep,name=containers,proto3" json:"containers,omitempty"`
+	SinceSeconds  int64                       `protobuf:"varint,4,opt,name=since_seconds,json=sinceSeconds,proto3" json:"since_seconds,omitempty"`
+	Filters       []*StreamLogsRequest_Filter `protobuf:"bytes,5,rep,name=filters,proto3" json:"filters,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -977,6 +1027,13 @@ func (x *StreamLogsRequest) GetSinceSeconds() int64 {
 	return 0
 }
 
+func (x *StreamLogsRequest) GetFilters() []*StreamLogsRequest_Filter {
+	if x != nil {
+		return x.Filters
+	}
+	return nil
+}
+
 type StreamLogsResponse struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	LogBatch      []*Log                 `protobuf:"bytes,1,rep,name=log_batch,json=logBatch,proto3" json:"log_batch,omitempty"`
@@ -1019,6 +1076,74 @@ func (x *StreamLogsResponse) GetLogBatch() []*Log {
 		return x.LogBatch
 	}
 	return nil
+}
+
+type StreamLogsRequest_Filter struct {
+	state         protoimpl.MessageState             `protogen:"open.v1"`
+	Key           string                             `protobuf:"bytes,1,opt,name=key,proto3" json:"key,omitempty"`
+	Value         string                             `protobuf:"bytes,2,opt,name=value,proto3" json:"value,omitempty"`
+	Operation     StreamLogsRequest_Filter_Operation `protobuf:"varint,3,opt,name=operation,proto3,enum=k8s.v1.StreamLogsRequest_Filter_Operation" json:"operation,omitempty"`
+	Not           bool                               `protobuf:"varint,4,opt,name=not,proto3" json:"not,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *StreamLogsRequest_Filter) Reset() {
+	*x = StreamLogsRequest_Filter{}
+	mi := &file_k8s_v1_service_proto_msgTypes[22]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *StreamLogsRequest_Filter) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*StreamLogsRequest_Filter) ProtoMessage() {}
+
+func (x *StreamLogsRequest_Filter) ProtoReflect() protoreflect.Message {
+	mi := &file_k8s_v1_service_proto_msgTypes[22]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use StreamLogsRequest_Filter.ProtoReflect.Descriptor instead.
+func (*StreamLogsRequest_Filter) Descriptor() ([]byte, []int) {
+	return file_k8s_v1_service_proto_rawDescGZIP(), []int{20, 0}
+}
+
+func (x *StreamLogsRequest_Filter) GetKey() string {
+	if x != nil {
+		return x.Key
+	}
+	return ""
+}
+
+func (x *StreamLogsRequest_Filter) GetValue() string {
+	if x != nil {
+		return x.Value
+	}
+	return ""
+}
+
+func (x *StreamLogsRequest_Filter) GetOperation() StreamLogsRequest_Filter_Operation {
+	if x != nil {
+		return x.Operation
+	}
+	return StreamLogsRequest_Filter_OPERATION_UNSPECIFIED
+}
+
+func (x *StreamLogsRequest_Filter) GetNot() bool {
+	if x != nil {
+		return x.Not
+	}
+	return false
 }
 
 var File_k8s_v1_service_proto protoreflect.FileDescriptor
@@ -1078,14 +1203,24 @@ const file_k8s_v1_service_proto_rawDesc = "" +
 	"\rport_forwards\x18\x01 \x03(\v2\x13.k8s.v1.PortForwardR\fportForwards\"\x18\n" +
 	"\x16GetPortForwardsRequest\"S\n" +
 	"\x17GetPortForwardsResponse\x128\n" +
-	"\rport_forwards\x18\x01 \x03(\v2\x13.k8s.v1.PortForwardR\fportForwards\"\x8a\x01\n" +
+	"\rport_forwards\x18\x01 \x03(\v2\x13.k8s.v1.PortForwardR\fportForwards\"\xab\x03\n" +
 	"\x11StreamLogsRequest\x12\x1c\n" +
 	"\tnamespace\x18\x01 \x01(\tR\tnamespace\x12\x12\n" +
 	"\x04pods\x18\x02 \x03(\tR\x04pods\x12\x1e\n" +
 	"\n" +
 	"containers\x18\x03 \x03(\tR\n" +
 	"containers\x12#\n" +
-	"\rsince_seconds\x18\x04 \x01(\x03R\fsinceSeconds\">\n" +
+	"\rsince_seconds\x18\x04 \x01(\x03R\fsinceSeconds\x12:\n" +
+	"\afilters\x18\x05 \x03(\v2 .k8s.v1.StreamLogsRequest.FilterR\afilters\x1a\xe2\x01\n" +
+	"\x06Filter\x12\x10\n" +
+	"\x03key\x18\x01 \x01(\tR\x03key\x12\x14\n" +
+	"\x05value\x18\x02 \x01(\tR\x05value\x12H\n" +
+	"\toperation\x18\x03 \x01(\x0e2*.k8s.v1.StreamLogsRequest.Filter.OperationR\toperation\x12\x10\n" +
+	"\x03not\x18\x04 \x01(\bR\x03not\"T\n" +
+	"\tOperation\x12\x19\n" +
+	"\x15OPERATION_UNSPECIFIED\x10\x00\x12\x14\n" +
+	"\x10OPERATION_EQUALS\x10\x01\x12\x16\n" +
+	"\x12OPERATION_CONTAINS\x10\x02\">\n" +
 	"\x12StreamLogsResponse\x12(\n" +
 	"\tlog_batch\x18\x01 \x03(\v2\v.k8s.v1.LogR\blogBatch2\xda\x06\n" +
 	"\aService\x12K\n" +
@@ -1117,73 +1252,78 @@ func file_k8s_v1_service_proto_rawDescGZIP() []byte {
 	return file_k8s_v1_service_proto_rawDescData
 }
 
-var file_k8s_v1_service_proto_msgTypes = make([]protoimpl.MessageInfo, 22)
+var file_k8s_v1_service_proto_enumTypes = make([]protoimpl.EnumInfo, 1)
+var file_k8s_v1_service_proto_msgTypes = make([]protoimpl.MessageInfo, 23)
 var file_k8s_v1_service_proto_goTypes = []any{
-	(*ListContextsRequest)(nil),     // 0: k8s.v1.ListContextsRequest
-	(*ListContextsResponse)(nil),    // 1: k8s.v1.ListContextsResponse
-	(*SetContextRequest)(nil),       // 2: k8s.v1.SetContextRequest
-	(*SetContextResponse)(nil),      // 3: k8s.v1.SetContextResponse
-	(*ListNamespacesRequest)(nil),   // 4: k8s.v1.ListNamespacesRequest
-	(*ListNamespacesResponse)(nil),  // 5: k8s.v1.ListNamespacesResponse
-	(*ListDeploymentsRequest)(nil),  // 6: k8s.v1.ListDeploymentsRequest
-	(*ListDeploymentsResponse)(nil), // 7: k8s.v1.ListDeploymentsResponse
-	(*GetDeploymentRequest)(nil),    // 8: k8s.v1.GetDeploymentRequest
-	(*GetDeploymentResponse)(nil),   // 9: k8s.v1.GetDeploymentResponse
-	(*ListPodsRequest)(nil),         // 10: k8s.v1.ListPodsRequest
-	(*ListPodsResponse)(nil),        // 11: k8s.v1.ListPodsResponse
-	(*GetPodRequest)(nil),           // 12: k8s.v1.GetPodRequest
-	(*GetPodResponse)(nil),          // 13: k8s.v1.GetPodResponse
-	(*PortForwardPodRequest)(nil),   // 14: k8s.v1.PortForwardPodRequest
-	(*PortForwardPodResponse)(nil),  // 15: k8s.v1.PortForwardPodResponse
-	(*StopPortForwardRequest)(nil),  // 16: k8s.v1.StopPortForwardRequest
-	(*StopPortForwardResponse)(nil), // 17: k8s.v1.StopPortForwardResponse
-	(*GetPortForwardsRequest)(nil),  // 18: k8s.v1.GetPortForwardsRequest
-	(*GetPortForwardsResponse)(nil), // 19: k8s.v1.GetPortForwardsResponse
-	(*StreamLogsRequest)(nil),       // 20: k8s.v1.StreamLogsRequest
-	(*StreamLogsResponse)(nil),      // 21: k8s.v1.StreamLogsResponse
-	(*Context)(nil),                 // 22: k8s.v1.Context
-	(*Deployment)(nil),              // 23: k8s.v1.Deployment
-	(*Pod)(nil),                     // 24: k8s.v1.Pod
-	(*PortForward)(nil),             // 25: k8s.v1.PortForward
-	(*Log)(nil),                     // 26: k8s.v1.Log
+	(StreamLogsRequest_Filter_Operation)(0), // 0: k8s.v1.StreamLogsRequest.Filter.Operation
+	(*ListContextsRequest)(nil),             // 1: k8s.v1.ListContextsRequest
+	(*ListContextsResponse)(nil),            // 2: k8s.v1.ListContextsResponse
+	(*SetContextRequest)(nil),               // 3: k8s.v1.SetContextRequest
+	(*SetContextResponse)(nil),              // 4: k8s.v1.SetContextResponse
+	(*ListNamespacesRequest)(nil),           // 5: k8s.v1.ListNamespacesRequest
+	(*ListNamespacesResponse)(nil),          // 6: k8s.v1.ListNamespacesResponse
+	(*ListDeploymentsRequest)(nil),          // 7: k8s.v1.ListDeploymentsRequest
+	(*ListDeploymentsResponse)(nil),         // 8: k8s.v1.ListDeploymentsResponse
+	(*GetDeploymentRequest)(nil),            // 9: k8s.v1.GetDeploymentRequest
+	(*GetDeploymentResponse)(nil),           // 10: k8s.v1.GetDeploymentResponse
+	(*ListPodsRequest)(nil),                 // 11: k8s.v1.ListPodsRequest
+	(*ListPodsResponse)(nil),                // 12: k8s.v1.ListPodsResponse
+	(*GetPodRequest)(nil),                   // 13: k8s.v1.GetPodRequest
+	(*GetPodResponse)(nil),                  // 14: k8s.v1.GetPodResponse
+	(*PortForwardPodRequest)(nil),           // 15: k8s.v1.PortForwardPodRequest
+	(*PortForwardPodResponse)(nil),          // 16: k8s.v1.PortForwardPodResponse
+	(*StopPortForwardRequest)(nil),          // 17: k8s.v1.StopPortForwardRequest
+	(*StopPortForwardResponse)(nil),         // 18: k8s.v1.StopPortForwardResponse
+	(*GetPortForwardsRequest)(nil),          // 19: k8s.v1.GetPortForwardsRequest
+	(*GetPortForwardsResponse)(nil),         // 20: k8s.v1.GetPortForwardsResponse
+	(*StreamLogsRequest)(nil),               // 21: k8s.v1.StreamLogsRequest
+	(*StreamLogsResponse)(nil),              // 22: k8s.v1.StreamLogsResponse
+	(*StreamLogsRequest_Filter)(nil),        // 23: k8s.v1.StreamLogsRequest.Filter
+	(*Context)(nil),                         // 24: k8s.v1.Context
+	(*Deployment)(nil),                      // 25: k8s.v1.Deployment
+	(*Pod)(nil),                             // 26: k8s.v1.Pod
+	(*PortForward)(nil),                     // 27: k8s.v1.PortForward
+	(*Log)(nil),                             // 28: k8s.v1.Log
 }
 var file_k8s_v1_service_proto_depIdxs = []int32{
-	22, // 0: k8s.v1.ListContextsResponse.contexts:type_name -> k8s.v1.Context
-	23, // 1: k8s.v1.ListDeploymentsResponse.deployment:type_name -> k8s.v1.Deployment
-	23, // 2: k8s.v1.GetDeploymentResponse.deployment:type_name -> k8s.v1.Deployment
-	24, // 3: k8s.v1.ListPodsResponse.pods:type_name -> k8s.v1.Pod
-	24, // 4: k8s.v1.GetPodResponse.pod:type_name -> k8s.v1.Pod
-	25, // 5: k8s.v1.PortForwardPodResponse.port_forwards:type_name -> k8s.v1.PortForward
-	25, // 6: k8s.v1.StopPortForwardResponse.port_forwards:type_name -> k8s.v1.PortForward
-	25, // 7: k8s.v1.GetPortForwardsResponse.port_forwards:type_name -> k8s.v1.PortForward
-	26, // 8: k8s.v1.StreamLogsResponse.log_batch:type_name -> k8s.v1.Log
-	0,  // 9: k8s.v1.Service.ListContexts:input_type -> k8s.v1.ListContextsRequest
-	2,  // 10: k8s.v1.Service.SetContext:input_type -> k8s.v1.SetContextRequest
-	4,  // 11: k8s.v1.Service.ListNamespaces:input_type -> k8s.v1.ListNamespacesRequest
-	6,  // 12: k8s.v1.Service.ListDeployments:input_type -> k8s.v1.ListDeploymentsRequest
-	8,  // 13: k8s.v1.Service.GetDeployment:input_type -> k8s.v1.GetDeploymentRequest
-	10, // 14: k8s.v1.Service.ListPods:input_type -> k8s.v1.ListPodsRequest
-	12, // 15: k8s.v1.Service.GetPod:input_type -> k8s.v1.GetPodRequest
-	14, // 16: k8s.v1.Service.PortForwardPod:input_type -> k8s.v1.PortForwardPodRequest
-	16, // 17: k8s.v1.Service.StopPortForward:input_type -> k8s.v1.StopPortForwardRequest
-	18, // 18: k8s.v1.Service.GetPortForwards:input_type -> k8s.v1.GetPortForwardsRequest
-	20, // 19: k8s.v1.Service.StreamLogs:input_type -> k8s.v1.StreamLogsRequest
-	1,  // 20: k8s.v1.Service.ListContexts:output_type -> k8s.v1.ListContextsResponse
-	3,  // 21: k8s.v1.Service.SetContext:output_type -> k8s.v1.SetContextResponse
-	5,  // 22: k8s.v1.Service.ListNamespaces:output_type -> k8s.v1.ListNamespacesResponse
-	7,  // 23: k8s.v1.Service.ListDeployments:output_type -> k8s.v1.ListDeploymentsResponse
-	9,  // 24: k8s.v1.Service.GetDeployment:output_type -> k8s.v1.GetDeploymentResponse
-	11, // 25: k8s.v1.Service.ListPods:output_type -> k8s.v1.ListPodsResponse
-	13, // 26: k8s.v1.Service.GetPod:output_type -> k8s.v1.GetPodResponse
-	15, // 27: k8s.v1.Service.PortForwardPod:output_type -> k8s.v1.PortForwardPodResponse
-	17, // 28: k8s.v1.Service.StopPortForward:output_type -> k8s.v1.StopPortForwardResponse
-	19, // 29: k8s.v1.Service.GetPortForwards:output_type -> k8s.v1.GetPortForwardsResponse
-	21, // 30: k8s.v1.Service.StreamLogs:output_type -> k8s.v1.StreamLogsResponse
-	20, // [20:31] is the sub-list for method output_type
-	9,  // [9:20] is the sub-list for method input_type
-	9,  // [9:9] is the sub-list for extension type_name
-	9,  // [9:9] is the sub-list for extension extendee
-	0,  // [0:9] is the sub-list for field type_name
+	24, // 0: k8s.v1.ListContextsResponse.contexts:type_name -> k8s.v1.Context
+	25, // 1: k8s.v1.ListDeploymentsResponse.deployment:type_name -> k8s.v1.Deployment
+	25, // 2: k8s.v1.GetDeploymentResponse.deployment:type_name -> k8s.v1.Deployment
+	26, // 3: k8s.v1.ListPodsResponse.pods:type_name -> k8s.v1.Pod
+	26, // 4: k8s.v1.GetPodResponse.pod:type_name -> k8s.v1.Pod
+	27, // 5: k8s.v1.PortForwardPodResponse.port_forwards:type_name -> k8s.v1.PortForward
+	27, // 6: k8s.v1.StopPortForwardResponse.port_forwards:type_name -> k8s.v1.PortForward
+	27, // 7: k8s.v1.GetPortForwardsResponse.port_forwards:type_name -> k8s.v1.PortForward
+	23, // 8: k8s.v1.StreamLogsRequest.filters:type_name -> k8s.v1.StreamLogsRequest.Filter
+	28, // 9: k8s.v1.StreamLogsResponse.log_batch:type_name -> k8s.v1.Log
+	0,  // 10: k8s.v1.StreamLogsRequest.Filter.operation:type_name -> k8s.v1.StreamLogsRequest.Filter.Operation
+	1,  // 11: k8s.v1.Service.ListContexts:input_type -> k8s.v1.ListContextsRequest
+	3,  // 12: k8s.v1.Service.SetContext:input_type -> k8s.v1.SetContextRequest
+	5,  // 13: k8s.v1.Service.ListNamespaces:input_type -> k8s.v1.ListNamespacesRequest
+	7,  // 14: k8s.v1.Service.ListDeployments:input_type -> k8s.v1.ListDeploymentsRequest
+	9,  // 15: k8s.v1.Service.GetDeployment:input_type -> k8s.v1.GetDeploymentRequest
+	11, // 16: k8s.v1.Service.ListPods:input_type -> k8s.v1.ListPodsRequest
+	13, // 17: k8s.v1.Service.GetPod:input_type -> k8s.v1.GetPodRequest
+	15, // 18: k8s.v1.Service.PortForwardPod:input_type -> k8s.v1.PortForwardPodRequest
+	17, // 19: k8s.v1.Service.StopPortForward:input_type -> k8s.v1.StopPortForwardRequest
+	19, // 20: k8s.v1.Service.GetPortForwards:input_type -> k8s.v1.GetPortForwardsRequest
+	21, // 21: k8s.v1.Service.StreamLogs:input_type -> k8s.v1.StreamLogsRequest
+	2,  // 22: k8s.v1.Service.ListContexts:output_type -> k8s.v1.ListContextsResponse
+	4,  // 23: k8s.v1.Service.SetContext:output_type -> k8s.v1.SetContextResponse
+	6,  // 24: k8s.v1.Service.ListNamespaces:output_type -> k8s.v1.ListNamespacesResponse
+	8,  // 25: k8s.v1.Service.ListDeployments:output_type -> k8s.v1.ListDeploymentsResponse
+	10, // 26: k8s.v1.Service.GetDeployment:output_type -> k8s.v1.GetDeploymentResponse
+	12, // 27: k8s.v1.Service.ListPods:output_type -> k8s.v1.ListPodsResponse
+	14, // 28: k8s.v1.Service.GetPod:output_type -> k8s.v1.GetPodResponse
+	16, // 29: k8s.v1.Service.PortForwardPod:output_type -> k8s.v1.PortForwardPodResponse
+	18, // 30: k8s.v1.Service.StopPortForward:output_type -> k8s.v1.StopPortForwardResponse
+	20, // 31: k8s.v1.Service.GetPortForwards:output_type -> k8s.v1.GetPortForwardsResponse
+	22, // 32: k8s.v1.Service.StreamLogs:output_type -> k8s.v1.StreamLogsResponse
+	22, // [22:33] is the sub-list for method output_type
+	11, // [11:22] is the sub-list for method input_type
+	11, // [11:11] is the sub-list for extension type_name
+	11, // [11:11] is the sub-list for extension extendee
+	0,  // [0:11] is the sub-list for field type_name
 }
 
 func init() { file_k8s_v1_service_proto_init() }
@@ -1199,13 +1339,14 @@ func file_k8s_v1_service_proto_init() {
 		File: protoimpl.DescBuilder{
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_k8s_v1_service_proto_rawDesc), len(file_k8s_v1_service_proto_rawDesc)),
-			NumEnums:      0,
-			NumMessages:   22,
+			NumEnums:      1,
+			NumMessages:   23,
 			NumExtensions: 0,
 			NumServices:   1,
 		},
 		GoTypes:           file_k8s_v1_service_proto_goTypes,
 		DependencyIndexes: file_k8s_v1_service_proto_depIdxs,
+		EnumInfos:         file_k8s_v1_service_proto_enumTypes,
 		MessageInfos:      file_k8s_v1_service_proto_msgTypes,
 	}.Build()
 	File_k8s_v1_service_proto = out.File

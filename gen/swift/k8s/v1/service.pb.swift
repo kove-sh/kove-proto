@@ -293,7 +293,65 @@ public struct K8s_V1_StreamLogsRequest: Sendable {
 
   public var sinceSeconds: Int64 = 0
 
+  public var filters: [K8s_V1_StreamLogsRequest.Filter] = []
+
   public var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  public struct Filter: Sendable {
+    // SwiftProtobuf.Message conformance is added in an extension below. See the
+    // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+    // methods supported on all messages.
+
+    public var key: String = String()
+
+    public var value: String = String()
+
+    public var operation: K8s_V1_StreamLogsRequest.Filter.Operation = .unspecified
+
+    public var not: Bool = false
+
+    public var unknownFields = SwiftProtobuf.UnknownStorage()
+
+    public enum Operation: SwiftProtobuf.Enum, Swift.CaseIterable {
+      public typealias RawValue = Int
+      case unspecified // = 0
+      case equals // = 1
+      case contains // = 2
+      case UNRECOGNIZED(Int)
+
+      public init() {
+        self = .unspecified
+      }
+
+      public init?(rawValue: Int) {
+        switch rawValue {
+        case 0: self = .unspecified
+        case 1: self = .equals
+        case 2: self = .contains
+        default: self = .UNRECOGNIZED(rawValue)
+        }
+      }
+
+      public var rawValue: Int {
+        switch self {
+        case .unspecified: return 0
+        case .equals: return 1
+        case .contains: return 2
+        case .UNRECOGNIZED(let i): return i
+        }
+      }
+
+      // The compiler won't synthesize support with the UNRECOGNIZED case.
+      public static let allCases: [K8s_V1_StreamLogsRequest.Filter.Operation] = [
+        .unspecified,
+        .equals,
+        .contains,
+      ]
+
+    }
+
+    public init() {}
+  }
 
   public init() {}
 }
@@ -905,7 +963,7 @@ extension K8s_V1_GetPortForwardsResponse: SwiftProtobuf.Message, SwiftProtobuf._
 
 extension K8s_V1_StreamLogsRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".StreamLogsRequest"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}namespace\0\u{1}pods\0\u{1}containers\0\u{3}since_seconds\0")
+  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}namespace\0\u{1}pods\0\u{1}containers\0\u{3}since_seconds\0\u{1}filters\0")
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -917,6 +975,7 @@ extension K8s_V1_StreamLogsRequest: SwiftProtobuf.Message, SwiftProtobuf._Messag
       case 2: try { try decoder.decodeRepeatedStringField(value: &self.pods) }()
       case 3: try { try decoder.decodeRepeatedStringField(value: &self.containers) }()
       case 4: try { try decoder.decodeSingularInt64Field(value: &self.sinceSeconds) }()
+      case 5: try { try decoder.decodeRepeatedMessageField(value: &self.filters) }()
       default: break
       }
     }
@@ -935,6 +994,9 @@ extension K8s_V1_StreamLogsRequest: SwiftProtobuf.Message, SwiftProtobuf._Messag
     if self.sinceSeconds != 0 {
       try visitor.visitSingularInt64Field(value: self.sinceSeconds, fieldNumber: 4)
     }
+    if !self.filters.isEmpty {
+      try visitor.visitRepeatedMessageField(value: self.filters, fieldNumber: 5)
+    }
     try unknownFields.traverse(visitor: &visitor)
   }
 
@@ -943,9 +1005,59 @@ extension K8s_V1_StreamLogsRequest: SwiftProtobuf.Message, SwiftProtobuf._Messag
     if lhs.pods != rhs.pods {return false}
     if lhs.containers != rhs.containers {return false}
     if lhs.sinceSeconds != rhs.sinceSeconds {return false}
+    if lhs.filters != rhs.filters {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }
+}
+
+extension K8s_V1_StreamLogsRequest.Filter: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  public static let protoMessageName: String = K8s_V1_StreamLogsRequest.protoMessageName + ".Filter"
+  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}key\0\u{1}value\0\u{1}operation\0\u{1}not\0")
+
+  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch fieldNumber {
+      case 1: try { try decoder.decodeSingularStringField(value: &self.key) }()
+      case 2: try { try decoder.decodeSingularStringField(value: &self.value) }()
+      case 3: try { try decoder.decodeSingularEnumField(value: &self.operation) }()
+      case 4: try { try decoder.decodeSingularBoolField(value: &self.not) }()
+      default: break
+      }
+    }
+  }
+
+  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    if !self.key.isEmpty {
+      try visitor.visitSingularStringField(value: self.key, fieldNumber: 1)
+    }
+    if !self.value.isEmpty {
+      try visitor.visitSingularStringField(value: self.value, fieldNumber: 2)
+    }
+    if self.operation != .unspecified {
+      try visitor.visitSingularEnumField(value: self.operation, fieldNumber: 3)
+    }
+    if self.not != false {
+      try visitor.visitSingularBoolField(value: self.not, fieldNumber: 4)
+    }
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  public static func ==(lhs: K8s_V1_StreamLogsRequest.Filter, rhs: K8s_V1_StreamLogsRequest.Filter) -> Bool {
+    if lhs.key != rhs.key {return false}
+    if lhs.value != rhs.value {return false}
+    if lhs.operation != rhs.operation {return false}
+    if lhs.not != rhs.not {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension K8s_V1_StreamLogsRequest.Filter.Operation: SwiftProtobuf._ProtoNameProviding {
+  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{2}\0OPERATION_UNSPECIFIED\0\u{1}OPERATION_EQUALS\0\u{1}OPERATION_CONTAINS\0")
 }
 
 extension K8s_V1_StreamLogsResponse: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {

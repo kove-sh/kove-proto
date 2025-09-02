@@ -98,10 +98,24 @@ message GetPortForwardsResponse {
 }
 
 message StreamLogsRequest {
+  message Filter {
+    enum Operation {
+      OPERATION_UNSPECIFIED = 0;
+      OPERATION_EQUALS = 1;
+      OPERATION_CONTAINS = 2;
+    }
+
+    string key = 1;
+    string value = 2;
+    Operation operation = 3;
+    bool not = 4;
+  }
+
   string namespace = 1;
   repeated string pods = 2;
   repeated string containers = 3;
   int64 since_seconds = 4;
+  repeated Filter filters = 5;
 }
 
 message StreamLogsResponse {
